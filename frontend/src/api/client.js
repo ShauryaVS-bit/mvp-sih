@@ -62,6 +62,14 @@ export async function fetchMonthlyReport(month = 'All-Time') {
   const res = await api.get('/analytics/monthly_report', { params: { month } })
   return res.data
 }
+/**
+ * GET /api/reports/:id/linked
+ * Returns graph of related reports { nodes, edges, source_id, total_linked }
+ */
+export async function fetchLinkedReports(reportId) {
+  const res = await api.get(`/reports/${reportId}/linked`)
+  return res.data
+}
 
 export default api
 

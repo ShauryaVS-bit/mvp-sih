@@ -1,0 +1,332 @@
+<!DOCTYPE html><html class="h-full bg-slate-50" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Report Detail | OIL Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#271902",
+                        "on-secondary-container": "#54647a",
+                        "on-surface": "#191c1e",
+                        "outline-variant": "#c5c6cd",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container": "#eceef0",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "tertiary-container": "#35260c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#1e1200",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-primary": "#bcc7de",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-surface-variant": "#45474c",
+                        "primary-container": "#1e293b",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed": "#fadfb8",
+                        "on-primary": "#ffffff",
+                        "primary": "#091426",
+                        "on-primary-fixed": "#111c2d",
+                        "surface-tint": "#545f73",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#8590a6",
+                        "outline": "#75777d",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-container": "#a38c6a",
+                        "surface-container-low": "#f2f4f6",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d8e3fb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "secondary": "#505f76",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "row-height-dense": "32px",
+                        "row-height-standard": "48px",
+                        "gutter": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Roboto", "sans-serif"],
+                        "label-caps": ["JetBrains Mono", "monospace"],
+                        "data-tabular": ["JetBrains Mono", "monospace"],
+                        "body-md": ["Roboto", "sans-serif"],
+                        "body-sm": ["Roboto", "sans-serif"],
+                        "headline-sm": ["Roboto", "sans-serif"],
+                        "headline-md": ["Roboto", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard">
+<div class="flex items-center gap-gutter">
+<div class="font-display-lg text-display-lg font-bold text-primary">OIL Sentinel</div>
+</div>
+<nav class="hidden md:flex items-center h-full gap-8">
+<a class="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80" href="#">New Report</a>
+</nav>
+<div class="flex items-center gap-4 text-primary">
+<button class="hover:bg-surface-container p-2 rounded transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container p-2 rounded transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[calc(48px+24px)] px-container-padding pb-container-padding flex-grow flex flex-col items-center">
+<div class="w-full max-w-5xl">
+<!-- Breadcrumb / Back -->
+<a class="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary mb-6 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+<span class="font-body-sm text-body-sm">Back to Dashboard</span>
+</a>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Main Report Document -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Header Block -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-6">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-block bg-error text-on-error font-label-caps text-label-caps px-2 py-1 rounded">SIF HIGH</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">INC-2023-0892</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Uncontrolled Release at Well Pad Charlie</h1>
+</div>
+<div class="text-right">
+<div class="font-data-tabular text-data-tabular text-on-surface-variant">2023-10-24 14:32 UTC</div>
+<div class="font-data-tabular text-data-tabular text-on-surface-variant mt-1">Asset: WPC-04</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-outline-variant">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">TYPE</div>
+<div class="font-body-sm text-body-sm text-on-surface">Loss of Containment</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">IOGP RULE</div>
+<div class="font-body-sm text-body-sm text-on-surface">Process Safety</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">REPORTER</div>
+<div class="font-body-sm text-body-sm text-on-surface">J. Doe (Op Tech)</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">STATUS</div>
+<div class="font-body-sm text-body-sm text-on-surface flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Open Investigation
+                                </div>
+</div>
+</div>
+</div>
+<!-- Content Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded overflow-hidden">
+<div class="h-1 bg-primary w-full"></div>
+<div class="p-6 space-y-8">
+<!-- Description -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="notes">notes</span>
+                                    Description of the Incident
+                                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                    During routine pressure testing on Well Pad Charlie (WPC-04), a secondary flange seal failed, resulting in a sudden and uncontrolled release of high-pressure gas mixed with produced water. The release lasted for approximately 45 seconds before the automated emergency shutdown (ESD) system fully engaged and isolated the wellhead. 
+                                </p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mt-4">
+                                    Two technicians were within the 10-meter exclusion zone at the time of the release. Both evacuated immediately upon hearing the release and the ESD alarm. Neither technician sustained injuries, but the release volume triggered an environmental reporting threshold.
+                                </p>
+</section>
+<hr class="border-outline-variant">
+<!-- Root Cause Analysis -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_tree">account_tree</span>
+                                    Root Cause Analysis
+                                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-4">
+                                    Preliminary investigation indicates a failure in the procurement process regarding seal specifications. The seals installed during the Q3 turnaround were rated for standard operating pressures but not the peak pressures required during the specific testing protocol being executed.
+                                </p>
+<ul class="list-none space-y-2">
+<li class="flex items-start gap-2 bg-surface p-3 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-error mt-0.5" data-icon="error">error</span>
+<div>
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Direct Cause</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Mechanical failure of the secondary flange seal under test pressure.</div>
+</div>
+</li>
+<li class="flex items-start gap-2 bg-surface p-3 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5" data-icon="search">search</span>
+<div>
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Systemic Cause</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Incorrect seal specification entered into the inventory management system during procurement.</div>
+</div>
+</li>
+</ul>
+</section>
+<hr class="border-outline-variant">
+<!-- Corrective Action -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="build">build</span>
+                                    Corrective Actions
+                                </h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface">
+<th class="font-label-caps text-label-caps text-on-surface-variant p-3 font-medium">ACTION ITEM</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-3 font-medium">OWNER</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-3 font-medium">DUE DATE</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-3 font-medium">STATUS</th>
+</tr>
+</thead>
+<tbody class="font-data-tabular text-data-tabular">
+<tr class="border-b border-surface-container hover:bg-surface transition-colors h-row-height-dense">
+<td class="p-3 text-on-surface">Audit all flange seals installed during Q3 turnaround across Well Pad Charlie.</td>
+<td class="p-3 text-on-surface-variant">M. Chen</td>
+<td class="p-3 text-on-surface-variant">2023-11-01</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-surface-variant text-on-surface rounded font-label-caps text-label-caps">IN PROGRESS</span></td>
+</tr>
+<tr class="border-b border-surface-container hover:bg-surface transition-colors h-row-height-dense">
+<td class="p-3 text-on-surface">Revise procurement specifications for test-rated pressure seals.</td>
+<td class="p-3 text-on-surface-variant">T. Barnes</td>
+<td class="p-3 text-on-surface-variant">2023-11-15</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-surface-container-highest text-on-surface-variant rounded font-label-caps text-label-caps">PENDING</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Right Column: Context & Linking -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Classification Summary -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Classification Summary</h3>
+<div class="space-y-4">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-1">SIF RATIONALE (AI EXTRACTED)</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant bg-surface p-3 border border-outline-variant rounded">
+                                    High-pressure release in close proximity (10m) to personnel without physical barriers present before ESD activation. Potential for fatality was present if ignition occurred.
+                                </p>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">IOGP LIFE-SAVING RULES IMPLICATED</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 bg-surface-variant text-on-surface px-2 py-1 rounded border border-outline-variant font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]" data-icon="local_fire_department">local_fire_department</span> Process Safety
+                                    </span>
+<span class="inline-flex items-center gap-1 bg-surface-variant text-on-surface px-2 py-1 rounded border border-outline-variant font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span> Line of Fire
+                                    </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Linked Reports -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-5 flex flex-col h-[400px]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Linked Reports</h3>
+<div class="flex bg-surface-container rounded p-0.5">
+<button aria-label="List View" class="px-2 py-1 bg-surface-container-lowest shadow-sm rounded text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" data-icon="format_list_bulleted">format_list_bulleted</span>
+</button>
+<button aria-label="Graph View" class="px-2 py-1 text-on-surface-variant hover:text-on-surface rounded flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="hub">hub</span>
+</button>
+</div>
+</div>
+<!-- List View (Default) -->
+<div class="flex-grow overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+<a class="block bg-surface border border-outline-variant rounded p-3 hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-error" data-icon="arrow_outward">arrow_outward</span>
+<span class="font-label-caps text-label-caps font-semibold text-on-surface">Same Asset Escalation</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="font-data-tabular text-data-tabular text-on-surface">INC-2023-0850</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">3 mos ago</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate mt-1">Minor weepage on WPC-04 primary flange</div>
+</a>
+<a class="block bg-surface border border-outline-variant rounded p-3 hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="repeat">repeat</span>
+<span class="font-label-caps text-label-caps font-semibold text-on-surface">Same Barrier Failure</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="font-data-tabular text-data-tabular text-on-surface">INC-2022-1102</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">1 yr ago</div>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate mt-1">Seal failure during pressure test at WPA-01</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<style>
+        /* Minimalist scrollbar for custom-scrollbar class */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #c5c6cd; /* outline-variant */
+            border-radius: 4px;
+        }
+    </style>
+</body></html>

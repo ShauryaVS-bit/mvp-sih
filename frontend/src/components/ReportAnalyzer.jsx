@@ -143,18 +143,18 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 font-inter">
       {/* Sample Selector */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
-        <p className="text-xs text-slate-700 font-bold mb-2.5">
-          Quick Load Sample Reports
+      <div className="bg-white p-5 rounded-lg border border-[#DFE1E6] shadow-sm">
+        <p className="text-[13px] text-[#191c1e] font-bold mb-3">
+          Quick Load Field Incident Narratives
         </p>
         <div className="flex flex-wrap gap-2">
           {SAMPLE_REPORTS.map((s, i) => (
             <button
               key={i}
               onClick={() => handleSampleLoad(s)}
-              className="text-xs px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 transition-all font-semibold shadow-2xs active:scale-[0.98]"
+              className="text-[12px] px-3 py-1.5 bg-[#F4F5F7] hover:bg-[#e1e2e4] text-[#191c1e] rounded-sm border border-[#DFE1E6] transition-all font-semibold active:scale-[0.98]"
             >
               {s.label}
             </button>
@@ -163,18 +163,18 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
       </div>
 
       {/* Main Form Box */}
-      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs space-y-4">
+      <div className="bg-white border border-[#DFE1E6] rounded-lg p-5 shadow-sm space-y-5">
         {/* Toggle Full Form */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="text-indigo-600" size={18} />
-            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Incident Metadata
+            <FileSpreadsheet className="text-[#0052cc]" size={18} />
+            <h3 className="text-[14px] font-bold text-[#191c1e] uppercase tracking-wider">
+              Incident Metadata & Attributes
             </h3>
           </div>
           <button
             onClick={() => setShowFullForm(!showFullForm)}
-            className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-bold transition-colors active:scale-[0.98]"
+            className="flex items-center gap-1 text-[12px] text-[#0052cc] hover:text-[#003d9b] font-bold transition-colors active:scale-[0.98]"
           >
             {showFullForm ? (
               <>
@@ -190,23 +190,23 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
 
         {/* Expandable Fields */}
         {showFullForm && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs pt-4 border-t border-slate-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-[13px] pt-4 border-t border-[#DFE1E6]">
             <div>
-              <label className="block text-slate-600 font-bold mb-1">Functional Location</label>
+              <label className="block text-[#434654] font-semibold mb-1.5">Functional Location</label>
               <input
                 type="text"
                 value={functionalLocation}
                 onChange={(e) => setFunctionalLocation(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-mono font-medium focus:bg-white focus:border-indigo-500 outline-none"
+                className="corp-input w-full px-3 py-2 text-[#191c1e] font-semibold"
               />
             </div>
 
             <div>
-              <label className="block text-slate-600 font-bold mb-1">Incident Classification Code</label>
+              <label className="block text-[#434654] font-semibold mb-1.5">Incident EHS Code</label>
               <select
                 value={ehsCode}
                 onChange={(e) => setEhsCode(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 font-mono font-bold focus:outline-none focus:border-indigo-500"
+                className="corp-input w-full px-3 py-2 text-[#0052cc] font-bold bg-[#F4F5F7]"
               >
                 <option value="R">R - Near Miss High Potential</option>
                 <option value="M">M - Near Miss Standard</option>
@@ -220,52 +220,52 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
             </div>
 
             <div>
-              <label className="block text-slate-600 font-bold mb-1">Incident Cause</label>
+              <label className="block text-[#434654] font-semibold mb-1.5">Incident Cause</label>
               <input
                 type="text"
                 value={incidentCause}
                 onChange={(e) => setIncidentCause(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
+                className="corp-input w-full px-3 py-2 text-[#191c1e]"
               />
             </div>
 
             <div>
-              <label className="block text-slate-600 font-bold mb-1">Affected Designation</label>
+              <label className="block text-[#434654] font-semibold mb-1.5">Affected Designation</label>
               <input
                 type="text"
                 value={designation}
                 onChange={(e) => setDesignation(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
+                className="corp-input w-full px-3 py-2 text-[#191c1e]"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-slate-600 font-bold mb-1">Root Cause Category</label>
+              <label className="block text-[#434654] font-semibold mb-1.5">Root Cause Category</label>
               <input
                 type="text"
                 value={rootCauseAnalysis}
                 onChange={(e) => setRootCauseAnalysis(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
+                className="corp-input w-full px-3 py-2 text-[#191c1e]"
               />
             </div>
 
-            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-emerald-800 font-bold mb-1">Corrective Action Taken</label>
+                <label className="block text-[#006d35] font-semibold mb-1.5">Corrective Action Taken</label>
                 <input
                   type="text"
                   value={correctiveAction}
                   onChange={(e) => setCorrectiveAction(e.target.value)}
-                  className="w-full bg-emerald-50/60 border border-emerald-200 rounded-lg px-3 py-2 text-emerald-900 font-medium focus:outline-none"
+                  className="corp-input w-full px-3 py-2 text-[#005226] bg-[#d1fae5] border-[#a7f3d0]"
                 />
               </div>
               <div>
-                <label className="block text-indigo-800 font-bold mb-1">Preventive Action Required</label>
+                <label className="block text-[#0052cc] font-semibold mb-1.5">Preventive Action Required</label>
                 <input
                   type="text"
                   value={preventiveAction}
                   onChange={(e) => setPreventiveAction(e.target.value)}
-                  className="w-full bg-indigo-50/60 border border-indigo-200 rounded-lg px-3 py-2 text-indigo-900 font-medium focus:outline-none"
+                  className="corp-input w-full px-3 py-2 text-[#0040a2] bg-[#eff4ff] border-[#c4d2ff]"
                 />
               </div>
             </div>
@@ -274,46 +274,46 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
 
         {/* Textarea */}
         <div>
-          <label className="block text-xs font-bold text-slate-700 mb-1">
-            Incident Description & Narrative
+          <label className="block text-[13px] font-bold text-[#191c1e] mb-1.5">
+            Field Observation & Incident Narrative
           </label>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste or type field observation report narrative..."
             rows={5}
-            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white rounded-lg p-3.5 text-xs text-slate-800 placeholder-slate-400 resize-none outline-none font-mono leading-relaxed font-medium"
+            className="corp-input w-full p-3.5 text-[13px] text-[#191c1e] placeholder-[#737685] resize-none leading-relaxed font-medium"
           />
-          <div className="text-right text-[11px] font-mono text-slate-400 mt-1 tabular-nums">{text.length} characters</div>
+          <div className="text-right text-[11px] font-semibold text-[#576377] mt-1 tabular-nums">{text.length} characters</div>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="flex items-start gap-2 p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold text-rose-700">
-            <AlertCircle size={16} className="flex-shrink-0 mt-0.5 text-rose-600" />
+          <div className="flex items-start gap-2 p-3 bg-[#ffdad6] border border-[#ffb4ab] rounded-md text-[13px] font-semibold text-[#93000a]">
+            <AlertCircle size={16} className="flex-shrink-0 mt-0.5 text-[#ba1a1a]" />
             {error}
           </div>
         )}
 
-        {/* Analyze button */}
+        {/* Analyze Button */}
         <button
           onClick={handleAnalyze}
           disabled={loading || !text.trim()}
-          className={`flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 text-xs font-bold rounded-lg transition-all shadow-xs active:scale-[0.98] ${
+          className={`flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 text-[13px] font-bold rounded-sm transition-all active:scale-[0.98] ${
             loading || !text.trim()
-              ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed shadow-none'
-              : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+              ? 'bg-[#F4F5F7] text-[#576377] border border-[#DFE1E6] cursor-not-allowed'
+              : 'corp-button-primary border border-transparent'
           }`}
         >
           {loading ? (
             <>
-              <Loader2 size={15} className="animate-spin text-white" />
-              Evaluating Hazards & Rules...
+              <Loader2 size={15} className="animate-spin" />
+              EVALUATING SIF HAZARDS & RULES...
             </>
           ) : (
             <>
-              <Send size={15} />
-              Run Incident Risk Analysis
+              <Send size={14} />
+              RUN INCIDENT RISK ANALYSIS
             </>
           )}
         </button>

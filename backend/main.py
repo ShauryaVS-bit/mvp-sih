@@ -327,9 +327,13 @@ async def get_reports():
             report_id=r.report_id,
             timestamp=r.timestamp,
             site=r.site,
+            functional_location=r.functional_location,
+            ehs_code=r.ehs_code,
+            ehs_short_desc=r.ehs_short_desc,
             reported_by=r.reported_by,
             category=r.category,
-            preview=r.raw_text[:120] + ("..." if len(r.raw_text) > 120 else ""),
+            incident_cause=getattr(r, "incident_cause", ""),
+            preview=r.raw_text,
             overall_risk_score=r.pre_risk_score,
             risk_level=r.pre_risk_level,
             sif_potential=r.pre_sif_potential,
@@ -356,3 +360,119 @@ async def analyze_report_by_id(report_id: str):
     except Exception as e:
         logger.error(f"Pipeline error for {report_id}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+
+
+@app.get("/api/reports/{report_id}/linked")
+async def get_linked_reports(report_id: str):
+    """
+    GET /api/reports/{report_id}/linked
+    Return a graph of related reports connected by shared attributes:
+    - Same incident cause
+    - Same functional location / site
+    - Same category
+    - Same risk level
+    Returns { nodes: [...], edges: [...] } for graph rendering.
+    """
+    reports = _load_synthetic_reports()
+    source = next((r for r in reports if r.report_id == report_id), None)
+
+    if not source:
+        raise HTTPException(status_code=404, detail=f"Report {report_id} not found.")
+
+    nodes = []
+    edges = []
+    seen_ids = set()
+
+    # Source node (the report being viewed)
+    nodes.append({
+        "id": source.report_id,
+        "label": source.report_id,
+        "type": "source",
+        "risk_level": source.pre_risk_level,
+        "sif_potential": source.pre_sif_potential,
+        "category": source.category,
+        "site": source.site,
+        "incident_cause": getattr(source, "incident_cause", ""),
+        "preview": source.raw_text[:100],
+    })
+    seen_ids.add(source.report_id)
+
+    # Find related reports
+    for r in reports:
+        if r.report_id == report_id:
+            continue
+
+        link_reasons = []
+        link_strength = 0.0
+
+        # Check shared incident cause
+        src_cause = getattr(source, "incident_cause", "").upper().strip()
+        r_cause = getattr(r, "incident_cause", "").upper().strip()
+        if src_cause and r_cause and src_cause == r_cause:
+            link_reasons.append(f"Same cause: {r_cause}")
+            link_strength += 0.35
+
+        # Check shared site
+        if source.site and r.site and source.site.lower() == r.site.lower():
+            link_reasons.append(f"Same site: {r.site}")
+            link_strength += 0.25
+
+        # Check shared functional location
+        src_loc = source.functional_location.lower().strip() if source.functional_location else ""
+        r_loc = r.functional_location.lower().strip() if r.functional_location else ""
+        if src_loc and r_loc and src_loc == r_loc:
+            link_reasons.append(f"Same location: {r.functional_location}")
+            link_strength += 0.20
+
+        # Check shared category
+        if source.category and r.category and source.category.lower() == r.category.lower():
+            link_reasons.append(f"Same category: {r.category}")
+            link_strength += 0.15
+
+        # Check shared risk level
+        if source.pre_risk_level == r.pre_risk_level:
+            link_strength += 0.05
+
+        # Only include if there's at least one concrete link
+        if link_reasons and link_strength >= 0.15:
+            if r.report_id not in seen_ids:
+                nodes.append({
+                    "id": r.report_id,
+                    "label": r.report_id,
+                    "type": "linked",
+                    "risk_level": r.pre_risk_level,
+                    "sif_potential": r.pre_sif_potential,
+                    "category": r.category,
+                    "site": r.site,
+                    "incident_cause": getattr(r, "incident_cause", ""),
+                    "preview": r.raw_text[:100],
+                })
+                seen_ids.add(r.report_id)
+
+            edges.append({
+                "source": source.report_id,
+                "target": r.report_id,
+                "reasons": link_reasons,
+                "strength": round(min(link_strength, 1.0), 2),
+                "label": link_reasons[0].split(":")[0] if link_reasons else "Related",
+            })
+
+    # Sort edges by strength descending, keep top 15
+    edges.sort(key=lambda e: e["strength"], reverse=True)
+    edges = edges[:15]
+
+    # Only keep nodes that appear in edges
+    edge_ids = set()
+    edge_ids.add(source.report_id)
+    for e in edges:
+        edge_ids.add(e["source"])
+        edge_ids.add(e["target"])
+    nodes = [n for n in nodes if n["id"] in edge_ids]
+
+    return {
+        "source_id": source.report_id,
+        "nodes": nodes,
+        "edges": edges,
+        "total_linked": len(edges),
+    }
+

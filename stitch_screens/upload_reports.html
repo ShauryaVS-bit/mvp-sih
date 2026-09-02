@@ -1,0 +1,245 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Upload Report - OIL Sentinel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed": "#271902",
+                        "on-secondary-container": "#54647a",
+                        "on-surface": "#191c1e",
+                        "outline-variant": "#c5c6cd",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container": "#eceef0",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "tertiary-container": "#35260c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#1e1200",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-primary": "#bcc7de",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-surface-variant": "#45474c",
+                        "primary-container": "#1e293b",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed": "#fadfb8",
+                        "on-primary": "#ffffff",
+                        "primary": "#091426",
+                        "on-primary-fixed": "#111c2d",
+                        "surface-tint": "#545f73",
+                        "on-secondary-fixed": "#0b1c30",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-container": "#8590a6",
+                        "outline": "#75777d",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-container": "#a38c6a",
+                        "surface-container-low": "#f2f4f6",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d8e3fb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "secondary": "#505f76",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-background": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "row-height-dense": "32px",
+                        "row-height-standard": "48px",
+                        "gutter": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Roboto", "sans-serif"],
+                        "label-caps": ["Roboto", "sans-serif"],
+                        "data-tabular": ["Roboto", "sans-serif"],
+                        "body-md": ["Roboto", "sans-serif"],
+                        "body-sm": ["Roboto", "sans-serif"],
+                        "headline-sm": ["Roboto", "sans-serif"],
+                        "headline-md": ["Roboto", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-tabular": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface h-full flex flex-col font-body-md antialiased pt-row-height-standard">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-container-padding h-full">
+<span class="font-display-lg text-display-lg font-bold text-primary">OIL Sentinel</span>
+<div class="hidden md:flex h-full items-center gap-gutter">
+<a class="h-full flex items-center px-unit text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer active:opacity-80" href="#">Dashboard</a>
+<a class="h-full flex items-center px-unit text-primary border-b-2 border-primary pb-1 hover:bg-surface-container transition-colors cursor-pointer active:opacity-80" href="#">New Report</a>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="p-unit rounded hover:bg-surface-container transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-unit rounded hover:bg-surface-container transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex justify-center py-container-padding px-gutter overflow-y-auto">
+<div class="w-full max-w-[800px] flex flex-col gap-container-padding">
+<header class="flex flex-col gap-unit pb-gutter border-b border-surface-container-high">
+<h1 class="font-headline-md text-headline-md text-primary">Upload and Process Reports</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Securely upload incident reports, safety observations, and audit files for processing.</p>
+</header>
+<div class="flex flex-col gap-gutter bg-surface-container-lowest border border-outline-variant rounded p-container-padding">
+<div class="flex flex-col gap-unit">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Upload Safety Report</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drag and drop your files here or click to browse.</p>
+</div>
+<!-- Drag and Drop Zone -->
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-container-padding flex flex-col items-center justify-center gap-gutter bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer min-h-[200px]" id="drop-zone">
+<span class="material-symbols-outlined text-[48px] text-primary">cloud_upload</span>
+<div class="text-center">
+<p class="font-body-md text-body-md text-on-surface font-semibold mb-1">Click to upload or drag and drop</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Supported formats: PDF, DOCX, TXT (Max 25MB)</p>
+</div>
+<input accept=".pdf,.docx,.txt" class="hidden" id="file-input" multiple="" type="file">
+<button class="px-container-padding h-row-height-dense flex items-center justify-center bg-primary text-on-primary font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity mt-2" onclick="document.getElementById('file-input').click()" type="button">
+                        Browse Files
+                    </button>
+</div>
+</div>
+<!-- Recent Uploads -->
+<div class="flex flex-col gap-gutter bg-surface-container-lowest border border-outline-variant rounded p-container-padding mt-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Recent Uploads</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-surface-container-high text-on-surface-variant font-label-caps text-label-caps">
+<th class="py-2 px-unit font-medium">Filename</th>
+<th class="py-2 px-unit font-medium">Date Uploaded</th>
+<th class="py-2 px-unit font-medium">Status</th>
+<th class="py-2 px-unit font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<tr class="border-b border-surface-container-low hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-unit flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">description</span>
+                                    incident_report_Q3_alpha.pdf
+                                </td>
+<td class="py-3 px-unit text-on-surface-variant">Oct 24, 2023 - 09:12 AM</td>
+<td class="py-3 px-unit">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps gap-1">
+<span class="material-symbols-outlined text-[14px] animate-spin">sync</span>
+                                        Processing
+                                    </span>
+</td>
+<td class="py-3 px-unit text-right">
+<button class="p-1 rounded hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-surface-container-low hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-unit flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">description</span>
+                                    safety_audit_rig_7.docx
+                                </td>
+<td class="py-3 px-unit text-on-surface-variant">Oct 23, 2023 - 14:45 PM</td>
+<td class="py-3 px-unit">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-[#d3f4d6] text-[#0d5915] font-label-caps text-label-caps gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                        Uploaded
+                                    </span>
+</td>
+<td class="py-3 px-unit text-right">
+<button class="p-1 rounded hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-unit flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">description</span>
+                                    observation_log_weekly.txt
+                                </td>
+<td class="py-3 px-unit text-on-surface-variant">Oct 20, 2023 - 11:30 AM</td>
+<td class="py-3 px-unit">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-[#d3f4d6] text-[#0d5915] font-label-caps text-label-caps gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                        Uploaded
+                                    </span>
+</td>
+<td class="py-3 px-unit text-right">
+<button class="p-1 rounded hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple drag and drop visual feedback
+        const dropZone = document.getElementById('drop-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.add('border-primary');
+                dropZone.classList.add('bg-secondary-container');
+            }, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.remove('border-primary');
+                dropZone.classList.remove('bg-secondary-container');
+            }, false);
+        });
+    </script>
+</body></html>

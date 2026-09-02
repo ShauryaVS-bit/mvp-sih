@@ -1,0 +1,359 @@
+<!DOCTYPE html><html class="h-full bg-background dark:bg-background" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>OIL Sentinel - Reports Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#e0e3e5",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-tertiary-fixed": "#271902",
+                      "on-secondary-container": "#54647a",
+                      "on-surface": "#191c1e",
+                      "outline-variant": "#c5c6cd",
+                      "on-primary-fixed-variant": "#3c475a",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "background": "#f7f9fb",
+                      "secondary-container": "#d0e1fb",
+                      "surface-container": "#eceef0",
+                      "surface": "#f7f9fb",
+                      "on-tertiary-fixed-variant": "#564427",
+                      "tertiary-container": "#35260c",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-error-container": "#93000a",
+                      "tertiary": "#1e1200",
+                      "inverse-on-surface": "#eff1f3",
+                      "inverse-primary": "#bcc7de",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#bcc7de",
+                      "on-surface-variant": "#45474c",
+                      "primary-container": "#1e293b",
+                      "surface-dim": "#d8dadc",
+                      "tertiary-fixed": "#fadfb8",
+                      "on-primary": "#ffffff",
+                      "primary": "#091426",
+                      "on-primary-fixed": "#111c2d",
+                      "surface-tint": "#545f73",
+                      "on-secondary-fixed": "#0b1c30",
+                      "tertiary-fixed-dim": "#ddc39d",
+                      "inverse-surface": "#2d3133",
+                      "on-primary-container": "#8590a6",
+                      "outline": "#75777d",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "on-tertiary-container": "#a38c6a",
+                      "surface-container-low": "#f2f4f6",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#d8e3fb",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#f7f9fb",
+                      "secondary": "#505f76",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-background": "#191c1e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "row-height-dense": "32px",
+                      "row-height-standard": "48px",
+                      "gutter": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Roboto"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "data-tabular": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Roboto"
+                      ],
+                      "body-sm": [
+                              "Roboto"
+                      ],
+                      "headline-sm": [
+                              "Roboto"
+                      ],
+                      "headline-md": [
+                              "Roboto"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-tabular": [
+                              "13px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-body-md text-on-surface antialiased bg-background">
+<!-- TopNavBar Component from JSON -->
+<header class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard">
+<div class="flex items-center gap-6 h-full">
+<span class="font-display-lg text-display-lg font-bold text-primary tracking-tight">OIL Sentinel</span>
+<nav class="hidden md:flex h-full items-center gap-6 ml-4">
+<a class="h-full flex flex-col justify-center text-primary border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">
+<span class="">Dashboard</span>
+</a>
+</nav>
+</div>
+<div class="flex-1 max-w-xl mx-8 hidden md:block">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-outline-variant rounded-DEFAULT bg-surface-container-lowest text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors font-body-sm text-body-sm" placeholder="Search reports, sites, SIF IDs..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 flex items-center justify-center p-1.5" title="Refresh Dashboard">
+  <span class="material-symbols-outlined text-sm">refresh</span>
+</button><button class="bg-primary text-on-primary font-body-md text-body-md px-4 py-1.5 rounded-DEFAULT hover:bg-primary-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="">New Report</span>
+</button>
+<div class="flex items-center gap-3 ml-2 border-l border-outline-variant pl-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined filled">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 mt-[48px] overflow-hidden flex flex-col">
+<!-- Filter Bar -->
+<div class="bg-surface-container-lowest border-b border-outline-variant py-2 px-container-padding flex flex-wrap gap-4 items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mr-2">FILTERS</span>
+<!-- Filter Selects -->
+<select class="border-none bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-1 pl-3 pr-8 focus:ring-1 focus:ring-primary">
+<option value="">SIF Tier (All)</option>
+<option value="insufficient">Insufficient Evidence</option>
+<option value="low">Low</option>
+<option value="moderate">Moderate</option>
+<option value="high">High</option>
+<option value="critical">Critical</option>
+</select>
+<select class="border-none bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-1 pl-3 pr-8 focus:ring-1 focus:ring-primary">
+<option value="">Report Type (All)</option>
+<option value="ua">Unsafe Act (UA)</option>
+<option value="uc">Unsafe Condition (UC)</option>
+<option value="nearmiss">Near-Miss</option>
+<option value="incident">Incident</option>
+</select>
+<select class="border-none bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-DEFAULT py-1 pl-3 pr-8 focus:ring-1 focus:ring-primary">
+<option value="">IOGP Rule (All)</option>
+<option value="energy">Energy Isolation</option>
+<option value="working">Working at Height</option>
+<option value="confined">Confined Space</option>
+</select>
+<div class="flex-1"></div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SORT BY</span>
+<select class="border-none bg-surface-container-lowest text-on-surface font-body-sm text-body-sm py-1 focus:ring-0 cursor-pointer">
+<option value="newest">Newest First</option>
+<option value="sif_desc">SIF Tier (High-Low)</option>
+</select>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-auto bg-background px-container-padding py-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-end mb-4">
+<h1 class="font-headline-md text-headline-md text-on-surface">Recent Reports</h1>
+<span class="font-data-tabular text-data-tabular text-on-surface-variant">Showing 10 of 1,204</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT overflow-hidden">
+<!-- Header Row -->
+<div class="flex items-center bg-surface-container-low border-b border-outline-variant px-4 py-2 text-on-surface-variant font-label-caps text-label-caps sticky top-0 z-10">
+<div class="w-24">SIF TIER</div>
+<div class="w-32">TIMESTAMP</div>
+<div class="flex-1">METADATA &amp; PREVIEW</div>
+<div class="w-16 text-center">LINKS</div>
+</div>
+<!-- Row 1: Critical -->
+<div class="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 py-2 group cursor-pointer h-row-height-standard">
+<div class="w-24 flex items-center gap-2">
+<div class="w-1 h-6 bg-error rounded-full"></div>
+<span class="font-label-caps text-label-caps text-error">CRITICAL</span>
+</div>
+<div class="w-32 font-data-tabular text-data-tabular text-on-surface-variant">2 hrs ago</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="font-label-caps text-label-caps text-on-surface bg-surface-container px-1.5 py-0.5 rounded-DEFAULT">Near-Miss</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Energy Isolation</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-data-tabular text-data-tabular text-primary font-medium">BAGHJAN-EPS-03</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate pr-4">Failure to properly isolate main valve during maintenance routine, resulting in unexpected pressure release.</p>
+</div>
+<div class="w-16 flex justify-center text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm" title="Linked to Incident INC-2023-089">link</span>
+</div>
+</div>
+<!-- Row 2: High -->
+<div class="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 py-2 group cursor-pointer h-row-height-standard">
+<div class="w-24 flex items-center gap-2">
+<div class="w-1 h-6 bg-[#d97706] rounded-full"></div> <!-- Amber -->
+<span class="font-label-caps text-label-caps text-[#d97706]">HIGH</span>
+</div>
+<div class="w-32 font-data-tabular text-data-tabular text-on-surface-variant">5 hrs ago</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="font-label-caps text-label-caps text-on-surface bg-surface-container px-1.5 py-0.5 rounded-DEFAULT">UC</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Working at Height</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-data-tabular text-data-tabular text-primary font-medium">DIBRUGARH-RIG-12</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate pr-4">Scaffolding structure on south face found to have loose cross-bracing connections after severe weather.</p>
+</div>
+<div class="w-16 flex justify-center text-on-surface-variant">
+<!-- No links -->
+</div>
+</div>
+<!-- Row 3: Moderate -->
+<div class="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 py-2 group cursor-pointer h-row-height-standard">
+<div class="w-24 flex items-center gap-2">
+<div class="w-1 h-6 bg-[#65a30d] rounded-full"></div> <!-- Sage/Green -->
+<span class="font-label-caps text-label-caps text-[#65a30d]">MODERATE</span>
+</div>
+<div class="w-32 font-data-tabular text-data-tabular text-on-surface-variant">12 hrs ago</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="font-label-caps text-label-caps text-on-surface bg-surface-container px-1.5 py-0.5 rounded-DEFAULT">UA</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PPE</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-data-tabular text-data-tabular text-primary font-medium">NAHARKATIA-F-02</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate pr-4">Contractor observed operating grinder without secondary face shield in designated hot work zone.</p>
+</div>
+<div class="w-16 flex justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" title="Multiple similar reports">layers</span>
+</div>
+</div>
+<!-- Row 4: Low -->
+<div class="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 py-2 group cursor-pointer h-row-height-standard">
+<div class="w-24 flex items-center gap-2">
+<div class="w-1 h-6 bg-[#3b82f6] rounded-full"></div> <!-- Light Blue -->
+<span class="font-label-caps text-label-caps text-[#3b82f6]">LOW</span>
+</div>
+<div class="w-32 font-data-tabular text-data-tabular text-on-surface-variant">1 day ago</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="font-label-caps text-label-caps text-on-surface bg-surface-container px-1.5 py-0.5 rounded-DEFAULT">UC</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Housekeeping</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-data-tabular text-data-tabular text-primary font-medium">MORAN-ST-05</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate pr-4">Minor oil spill (~200ml) noted near lube oil skid. Cleanup initiated immediately.</p>
+</div>
+<div class="w-16 flex justify-center text-on-surface-variant">
+</div>
+</div>
+<!-- Row 5: Insufficient -->
+<div class="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 py-2 group cursor-pointer h-row-height-standard">
+<div class="w-24 flex items-center gap-2">
+<div class="w-1 h-6 bg-outline-variant rounded-full"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PENDING</span>
+</div>
+<div class="w-32 font-data-tabular text-data-tabular text-on-surface-variant">2 days ago</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="font-label-caps text-label-caps text-on-surface bg-surface-container px-1.5 py-0.5 rounded-DEFAULT">Unknown</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">General</span>
+<span class="text-outline-variant text-[10px]">|</span>
+<span class="font-data-tabular text-data-tabular text-primary font-medium">TINSUKIA-W-11</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate pr-4 text-on-surface-variant italic">Report submitted via SMS gateway. Awaiting detailed supervisor review for SIF classification.</p>
+</div>
+<div class="w-16 flex justify-center text-on-surface-variant">
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

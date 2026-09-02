@@ -304,6 +304,7 @@ class ReportListItem(BaseModel):
     ehs_short_desc: str = "Near Miss"
     reported_by: str
     category: str
+    incident_cause: str = ""
     preview: str
     overall_risk_score: float
     risk_level: str
