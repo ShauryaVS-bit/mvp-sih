@@ -1,22 +1,27 @@
 import React, { useState, useMemo } from 'react';
+import { deleteReport, restoreReport } from '../api/client';
 
-// Derive IOGP Life-Saving Rule from category and cause
-function deriveIOGP(category, cause) {
-  const cat = (category || '').toLowerCase();
-  const c = (cause || '').toLowerCase();
-  if (c.includes('material handling') || c.includes('lifting'))
-    return { rule: 'Lifting Operations' };
-  if (c.includes('working condition') || cat.includes('unsafe condition'))
-    return { rule: 'Safe Conditions' };
-  if (cat.includes('near miss') && cat.includes('high'))
-    return { rule: 'Process Safety' };
-  if (cat.includes('near miss') || cat.includes('near-miss'))
-    return { rule: 'Line of Fire' };
-  if (cat.includes('unsafe act'))
-    return { rule: 'Energy Isolation' };
-  if (cat.includes('observation'))
-    return { rule: 'Work Authorization' };
-  return { rule: 'General Safety' };
+function formatIOGP(ruleString) {
+  if (!ruleString || ruleString.trim() === '') return { rule: 'General Safety', icon: 'health_and_safety' };
+  
+  const rules = ruleString.split(',').map(r => r.trim());
+  const rule = rules[0]; 
+  
+  let icon = 'health_and_safety';
+  const lRule = rule.toLowerCase();
+  if (lRule.includes('energy') || lRule.includes('isolation')) icon = 'bolt';
+  else if (lRule.includes('lift')) icon = 'crane';
+  else if (lRule.includes('process')) icon = 'factory';
+  else if (lRule.includes('line of fire')) icon = 'warning';
+  else if (lRule.includes('work authorization')) icon = 'assignment_turned_in';
+  else if (lRule.includes('bypassing')) icon = 'gpp_bad';
+  else if (lRule.includes('confined')) icon = 'door_back';
+  else if (lRule.includes('driving')) icon = 'directions_car';
+  else if (lRule.includes('hot work')) icon = 'local_fire_department';
+  else if (lRule.includes('safe system')) icon = 'security';
+  else if (lRule.includes('working at height')) icon = 'height';
+
+  return { rule: ruleString, icon };
 }
 
 // Format timestamp to relative or short date
@@ -36,12 +41,36 @@ function formatTimestamp(ts) {
   }
 }
 
-export default function ReportsDashboard({ reports, onSelectReport, onNavigate }) {
+export default function ReportsDashboard({ reports, onSelectReport, onNavigate, onRefresh }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sifFilter, setSifFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [iogpFilter, setIogpFilter] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
+  const [undoToast, setUndoToast] = useState(null);
+
+  const handleDelete = async (e, reportId) => {
+    e.stopPropagation();
+    try {
+      await deleteReport(reportId);
+      if (onRefresh) onRefresh();
+      setUndoToast({ reportId, message: `Report deleted. It will be permanently discarded in 1 day.` });
+      setTimeout(() => setUndoToast(null), 10000);
+    } catch(err) {
+      console.error(err);
+    }
+  };
+
+  const handleUndo = async () => {
+    if (!undoToast) return;
+    try {
+      await restoreReport(undoToast.reportId);
+      if (onRefresh) onRefresh();
+      setUndoToast(null);
+    } catch(err) {
+      console.error(err);
+    }
+  };
 
   const filteredAndSortedReports = useMemo(() => {
     if (!reports) return [];
@@ -124,9 +153,12 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
 <div className="flex items-center gap-6 h-full">
 <span className="font-display-lg text-display-lg font-bold text-primary tracking-tight">OIL Sentinel</span>
 <nav className="hidden md:flex h-full items-center gap-6 ml-4">
-<a className="h-full flex flex-col justify-center text-primary border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">
+<button className="h-full flex flex-col justify-center text-primary border-b-2 border-primary pb-1 font-body-md text-body-md">
 <span className="">Dashboard</span>
-</a>
+</button>
+<button onClick={() => onNavigate('INSIGHTS')} className="h-full flex flex-col justify-center text-on-surface-variant hover:text-primary transition-colors pb-1 font-body-md text-body-md">
+<span>Insights</span>
+</button>
 </nav>
 </div>
 <div className="flex-1 max-w-xl mx-8 hidden md:block">
@@ -144,7 +176,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
 </div>
 </div>
 <div className="flex items-center gap-4">
-<button className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 flex items-center justify-center p-1.5" title="Refresh Dashboard">
+<button onClick={onRefresh} className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80 flex items-center justify-center p-1.5" title="Refresh Dashboard">
   <span className="material-symbols-outlined text-sm">refresh</span>
 </button><button onClick={() => onNavigate('UPLOAD')} className="bg-primary text-on-primary font-body-md text-body-md px-4 py-1.5 rounded-DEFAULT hover:bg-primary-container transition-colors flex items-center gap-2">
 <span className="material-symbols-outlined text-sm">add</span>
@@ -221,7 +253,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
 <div className="w-48">IOGP RULE</div>
 <div className="w-64">CATEGORY</div>
 <div className="flex-1">SIF</div>
-<div className="w-12 text-center"></div>
+<div className="w-20 text-center">ACTIONS</div>
 </div>
 
 {filteredAndSortedReports && filteredAndSortedReports.length > 0 ? (
@@ -242,7 +274,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
       tierConfig = { label: 'LOW', bgClass: 'bg-[#3b82f6]', textClass: 'text-[#3b82f6]' };
     }
 
-    const iogp = deriveIOGP(report.category, report.incident_cause);
+    const iogp = formatIOGP(report.iogp_rule);
 
     return (
       <div key={report.report_id} onClick={() => onSelectReport(report.report_id)} className="flex items-center border-b border-surface-container hover:bg-surface-container-low transition-colors px-4 group cursor-pointer" style={{ minHeight: '44px' }}>
@@ -284,9 +316,18 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
             {report.sif_potential ? 'Positive' : 'Negative'}
           </span>
         </div>
-        {/* Arrow */}
-        <div className="w-12 flex justify-center text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="material-symbols-outlined text-sm" title="View details">arrow_forward</span>
+        {/* Actions */}
+        <div className="w-20 flex justify-end gap-2 text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+          <button 
+            onClick={(e) => handleDelete(e, report.report_id)}
+            className="hover:text-error transition-colors p-1" 
+            title="Delete Report"
+          >
+            <span className="material-symbols-outlined text-sm">delete</span>
+          </button>
+          <button className="hover:text-primary transition-colors p-1" title="View details">
+            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
         </div>
       </div>
     );
@@ -302,6 +343,24 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate }
 </div>
 </main>
 
+{/* Undo Toast */}
+{undoToast && (
+  <div className="fixed bottom-6 right-6 bg-surface-container-high border border-outline-variant text-on-surface px-4 py-3 rounded shadow-lg flex items-center gap-4 z-50 animate-in slide-in-from-bottom-5">
+    <span className="font-body-sm text-body-sm">{undoToast.message}</span>
+    <button 
+      onClick={handleUndo}
+      className="text-primary font-label-caps text-label-caps font-bold hover:underline uppercase tracking-wider"
+    >
+      Undo
+    </button>
+    <button 
+      onClick={() => setUndoToast(null)}
+      className="text-on-surface-variant hover:text-on-surface flex items-center"
+    >
+      <span className="material-symbols-outlined text-[16px]">close</span>
+    </button>
+  </div>
+)}
 
     </>
   );

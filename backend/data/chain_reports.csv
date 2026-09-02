@@ -1,0 +1,6 @@
+report_id,site_id,incident_cause,iogp_rule,report_type,text
+CHAIN-001,SITE-ALPHA-VALVE,VALVE DEGRADATION,Bypassing Safety Controls,Near Miss,"Small leak noticed near the pressure relief valve on Line 4. Cleaned up the area but the primary source was not fully secured."
+CHAIN-002,SITE-ALPHA-VALVE,VALVE DEGRADATION,Bypassing Safety Controls,Hazard Observation,"Operator reported a hissing sound coming from the same pressure relief valve. A low-priority work order was submitted for routine maintenance."
+CHAIN-003,SITE-ALPHA-VALVE,VALVE DEGRADATION,Bypassing Safety Controls,Near Miss,"Minor pressure drop recorded on the central control panel. The valve appears to be stuck partially open despite manual override attempts."
+CHAIN-004,SITE-ALPHA-VALVE,VALVE DEGRADATION,Bypassing Safety Controls,Hazard Observation,"Valve handle vibrating excessively during the morning pump start-up sequence. The immediate area was cordoned off as a precaution."
+CHAIN-005,SITE-ALPHA-VALVE,VALVE DEGRADATION,Bypassing Safety Controls,Incident,"The pressure relief valve completely blew out, causing a massive release of high-pressure fluid. A nearby worker narrowly avoided being struck by flying metal shrapnel. Emergency shutdown initiated."

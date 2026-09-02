@@ -46,6 +46,7 @@ export default function ReportDetail({ report, analysis, analysisLoading, onNavi
 </div>
 <nav className="hidden md:flex items-center h-full gap-8">
 <a onClick={() => onNavigate('DASHBOARD')} className="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80">Dashboard</a>
+<a onClick={() => onNavigate('INSIGHTS')} className="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80">Insights</a>
 <a onClick={() => onNavigate('UPLOAD')} className="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80">New Report</a>
 </nav>
 <div className="flex items-center gap-4 text-primary">
@@ -136,7 +137,7 @@ export default function ReportDetail({ report, analysis, analysisLoading, onNavi
 Description of the Incident
 </h2>
 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-{report?.preview || analysis?.raw_text || 'No description available.'}
+{analysis?.raw_text || report?.preview || 'No description available.'}
 </p>
 </section>
 

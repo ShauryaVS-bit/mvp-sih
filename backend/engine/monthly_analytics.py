@@ -56,23 +56,72 @@ def save_analyzed_report(result: FullAnalysisResult):
     logger.info(f"Saved analyzed report {result.report_id} to store.")
 
 
-def load_all_analyzed_reports() -> list[dict]:
-    """Load all persistent analyzed reports."""
+def load_all_analyzed_reports(include_deleted: bool = False) -> list[dict]:
+    """Load persistent reports, purging ones deleted > 1 day ago."""
     _ensure_store_exists()
     try:
         data = json.loads(_STORE_FILE.read_text(encoding="utf-8"))
-        if data:
-            return data
     except Exception as e:
         logger.warning(f"Error loading store file: {e}")
+        try:
+            data = json.loads(_SYNTHETIC_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            data = []
 
-    # Fallback / Seed from synthetic_reports.json
+    # Filter and auto-purge
+    now = datetime.utcnow()
+    valid_data = []
+    has_changes = False
+
+    for r in data:
+        if r.get("is_deleted"):
+            deleted_str = r.get("deleted_at")
+            if deleted_str:
+                try:
+                    deleted_date = datetime.fromisoformat(deleted_str.replace("Z", "+00:00")).replace(tzinfo=None)
+                    if (now - deleted_date).days >= 1:
+                        has_changes = True
+                        continue  # Hard delete
+                except Exception:
+                    pass
+            if not include_deleted:
+                continue
+        valid_data.append(r)
+
+    if has_changes:
+        _STORE_FILE.write_text(json.dumps(valid_data, indent=2, default=str), encoding="utf-8")
+
+    return valid_data
+
+def soft_delete_report(report_id: str) -> bool:
+    """Marks a report as deleted."""
+    _ensure_store_exists()
     try:
-        synth = json.loads(_SYNTHETIC_FILE.read_text(encoding="utf-8"))
-        return synth
+        data = json.loads(_STORE_FILE.read_text(encoding="utf-8"))
+        for r in data:
+            if r.get("report_id") == report_id:
+                r["is_deleted"] = True
+                r["deleted_at"] = datetime.utcnow().isoformat() + "Z"
+                _STORE_FILE.write_text(json.dumps(data, indent=2, default=str), encoding="utf-8")
+                return True
     except Exception as e:
-        logger.error(f"Error reading synthetic file: {e}")
-        return []
+        logger.error(f"Failed to soft delete: {e}")
+    return False
+
+def restore_report(report_id: str) -> bool:
+    """Restores a soft-deleted report."""
+    _ensure_store_exists()
+    try:
+        data = json.loads(_STORE_FILE.read_text(encoding="utf-8"))
+        for r in data:
+            if r.get("report_id") == report_id:
+                r["is_deleted"] = False
+                r.pop("deleted_at", None)
+                _STORE_FILE.write_text(json.dumps(data, indent=2, default=str), encoding="utf-8")
+                return True
+    except Exception as e:
+        logger.error(f"Failed to restore: {e}")
+    return False
 
 
 def get_available_months() -> MonthsListResponse:

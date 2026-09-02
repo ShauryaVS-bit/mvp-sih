@@ -40,6 +40,24 @@ export async function analyzeText(text, reportId = null) {
 }
 
 /**
+ * POST /api/analyze/bulk
+ * Runs bulk pipeline on raw file text
+ */
+export async function analyzeBulkText(text) {
+  const payload = { text }
+  const res = await api.post('/analyze/bulk', payload)
+  return res.data
+}
+
+/**
+ * GET /api/analyze/status
+ */
+export async function checkBulkStatus() {
+  const res = await api.get('/analyze/status')
+  return res.data
+}
+
+/**
  * GET /api/health
  */
 export async function checkHealth() {
@@ -68,6 +86,26 @@ export async function fetchMonthlyReport(month = 'All-Time') {
  */
 export async function fetchLinkedReports(reportId) {
   const res = await api.get(`/reports/${reportId}/linked`)
+  return res.data
+}
+
+export async function deleteReport(reportId) {
+  const res = await api.delete(`/reports/${reportId}`)
+  return res.data
+}
+
+export async function restoreReport(reportId) {
+  const res = await api.post(`/reports/${reportId}/restore`)
+  return res.data
+}
+
+export async function fetchGlobalInsights() {
+  const res = await api.get('/insights/global')
+  return res.data
+}
+
+export async function fetchManualInsights(prompt = "") {
+  const res = await api.post('/insights/query', { prompt })
   return res.data
 }
 

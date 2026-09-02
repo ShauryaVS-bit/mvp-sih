@@ -6,10 +6,9 @@ Statement-to-Statement Causal DAG Maps, and Dense Vector RAG Evidence Retrieval.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional
-from datetime import datetime
+from typing import Any, Dict, List, Optional
+from datetime import datetime, timezone
 import uuid
-
 from pydantic import BaseModel, Field, ConfigDict
 
 
@@ -70,32 +69,7 @@ class EnergySource(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 1: Multi-Aspect Safety Fact Extractor Output
-# ─────────────────────────────────────────────────────────────────────────────
 
-class SafetyFactTuple(BaseModel):
-    """Extracted 5-tuple safety facts with evidence discipline."""
-    model_config = ConfigDict(populate_by_name=True)
-
-    activity: str = Field(default="UNKNOWN", description="Operational activity, e.g. 'Pin removal', 'Joint tightening'")
-    activity_status: EvidenceStatus = Field(default=EvidenceStatus.EXPLICIT)
-
-    equipment: str = Field(default="UNKNOWN", description="Equipment involved, e.g. 'Rig pin', 'Hammer', 'Eyewash'")
-    equipment_status: EvidenceStatus = Field(default=EvidenceStatus.EXPLICIT)
-
-    hazard: str = Field(default="UNKNOWN", description="Hazard description, e.g. 'Pin ejected at high speed'")
-    hazard_status: EvidenceStatus = Field(default=EvidenceStatus.EXPLICIT)
-
-    energy_source: EnergySource = Field(default=EnergySource.UNKNOWN)
-    energy_status: EvidenceStatus = Field(default=EvidenceStatus.INFERRED)
-
-    exposure: str = Field(default="UNKNOWN", description="Human exposure path, e.g. 'Rigman in direct line of fire'")
-    exposure_status: EvidenceStatus = Field(default=EvidenceStatus.EXPLICIT)
-
-    barrier: str = Field(default="UNKNOWN", description="Safety control barrier, e.g. 'Offset position', 'Tool lanyard'")
-    barrier_condition: BarrierCondition = Field(default=BarrierCondition.UNKNOWN)
-    barrier_status: EvidenceStatus = Field(default=EvidenceStatus.INFERRED)
 
 
 class ExtractedFact(BaseModel):
@@ -152,44 +126,7 @@ class EvidenceChunk(BaseModel):
     metadata: dict = Field(default_factory=dict)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Statement-to-Statement & Evidence-to-Evidence Causal Map Models
-# ─────────────────────────────────────────────────────────────────────────────
 
-class StatementNode(BaseModel):
-    """Node in statement-to-statement causal map DAG."""
-    model_config = ConfigDict(populate_by_name=True)
-
-    node_id: str
-    statement_index: int
-    raw_statement: str
-    extracted_entity: str = "unspecified"
-    extracted_action: str = "unspecified"
-    extracted_state: str = "unspecified"
-    has_missing_barrier: bool = False
-    missing_barrier_description: str = ""
-    hazard_consequence: str = ""
-    matched_evidence_source: str = ""
-    matched_evidence_snippet: str = ""
-    node_type: str = "STATEMENT"  # STATEMENT, MISSING_BARRIER, HAZARD_CONSEQUENCE, GROUNDING_PROOF
-
-
-class CausalEdge(BaseModel):
-    """Directed edge in causal map DAG."""
-    model_config = ConfigDict(populate_by_name=True)
-
-    source_id: str
-    target_id: str
-    label: str
-
-
-class CausalGraphMap(BaseModel):
-    """Full Causal Map payload."""
-    model_config = ConfigDict(populate_by_name=True)
-
-    nodes: list[StatementNode] = Field(default_factory=list)
-    edges: list[CausalEdge] = Field(default_factory=list)
-    summary_path: str = ""
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -225,19 +162,18 @@ class FullAnalysisResult(BaseModel):
     potential_consequences: str = Field(default="")
     corrective_action: str = Field(default="")
     preventive_action: str = Field(default="")
+    iogp_rule: str = Field(default="")
 
     # Multi-Model Pipeline Outputs
-    fact_tuple: Optional[SafetyFactTuple] = Field(default=None)
     extracted_facts: list[ExtractedFact] = Field(default_factory=list)
     inferred_hazards: list[InferredHazard] = Field(default_factory=list)
     evidence_matches: list[EvidenceChunk] = Field(default_factory=list)
-    causal_graph: Optional[CausalGraphMap] = Field(default=None)
 
     overall_risk_score: float = Field(default=0.0, ge=0.0, le=1.0)
     risk_level: RiskLevel = Field(default=RiskLevel.LOW)
     sif_potential: bool = Field(default=False)
     processing_time_ms: float = Field(default=0.0)
-    analyzed_at: datetime = Field(default_factory=datetime.utcnow)
+    analyzed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     pipeline_mode: str = Field(default="multi_model_causal_dag", description="Active model architecture")
 
 
@@ -265,6 +201,7 @@ class AnalyzeRequest(BaseModel):
     potential_consequences: Optional[str] = Field(default=None)
     corrective_action: Optional[str] = Field(default=None)
     preventive_action: Optional[str] = Field(default=None)
+    iogp_rule: Optional[str] = Field(default=None)
 
 
 class SyntheticReport(BaseModel):
@@ -287,6 +224,7 @@ class SyntheticReport(BaseModel):
     potential_consequences: str = ""
     corrective_action: str = ""
     preventive_action: str = ""
+    iogp_rule: str = ""
     pre_risk_score: float = Field(default=0.0)
     pre_sif_potential: bool = Field(default=False)
     pre_risk_level: str = Field(default="LOW")
@@ -305,6 +243,7 @@ class ReportListItem(BaseModel):
     reported_by: str
     category: str
     incident_cause: str = ""
+    iogp_rule: str = ""
     preview: str
     overall_risk_score: float
     risk_level: str
@@ -313,10 +252,10 @@ class ReportListItem(BaseModel):
 
 class HealthResponse(BaseModel):
     status: str = "ok"
-    version: str = "2.0.0-multi-model-causal-dag"
+    version: str = "2.1.0-graph-rag"
     rag_indexed: bool = False
     rules_loaded: int = 0
-    model_architecture: str = "DeBERTa-v3/SetFit + NetworkX Causal DAG + ChromaDB Dense RAG"
+    model_architecture: str = "Neo4j Knowledge Graph RAG + LLM Graph Extraction"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -360,7 +299,7 @@ class MonthlyReportPayload(BaseModel):
     causal_pattern_links: list[CausalPatternLink] = Field(default_factory=list)
     barrier_failure_distribution: dict[str, int] = Field(default_factory=dict)
     location_risk_distribution: dict[str, int] = Field(default_factory=dict)
-    generated_at: datetime = Field(default_factory=datetime.utcnow)
+    generated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class MonthsListResponse(BaseModel):

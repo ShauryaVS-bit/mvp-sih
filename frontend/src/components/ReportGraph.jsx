@@ -351,7 +351,9 @@ export default function ReportGraph({ graphData, onNodeClick }) {
       const dy = my - pos.y
       const r = node.type === 'source' ? 28 : 18
       if (dx * dx + dy * dy < r * r) {
-        onNodeClick(node.id)
+        if (node.type !== 'entity') {
+          onNodeClick(node.id)
+        }
         break
       }
     }

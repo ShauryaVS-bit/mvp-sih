@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReportsDashboard from './components/ReportsDashboard';
 import ReportDetail from './components/ReportDetail';
 import UploadReports from './components/UploadReports';
+import Insights from './components/Insights';
 import { fetchReports, analyzeReportById, checkHealth } from './api/client';
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
           reports={reports} 
           onSelectReport={handleSelectReport} 
           onNavigate={handleNavigate} 
+          onRefresh={loadReports}
         />
       )}
       {currentView === 'REPORT_DETAIL' && (
@@ -65,6 +67,11 @@ export default function App() {
       )}
       {currentView === 'UPLOAD' && (
         <UploadReports 
+          onNavigate={handleNavigate} 
+        />
+      )}
+      {currentView === 'INSIGHTS' && (
+        <Insights 
           onNavigate={handleNavigate} 
         />
       )}

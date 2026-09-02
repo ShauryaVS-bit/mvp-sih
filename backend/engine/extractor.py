@@ -207,19 +207,23 @@ def _get_sentence_containing(text: str, char_idx: int) -> str:
 
 def _extract_facts_llm(text: str) -> list[ExtractedFact]:
     """
-    LLM-backed fact extraction using instructor + OpenAI.
-    Activated when OPENAI_API_KEY is set in environment.
-    Falls back to pattern matching if import fails.
+    LLM-backed fact extraction using LangChain + Gemini.
+    Activated when GEMINI_API_KEY is set in environment.
+    Falls back to pattern matching if it fails.
     """
     try:
-        import instructor
-        from openai import OpenAI
+        from langchain_google_genai import ChatGoogleGenerativeAI
         from pydantic import BaseModel
 
         class LLMFactList(BaseModel):
             facts: list[ExtractedFact]
 
-        client = instructor.from_openai(OpenAI())
+        llm = ChatGoogleGenerativeAI(
+            model="gemini-3.5-flash", 
+            temperature=0,
+            convert_system_message_to_human=True
+        )
+        structured_llm = llm.with_structured_output(LLMFactList)
 
         system_prompt = """You are a process safety expert analyzing industrial incident reports.
 Extract all explicit physical facts from the report. Focus on:
@@ -230,15 +234,8 @@ Extract all explicit physical facts from the report. Focus on:
 
 Return only facts that are EXPLICITLY STATED in the text. Do not infer or guess."""
 
-        result = client.chat.completions.create(
-            model="gpt-4o-mini",
-            response_model=LLMFactList,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Extract physical facts from this safety report:\n\n{text}"}
-            ],
-            max_retries=2,
-        )
+        prompt = f"{system_prompt}\n\nExtract physical facts from this safety report:\n\n{text}"
+        result = structured_llm.invoke(prompt)
 
         # Enhance each LLM fact with rule matching for downstream inference
         llm_facts = result.facts
@@ -266,16 +263,16 @@ def extract_facts(text: str) -> list[ExtractedFact]:
     """
     Main entry point for Step 1: Fact Extraction.
 
-    Uses pattern matching by default. Switches to LLM mode if OPENAI_API_KEY
-    is set in the environment (and USE_MOCK != 'true').
+    Uses LLM mode if GEMINI_API_KEY is set in the environment 
+    (and USE_MOCK != 'true'). Otherwise, pattern matching.
     """
     use_llm = (
-        os.getenv("OPENAI_API_KEY") is not None
+        os.getenv("GEMINI_API_KEY") is not None
         and os.getenv("USE_MOCK", "false").lower() != "true"
     )
 
     if use_llm:
-        logger.info("Using LLM-backed fact extraction (instructor + OpenAI)")
+        logger.info("Using LLM-backed fact extraction (LangChain + Gemini)")
         facts = _extract_facts_llm(text)
     else:
         logger.info("Using pattern-based fact extraction (offline mode)")

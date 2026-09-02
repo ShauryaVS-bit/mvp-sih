@@ -1,6 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function UploadReports({ onNavigate }) {
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState({ status: 'idle', processed: 0, total: 0 });
+
+  useEffect(() => {
+    let intervalId;
+    if (isUploading) {
+      intervalId = setInterval(async () => {
+        try {
+          const res = await fetch('/api/analyze/status');
+          if (res.ok) {
+            const data = await res.json();
+            setUploadStatus(data);
+            if (data.status === 'completed') {
+              setIsUploading(false);
+              clearInterval(intervalId);
+              onNavigate('DASHBOARD');
+            }
+          }
+        } catch (error) {
+          console.error("Failed to fetch upload status:", error);
+        }
+      }, 2000); // poll every 2 seconds
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [isUploading, onNavigate]);
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    setIsUploading(true);
+    setUploadStatus({ status: 'queued', processed: 0, total: '...' });
+    
+    try {
+      const text = await file.text(); // Read the raw text
+      const response = await fetch('/api/analyze/bulk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text })
+      });
+      
+      if (!response.ok) {
+        setIsUploading(false);
+        alert("Failed to process the reports. Check backend logs.");
+      }
+      // We don't navigate away immediately anymore. We wait for polling to tell us it's done.
+    } catch (error) {
+      console.error(error);
+      setIsUploading(false);
+      alert("Error uploading file.");
+    }
+  };
   return (
     <>
       
@@ -10,6 +64,7 @@ export default function UploadReports({ onNavigate }) {
 <span className="font-display-lg text-display-lg font-bold text-primary">OIL Sentinel</span>
 <div className="hidden md:flex h-full items-center gap-gutter">
 <a onClick={() => onNavigate('DASHBOARD')} className="h-full flex items-center px-unit text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer active:opacity-80">Dashboard</a>
+<a onClick={() => onNavigate('INSIGHTS')} className="h-full flex items-center px-unit text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer active:opacity-80">Insights</a>
 <a className="h-full flex items-center px-unit text-primary border-b-2 border-primary pb-1 hover:bg-surface-container transition-colors cursor-pointer active:opacity-80" href="#">New Report</a>
 </div>
 </div>
@@ -41,10 +96,21 @@ export default function UploadReports({ onNavigate }) {
 <p className="font-body-md text-body-md text-on-surface font-semibold mb-1">Click to upload or drag and drop</p>
 <p className="font-body-sm text-body-sm text-on-surface-variant">Supported formats: PDF, DOCX, TXT (Max 25MB)</p>
 </div>
-<input accept=".pdf,.docx,.txt" className="hidden" id="file-input" multiple="" type="file" />
-<button className="px-container-padding h-row-height-dense flex items-center justify-center bg-primary text-on-primary font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity mt-2" onClick={() => document.getElementById('file-input').click()} type="button">
-                        Browse Files
-                    </button>
+<input accept=".txt,.csv,.jsonl" className="hidden" id="file-input" type="file" onChange={handleFileUpload} />
+{isUploading ? (
+    <div className="flex flex-col items-center gap-2 mt-2 w-full max-w-md">
+        <div className="w-full bg-surface-container-high rounded-full h-2">
+            <div className="bg-primary h-2 rounded-full transition-all duration-500" style={{ width: `${uploadStatus.total ? (uploadStatus.processed / uploadStatus.total) * 100 : 0}%` }}></div>
+        </div>
+        <p className="font-body-sm text-primary font-medium">
+            Processing via AI: {uploadStatus.processed} / {uploadStatus.total} reports done...
+        </p>
+    </div>
+) : (
+    <button className="px-container-padding h-row-height-dense flex items-center justify-center bg-primary text-on-primary font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity mt-2" onClick={() => document.getElementById('file-input').click()} type="button">
+        Browse Files
+    </button>
+)}
 </div>
 </div>
 {/* Recent Uploads */}

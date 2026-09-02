@@ -14,13 +14,22 @@ import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 # Ensure backend root is on sys.path when run from any directory
 _BACKEND_ROOT = Path(__file__).parent
 if str(_BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(_BACKEND_ROOT))
+
+import os
+from dotenv import load_dotenv
+load_dotenv(_BACKEND_ROOT / ".env")
+
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 
 from models.schemas import (
     AnalyzeRequest,
@@ -39,6 +48,17 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s — %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+# Initialize Graph Agents
+try:
+    from engine.graph_ingestion_agent import GraphIngestionAgent
+    from engine.graph_reasoning_agent import GraphReasoningAgent
+    ingestion_agent = GraphIngestionAgent(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
+    reasoning_agent = GraphReasoningAgent(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
+    GRAPH_AGENTS_READY = True
+except Exception as e:
+    logger.error(f"Failed to initialize Graph Agents: {e}")
+    GRAPH_AGENTS_READY = False
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -155,31 +175,19 @@ def run_pipeline(text: str, report_id: str | None = None) -> FullAnalysisResult:
     t_end = time.perf_counter()
     processing_ms = round((t_end - t_start) * 1000, 2)
 
-    # Step 4: Build NetworkX Causal Graph Map & 5-Tuple Fact Extraction
-    from engine.causal_graph import build_causal_graph, extract_fact_tuple
-    causal_map = build_causal_graph(
-        text=text,
-        extracted_facts=extracted_facts,
-        inferred_hazards=inferred_hazards,
-        evidence_matches=unique_evidence[:4],
-    )
-    fact_tuple = extract_fact_tuple(
-        text=text,
-        facts=extracted_facts,
-        hazards=inferred_hazards,
-    )
+    iogp_rules = list(set([h.iogp_rule for h in inferred_hazards if hasattr(h, 'iogp_rule') and h.iogp_rule and h.iogp_rule.strip() and h.iogp_rule.lower() != "n/a"]))
+    iogp_rule_str = ", ".join(iogp_rules) if iogp_rules else ""
 
     result = FullAnalysisResult(
         raw_text=text,
-        fact_tuple=fact_tuple,
         extracted_facts=extracted_facts,
         inferred_hazards=inferred_hazards,
         evidence_matches=unique_evidence[:4],
-        causal_graph=causal_map,
         overall_risk_score=overall_risk,
         risk_level=risk_level,
         sif_potential=sif_potential,
         processing_time_ms=processing_ms,
+        iogp_rule=iogp_rule_str,
     )
 
     if report_id:
@@ -222,10 +230,10 @@ async def health_check():
 
     return HealthResponse(
         status="ok",
-        version="2.0.0-multi-model-causal-dag",
+        version="2.1.0-graph-rag",
         rag_indexed=rag_ready,
         rules_loaded=get_rules_count(),
-        model_architecture="DeBERTa-v3/SetFit + NetworkX Causal DAG + ChromaDB Dense RAG",
+        model_architecture="Neo4j Knowledge Graph RAG + LLM Graph Extraction",
     )
 
 
@@ -233,13 +241,64 @@ async def health_check():
 async def analyze_report(request: AnalyzeRequest):
     """
     POST /api/analyze
-    Run the multi-model neuro-symbolic pipeline on raw text or full SAP EHS Incident form.
+    Run the multi-model neuro-symbolic pipeline on raw text or structured CSV/JSON.
     """
     if not request.text.strip():
         raise HTTPException(status_code=400, detail="Report text cannot be empty.")
 
+    # ─────────────────────────────────────────────────────────────────────────
+    # Smart Pre-Processing (Parse JSON / CSV to bypass LLM extraction needs)
+    # ─────────────────────────────────────────────────────────────────────────
+    import json, csv, io
+    parsed_text = request.text
+    metadata = {}
+
     try:
-        result = run_pipeline(text=request.text, report_id=request.report_id)
+        # 1. Try strict JSON
+        data = json.loads(request.text)
+        if isinstance(data, dict):
+            parsed_text = data.get("text", data.get("description", request.text))
+            metadata = data
+    except json.JSONDecodeError:
+        try:
+            # 2. Try JSON Lines (process first line)
+            first_line = request.text.strip().split("\n")[0].strip()
+            if first_line.startswith("{") and first_line.endswith("}"):
+                data = json.loads(first_line)
+                if isinstance(data, dict):
+                    parsed_text = data.get("text", data.get("description", request.text))
+                    metadata = data
+        except Exception:
+            try:
+                # 3. Try CSV (process first row)
+                reader = list(csv.DictReader(io.StringIO(request.text)))
+                if reader and "text" in reader[0]:
+                    parsed_text = reader[0]["text"]
+                    metadata = reader[0]
+            except Exception:
+                pass
+                
+    # 4. Ultimate Regex Fallback for malformed JSON/CSV fragments missing braces/headers
+    if parsed_text == request.text:
+        import re
+        text_match = re.search(r'"text"\s*:\s*"((?:\\.|[^"\\])*)"', request.text)
+        if text_match:
+            parsed_text = text_match.group(1).encode('utf-8').decode('unicode_escape')
+            
+    if metadata:
+        request.report_id = metadata.get("report_id", request.report_id)
+        request.functional_location = metadata.get("site_id", metadata.get("asset_id", request.functional_location))
+        
+        # Handle list/string conversions
+        iogp = metadata.get("iogp_rule")
+        if isinstance(iogp, list): iogp = ", ".join(iogp)
+        request.incident_cause = iogp or request.incident_cause
+        
+        request.incident_type = metadata.get("activity", request.incident_type)
+        request.ehs_code = metadata.get("sif_tier_label", metadata.get("report_type", request.ehs_code))
+
+    try:
+        result = run_pipeline(text=parsed_text, report_id=request.report_id)
 
         # Copy custom form fields if provided in request
         if request.functional_location:
@@ -276,9 +335,42 @@ async def analyze_report(request: AnalyzeRequest):
         if request.preventive_action:
             result.preventive_action = request.preventive_action
 
+        # ─────────────────────────────────────────────────────────────────────────
+        # Agent 2: Explicit Database RAG Scan for SIF Pattern Detection
+        # ─────────────────────────────────────────────────────────────────────────
+        if GRAPH_AGENTS_READY and result.functional_location and result.functional_location != "Unknown":
+            logger.info(f"Executing Agent 2 Full Database Scan for Spatial SIF clustering at {result.functional_location}...")
+            try:
+                chat_res = reasoning_agent.check_sif_pattern_fast(result.functional_location, result.incident_cause)
+                if "SIF_PATTERN_DETECTED" in chat_res.upper():
+                    result.sif_potential = True
+                    result.risk_level = RiskLevel.HIGH
+                    alert_text = chat_res.upper().split("SIF_PATTERN_DETECTED:", 1)[-1].strip()
+                    # Prepend alert to the root cause analysis so it renders aggressively on the dashboard
+                    existing_rca = result.root_cause_analysis or "No explicit root cause determined."
+                    result.root_cause_analysis = f"⚠️ CRITICAL ALERT - RECURRING SIF PATTERN: {alert_text}\n\n[Original Narrative Context]: {existing_rca}"
+                    result.overall_risk_score = max(result.overall_risk_score, 0.95)
+            except Exception as e:
+                logger.error(f"Agent 2 RAG Scan failed: {e}")
+
         # Auto-save to persistent store
         from engine.monthly_analytics import save_analyzed_report
         save_analyzed_report(result)
+        
+        # AGENT 1: Graph Ingestion (Fire and Forget or await if async)
+        if GRAPH_AGENTS_READY:
+            # We pass the extracted form fields as metadata to the graph
+            metadata = {
+                "functional_location": result.functional_location,
+                "ehs_code": result.ehs_code,
+                "incident_type": result.incident_type,
+                "risk_level": result.risk_level
+            }
+            # Add to graph
+            # Since ingest_report is currently synchronous (or if async we would await it)
+            # In our agent it's sync, so we call it directly
+            import threading
+            threading.Thread(target=ingestion_agent.ingest_report, args=(result.report_id or "new_report", request.text, metadata)).start()
 
         return result
     except Exception as e:
@@ -310,169 +402,356 @@ async def get_monthly_report(month: str = "All-Time"):
 async def get_reports():
     """
     GET /api/reports
-    Return all synthetic reports sorted by pre-computed risk score (highest first).
-    Used to populate the Triage Queue in the dashboard.
+    Return only real, analyzed reports from the store.
     """
+    items = []
     try:
-        reports = _load_synthetic_reports()
+        from engine.monthly_analytics import load_all_analyzed_reports
+        new_data = load_all_analyzed_reports() # automatically excludes deleted items
+        for n in new_data:
+            # Convert ISO string timezone to ensure it parses perfectly in frontend
+            timestamp = n.get("analyzed_at", "Unknown")
+            if timestamp.endswith("+00:00"): timestamp = timestamp.replace("+00:00", "Z")
+            
+            items.append(ReportListItem(
+                report_id=n.get("report_id", "Unknown"),
+                timestamp=timestamp,
+                site=n.get("functional_location", "Unknown"),
+                functional_location=n.get("functional_location", "Unknown"),
+                ehs_code=n.get("ehs_code", "M"),
+                ehs_short_desc=n.get("ehs_short_desc", "Unknown"),
+                reported_by="User Upload",
+                category=n.get("incident_type", "Unknown"),
+                incident_cause=n.get("incident_cause", ""),
+                iogp_rule=n.get("iogp_rule", ""),
+                preview=n.get("raw_text", "")[:100],
+                overall_risk_score=n.get("overall_risk_score", 0.5),
+                risk_level=n.get("risk_level", "LOW").upper(),
+                sif_potential=n.get("sif_potential", False)
+            ))
     except Exception as e:
-        logger.error(f"Failed to load synthetic reports: {e}")
-        raise HTTPException(status_code=500, detail="Could not load report dataset.")
+        logger.error(f"Failed to load reports for dashboard: {e}")
 
-    # Sort by pre-computed risk score descending
-    reports.sort(key=lambda r: r.pre_risk_score, reverse=True)
+    # Sort everything by risk score descending
+    items.sort(key=lambda x: x.overall_risk_score, reverse=True)
+    return items
 
-    return [
-        ReportListItem(
-            report_id=r.report_id,
-            timestamp=r.timestamp,
-            site=r.site,
-            functional_location=r.functional_location,
-            ehs_code=r.ehs_code,
-            ehs_short_desc=r.ehs_short_desc,
-            reported_by=r.reported_by,
-            category=r.category,
-            incident_cause=getattr(r, "incident_cause", ""),
-            preview=r.raw_text,
-            overall_risk_score=r.pre_risk_score,
-            risk_level=r.pre_risk_level,
-            sif_potential=r.pre_sif_potential,
+@app.delete("/api/reports/{report_id}")
+async def delete_report(report_id: str):
+    """Soft delete a report."""
+    from engine.monthly_analytics import soft_delete_report
+    if soft_delete_report(report_id):
+        return {"status": "success"}
+    raise HTTPException(status_code=404, detail="Report not found")
+
+@app.post("/api/reports/{report_id}/restore")
+async def restore_report_api(report_id: str):
+    """Restore a soft deleted report."""
+    from engine.monthly_analytics import restore_report
+    if restore_report(report_id):
+        return {"status": "success"}
+    raise HTTPException(status_code=404, detail="Report not found")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Global State for Bulk Upload Tracking
+# ─────────────────────────────────────────────────────────────────────────────
+bulk_job_status = {
+    "status": "idle", # idle, processing, completed
+    "total": 0,
+    "processed": 0
+}
+
+@app.post("/api/analyze/bulk")
+async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTasks):
+    """
+    POST /api/analyze/bulk
+    Process multiple reports from a JSONL or CSV file in the background.
+    """
+    global bulk_job_status
+    if not request.text.strip():
+        raise HTTPException(status_code=400, detail="File cannot be empty.")
+        
+    reports_to_process = []
+    import json, csv, io
+    
+    # 1. Try JSONL
+    lines = [line.strip() for line in request.text.strip().split("\n") if line.strip()]
+    is_jsonl = False
+    if lines and lines[0].startswith("{") and lines[0].endswith("}"):
+        is_jsonl = True
+        for line in lines:
+            try:
+                data = json.loads(line)
+                if isinstance(data, dict):
+                    reports_to_process.append(data)
+            except Exception:
+                pass
+                
+    # 2. Try CSV
+    if not is_jsonl and lines:
+        try:
+            reader = list(csv.DictReader(io.StringIO(request.text)))
+            if reader and "text" in reader[0]:
+                reports_to_process.extend(reader)
+        except Exception:
+            pass
+            
+    if not reports_to_process:
+        # 3. If neither worked, fallback to single processing
+        reports_to_process.append({"text": request.text})
+
+    def process_all():
+        global bulk_job_status
+        from engine.monthly_analytics import save_analyzed_report
+        from engine.graph_ingestion_agent import GraphIngestionAgent
+        import time
+        import re
+        
+        agent1 = GraphIngestionAgent(
+            neo4j_uri=os.getenv("NEO4J_URI", "bolt://localhost:7687"),
+            neo4j_user=os.getenv("NEO4J_USER", "neo4j"),
+            neo4j_password=os.getenv("NEO4J_PASSWORD", "password")
         )
-        for r in reports
-    ]
+        
+        # We will chunk the reports to batch LLM graph extraction (10 per batch)
+        BATCH_SIZE = 10
+        for chunk_idx in range(0, len(reports_to_process), BATCH_SIZE):
+            chunk = reports_to_process[chunk_idx:chunk_idx + BATCH_SIZE]
+            
+            # Step 1: Prepare the batch payload for Agent 1
+            batch_payload = []
+            analyzed_results = []
+            
+            for i, metadata in enumerate(chunk):
+                try:
+                    parsed_text = metadata.get("text", metadata.get("description", ""))
+                    if parsed_text and parsed_text == request.text:
+                        text_match = re.search(r'"text"\s*:\s*"((?:\\.|[^"\\])*)"', parsed_text)
+                        if text_match:
+                            parsed_text = text_match.group(1).encode('utf-8').decode('unicode_escape')
+
+                    if not parsed_text:
+                        continue
+                    
+                    report_id = metadata.get("report_id", None)
+                    
+                    # Run pipeline WITHOUT Agent 1 Graph Ingestion (Offline Fast Path)
+                    result = run_pipeline(text=parsed_text, report_id=report_id)
+                    
+                    loc = metadata.get("site_id", metadata.get("asset_id", result.functional_location))
+                    if loc: result.functional_location = loc
+                    cat = metadata.get("report_type", result.incident_type)
+                    if cat: result.incident_type = cat
+                    iogp = metadata.get("iogp_rule")
+                    if isinstance(iogp, list): iogp = ", ".join(iogp)
+                    if iogp: result.iogp_rule = iogp
+                    
+                    cause = metadata.get("incident_cause")
+                    if cause: result.incident_cause = cause
+                    
+                    # Agent 2 Fast SIF Pattern Detection
+                    try:
+                        from engine.graph_reasoning_agent import GraphReasoningAgent
+                        reasoning_agent = GraphReasoningAgent(
+                            neo4j_uri=os.getenv("NEO4J_URI", "bolt://localhost:7687"),
+                            neo4j_user=os.getenv("NEO4J_USER", "neo4j"),
+                            neo4j_password=os.getenv("NEO4J_PASSWORD", "password")
+                        )
+                        
+                        # Check graph for previous incidents
+                        chat_res = reasoning_agent.check_sif_pattern_fast(result.functional_location, result.incident_cause)
+                        
+                        # Cross-fact check: Also look at the current uncommitted batch
+                        in_batch_count = sum(
+                            1 for prev_res in analyzed_results 
+                            if prev_res.functional_location == result.functional_location 
+                            and prev_res.incident_cause == result.incident_cause
+                        )
+                        
+                        if "SIF_PATTERN_DETECTED" in chat_res.upper() or in_batch_count >= 2:
+                            result.sif_potential = True
+                            result.risk_level = RiskLevel.HIGH
+                            if in_batch_count >= 2:
+                                alert_text = f"{in_batch_count} similar incidents detected in current batch for {result.incident_cause} at {result.functional_location}."
+                            else:
+                                alert_text = chat_res.upper().split("SIF_PATTERN_DETECTED:", 1)[-1].strip()
+                                
+                            existing_rca = result.root_cause_analysis or "No explicit root cause determined."
+                            result.root_cause_analysis = f"⚠️ CRITICAL ALERT - RECURRING SIF PATTERN: {alert_text}\n\n[Original Narrative Context]: {existing_rca}"
+                            result.overall_risk_score = max(result.overall_risk_score, 0.95)
+                            
+                            # Retroactively flag preceding events in this chain as PRECURSORS
+                            if in_batch_count >= 2:
+                                for prev_res in analyzed_results:
+                                    if prev_res.functional_location == result.functional_location and prev_res.incident_cause == result.incident_cause:
+                                        if not prev_res.sif_potential:
+                                            prev_res.sif_potential = True
+                                            prev_res.risk_level = RiskLevel.HIGH
+                                            existing_prev = prev_res.root_cause_analysis or "No explicit root cause determined."
+                                            prev_res.root_cause_analysis = f"⚠️ PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: {existing_prev}"
+                                            prev_res.overall_risk_score = max(prev_res.overall_risk_score, 0.90)
+                                            
+                                            # Update the corresponding payload in batch_payload
+                                            for bp in batch_payload:
+                                                if bp["report_id"] == prev_res.report_id:
+                                                    bp["metadata"]["sif_potential"] = True
+                                                    bp["metadata"]["overall_risk_score"] = prev_res.overall_risk_score
+                                                    bp["metadata"]["risk_level"] = prev_res.risk_level
+                                                    break
+                    except Exception as e:
+                        logger.error(f"Agent 2 Fast RAG Scan failed in bulk: {e}")
+                    
+                    analyzed_results.append(result)
+                    batch_payload.append({
+                        "report_id": result.report_id,
+                        "text": parsed_text,
+                        "metadata": {
+                            "sif_potential": result.sif_potential,
+                            "overall_risk_score": result.overall_risk_score,
+                            "risk_level": result.risk_level,
+                            "ehs_code": result.ehs_code
+                        }
+                    })
+                except Exception as e:
+                    logger.error(f"Bulk offline processing error: {e}")
+
+            # Step 2: Agent 1 bulk extraction (1 LLM call for up to 10 reports)
+            if batch_payload:
+                if chunk_idx > 0:
+                    time.sleep(5)  # Throttle between chunks to protect quota
+                agent1.ingest_reports_batch(batch_payload)
+            
+            # Step 3: Save to store
+            for res in analyzed_results:
+                save_analyzed_report(res)
+                
+            bulk_job_status["processed"] += len(analyzed_results)
+
+        bulk_job_status["status"] = "completed"
+
+    bulk_job_status["total"] = len(reports_to_process)
+    bulk_job_status["processed"] = 0
+    bulk_job_status["status"] = "processing"
+    
+    background_tasks.add_task(process_all)
+    return {"message": f"Successfully queued {len(reports_to_process)} reports for background processing."}
+
+@app.get("/api/analyze/status")
+async def get_bulk_status():
+    """
+    GET /api/analyze/status
+    Returns the progress of the active bulk upload job.
+    """
+    return bulk_job_status
 
 
-@app.get("/api/reports/{report_id}", response_model=FullAnalysisResult)
-async def analyze_report_by_id(report_id: str):
+@app.get("/api/reports/{report_id}")
+async def get_report_by_id(report_id: str):
     """
     GET /api/reports/{report_id}
-    Run the full pipeline on a specific synthetic report by ID.
+    Returns the analyzed report data from the persistent store.
     """
-    reports = _load_synthetic_reports()
-    report = next((r for r in reports if r.report_id == report_id), None)
-
-    if not report:
-        raise HTTPException(status_code=404, detail=f"Report {report_id} not found.")
-
     try:
-        result = run_pipeline(text=report.raw_text, report_id=report.report_id)
-        return result
+        import json
+        from pathlib import Path
+        store_path = Path(__file__).parent / "data" / "analyzed_reports_store.json"
+        if store_path.exists():
+            data = json.loads(store_path.read_text(encoding="utf-8"))
+            for r in data:
+                if r.get("report_id") == report_id:
+                    return r
     except Exception as e:
-        logger.error(f"Pipeline error for {report_id}: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+        logger.error(f"Error reading store for {report_id}: {e}")
+        
+    raise HTTPException(status_code=404, detail=f"Report {report_id} not found.")
 
+@app.get("/api/insights/global")
+async def get_global_insights():
+    """
+    GET /api/insights/global
+    Use Agent 2 to extract global insights from Neo4j.
+    """
+    if not GRAPH_AGENTS_READY:
+        raise HTTPException(status_code=503, detail="Graph Database is not ready.")
+    
+    try:
+        from engine.graph_reasoning_agent import GraphReasoningAgent
+        agent2 = GraphReasoningAgent(
+            neo4j_uri=os.getenv("NEO4J_URI", "bolt://localhost:7687"),
+            neo4j_user=os.getenv("NEO4J_USER", "neo4j"),
+            neo4j_password=os.getenv("NEO4J_PASSWORD", "password")
+        )
+        return agent2.get_global_insights()
+    except Exception as e:
+        logger.error(f"Global insights failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+class ManualAnalysisRequest(BaseModel):
+    prompt: str = ""
+
+@app.post("/api/insights/query")
+async def run_manual_insights(request: ManualAnalysisRequest):
+    """
+    POST /api/insights/query
+    Use Agent 2 to run a deep manual analysis over the Neo4j graph.
+    """
+    if not GRAPH_AGENTS_READY:
+        raise HTTPException(status_code=503, detail="Graph Database is not ready.")
+    
+    try:
+        from engine.graph_reasoning_agent import GraphReasoningAgent
+        agent2 = GraphReasoningAgent(
+            neo4j_uri=os.getenv("NEO4J_URI", "bolt://localhost:7687"),
+            neo4j_user=os.getenv("NEO4J_USER", "neo4j"),
+            neo4j_password=os.getenv("NEO4J_PASSWORD", "password")
+        )
+        result = agent2.run_manual_analysis(request.prompt)
+        return {"analysis": result}
+    except Exception as e:
+        logger.error(f"Manual insights failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/reports/{report_id}/linked")
 async def get_linked_reports(report_id: str):
     """
     GET /api/reports/{report_id}/linked
-    Return a graph of related reports connected by shared attributes:
-    - Same incident cause
-    - Same functional location / site
-    - Same category
-    - Same risk level
-    Returns { nodes: [...], edges: [...] } for graph rendering.
+    Return a graph of related reports connected by shared attributes.
+    POWERED PURELY BY AGENT 2 (Neo4j Graph Cypher Reasoning)
     """
-    reports = _load_synthetic_reports()
-    source = next((r for r in reports if r.report_id == report_id), None)
+    if GRAPH_AGENTS_READY:
+        try:
+            logger.info(f"Using Agent 2 to find SIF patterns for {report_id}")
+            result = reasoning_agent.find_sif_patterns(report_id)
+            if result and result.get("nodes"):
+                return result
+        except Exception as e:
+            logger.error(f"Agent 2 Graph retrieval failed: {e}")
 
-    if not source:
-        raise HTTPException(status_code=404, detail=f"Report {report_id} not found.")
-
-    nodes = []
-    edges = []
-    seen_ids = set()
-
-    # Source node (the report being viewed)
-    nodes.append({
-        "id": source.report_id,
-        "label": source.report_id,
-        "type": "source",
-        "risk_level": source.pre_risk_level,
-        "sif_potential": source.pre_sif_potential,
-        "category": source.category,
-        "site": source.site,
-        "incident_cause": getattr(source, "incident_cause", ""),
-        "preview": source.raw_text[:100],
-    })
-    seen_ids.add(source.report_id)
-
-    # Find related reports
-    for r in reports:
-        if r.report_id == report_id:
-            continue
-
-        link_reasons = []
-        link_strength = 0.0
-
-        # Check shared incident cause
-        src_cause = getattr(source, "incident_cause", "").upper().strip()
-        r_cause = getattr(r, "incident_cause", "").upper().strip()
-        if src_cause and r_cause and src_cause == r_cause:
-            link_reasons.append(f"Same cause: {r_cause}")
-            link_strength += 0.35
-
-        # Check shared site
-        if source.site and r.site and source.site.lower() == r.site.lower():
-            link_reasons.append(f"Same site: {r.site}")
-            link_strength += 0.25
-
-        # Check shared functional location
-        src_loc = source.functional_location.lower().strip() if source.functional_location else ""
-        r_loc = r.functional_location.lower().strip() if r.functional_location else ""
-        if src_loc and r_loc and src_loc == r_loc:
-            link_reasons.append(f"Same location: {r.functional_location}")
-            link_strength += 0.20
-
-        # Check shared category
-        if source.category and r.category and source.category.lower() == r.category.lower():
-            link_reasons.append(f"Same category: {r.category}")
-            link_strength += 0.15
-
-        # Check shared risk level
-        if source.pre_risk_level == r.pre_risk_level:
-            link_strength += 0.05
-
-        # Only include if there's at least one concrete link
-        if link_reasons and link_strength >= 0.15:
-            if r.report_id not in seen_ids:
-                nodes.append({
-                    "id": r.report_id,
-                    "label": r.report_id,
-                    "type": "linked",
-                    "risk_level": r.pre_risk_level,
-                    "sif_potential": r.pre_sif_potential,
-                    "category": r.category,
-                    "site": r.site,
-                    "incident_cause": getattr(r, "incident_cause", ""),
-                    "preview": r.raw_text[:100],
-                })
-                seen_ids.add(r.report_id)
-
-            edges.append({
-                "source": source.report_id,
-                "target": r.report_id,
-                "reasons": link_reasons,
-                "strength": round(min(link_strength, 1.0), 2),
-                "label": link_reasons[0].split(":")[0] if link_reasons else "Related",
-            })
-
-    # Sort edges by strength descending, keep top 15
-    edges.sort(key=lambda e: e["strength"], reverse=True)
-    edges = edges[:15]
-
-    # Only keep nodes that appear in edges
-    edge_ids = set()
-    edge_ids.add(source.report_id)
-    for e in edges:
-        edge_ids.add(e["source"])
-        edge_ids.add(e["target"])
-    nodes = [n for n in nodes if n["id"] in edge_ids]
-
+    # No synthetic slop fallback. If the graph fails or is empty, return empty graph structure.
     return {
-        "source_id": source.report_id,
-        "nodes": nodes,
-        "edges": edges,
-        "total_linked": len(edges),
+        "source_id": report_id,
+        "nodes": [],
+        "edges": [],
+        "total_linked": 0,
     }
+
+from pydantic import BaseModel
+class ChatRequest(BaseModel):
+    prompt: str
+
+@app.post("/api/chat")
+async def ask_agent2(request: ChatRequest):
+    """
+    POST /api/chat
+    Ask Agent 2 a custom question. Agent 2 uses GraphRAG to synthesize an answer.
+    """
+    if not GRAPH_AGENTS_READY:
+        raise HTTPException(status_code=503, detail="Graph Agents are not available.")
+    
+    try:
+        answer = reasoning_agent.answer_custom_prompt(request.prompt)
+        return {"answer": answer}
+    except Exception as e:
+        logger.error(f"Agent 2 chat failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
