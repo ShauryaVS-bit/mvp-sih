@@ -1,0 +1,463 @@
+{
+  "version": "1.0.0",
+  "description": "Neuro-Symbolic SIF Risk Engine — Physical Safety Constraint Rules Graph",
+  "rules": [
+    {
+      "rule_id": "RULE_001",
+      "name": "Pressure Bleed / Double Block Isolation",
+      "trigger_entity_keywords": [
+        "valve a", "v-101", "bleed valve", "isolation valve", "block valve",
+        "master valve", "wing valve", "wellhead valve", "manifold valve"
+      ],
+      "trigger_action_keywords": [
+        "bleed", "bleed down", "bleed-down", "depressur", "vent pressure",
+        "pressure relief", "blowdown", "blow down", "released pressure",
+        "opened to vent", "vented", "pressure reduced"
+      ],
+      "required_condition": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+      "required_condition_keywords": [
+        "valve b", "secondary isolation", "double block", "v-102", "confirmed closed",
+        "isolation verified", "secondary valve", "wing valve closed",
+        "block valve closed", "dbb", "double block and bleed", "verified closed",
+        "isolation confirmed", "secondary barrier"
+      ],
+      "hazard_if_missing": "Unverified Energy Isolation — Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+      "hazard_tag": "IMPLICIT_BARRIER_RISK",
+      "severity_score": 0.95,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+      "iogp_clause": "Clause 3.7 — Secondary Barrier Integrity",
+      "oisd_standard": "OISD-RP-238: Well Integrity Management",
+      "oisd_clause": "Clause 6.2.1 — Secondary Valve Verification in Bleed Operations",
+      "historical_precedent": "2020 Baghjan-5 Well Blowout — Premature barrier removal during pressure operations; secondary valve physically unverified",
+      "mitigation": "Immediately halt downstream work. Physically verify and document secondary valve (Valve B) closed position via valve position indicator and downstream pressure gauge reading."
+    },
+    {
+      "rule_id": "RULE_002",
+      "name": "Hotwork — Gas-Free Certification Required",
+      "trigger_entity_keywords": [
+        "weld", "welder", "grind", "grinder", "torch", "cutting",
+        "brazing", "soldering", "plasma cutting", "spark generating",
+        "non-IS equipment", "non-intrinsically safe"
+      ],
+      "trigger_action_keywords": [
+        "welding", "grinding", "hot work", "hotwork", "cutting operation",
+        "oxy-acetylene", "arc welding", "started cutting", "commenced welding",
+        "sparked", "used grinder", "torch cutting"
+      ],
+      "required_condition": "Gas-free certificate issued by safety officer; fire watch assigned; area tested < 10% LEL",
+      "required_condition_keywords": [
+        "gas free", "gas-free", "gas test", "LEL", "certificate", "fire watch",
+        "gas certificate", "hydrocarbon test", "combustible gas",
+        "atmosphere tested", "safety officer signed", "hotwork permit", "gas clear"
+      ],
+      "hazard_if_missing": "Ignition Source in Potentially Hazardous Atmosphere — flammable gas or vapor ignition risk without confirmed gas-free status.",
+      "hazard_tag": "IGNITION_SOURCE_UNCONTROLLED",
+      "severity_score": 0.90,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #2: Conduct a Gas Test When Required",
+      "iogp_clause": "Clause 3.3 — Gas-Free Certificate",
+      "oisd_standard": "OISD-116: Fire Prevention and Hotwork Control",
+      "oisd_clause": "Clause 3.3 — Gas-Free Certificate Requirements",
+      "historical_precedent": "1988 Piper Alpha Disaster — Condensate pump reinstated during hotwork; gas release found ignition source",
+      "mitigation": "Stop all hotwork immediately. Conduct gas test with calibrated detector. Issue gas-free certificate valid for maximum 2 hours. Assign fire watch before resuming."
+    },
+    {
+      "rule_id": "RULE_003",
+      "name": "Suspended Load — Exclusion Zone Required",
+      "trigger_entity_keywords": [
+        "crane", "hoist", "rigging", "sling", "shackle", "spreader bar",
+        "overhead lift", "forklift", "overhead crane", "pedestal crane",
+        "pick and carry", "suspended", "lifting"
+      ],
+      "trigger_action_keywords": [
+        "lifting", "raised", "hoisted", "suspended load", "lift commenced",
+        "picking up", "crane operation", "overhead movement", "load elevated",
+        "rigging up", "lift in progress", "lifting operation"
+      ],
+      "required_condition": "Exclusion zone established and barricaded; all personnel clear of load path; lift supervisor confirmed",
+      "required_condition_keywords": [
+        "exclusion zone", "barricaded", "area cleared", "personnel clear",
+        "no personnel below", "lift supervisor", "zone established",
+        "barricade", "clear of load", "load path clear", "no one under",
+        "area evacuated", "keep clear", "zone barricaded"
+      ],
+      "hazard_if_missing": "Personnel potentially within drop zone of suspended load — risk of crush injury or fatality from load drop.",
+      "hazard_tag": "PERSONNEL_UNDER_SUSPENDED_LOAD",
+      "severity_score": 0.88,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #7: Do Not Place Yourself Under a Suspended Load",
+      "iogp_clause": "Clause 7.2 — Exclusion Zone Requirements",
+      "oisd_standard": "OISD-GDN-205: Safety in Lifting Operations",
+      "oisd_clause": "Clause 4.3 — Exclusion Zone Requirement",
+      "historical_precedent": "Multiple fatalities industry-wide from dropped objects during crane operations without established exclusion zones",
+      "mitigation": "Immediately stop the lift. Establish exclusion zone equal to lift height + 20%. Verify all personnel are outside zone before resuming. Assign dedicated lift supervisor."
+    },
+    {
+      "rule_id": "RULE_004",
+      "name": "H2S Zone Entry — Breathing Apparatus Required",
+      "trigger_entity_keywords": [
+        "h2s", "hydrogen sulfide", "sour", "sour gas", "toxic area",
+        "h2s zone", "gas zone", "production area", "sour well",
+        "amine unit", "sulfur plant"
+      ],
+      "trigger_action_keywords": [
+        "entered", "entry", "personnel entered", "went into", "accessed",
+        "working in", "operating in", "proceeded to", "moved to area",
+        "inspecting", "monitoring"
+      ],
+      "required_condition": "Positive-pressure SCBA or supplied air worn; personal H2S monitor active; buddy system in place",
+      "required_condition_keywords": [
+        "scba", "breathing apparatus", "ba set", "self-contained breathing",
+        "supplied air", "h2s monitor", "gas detector", "buddy", "two person",
+        "h2s alarm", "personal monitor", "wore scba", "donned ba",
+        "gas monitor worn"
+      ],
+      "hazard_if_missing": "Personnel in H2S Zone without confirmed respiratory protection — risk of H2S poisoning at potentially IDLH (100 ppm) concentrations.",
+      "hazard_tag": "TOXIC_ATMOSPHERE_EXPOSURE",
+      "severity_score": 0.92,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #12: Follow Requirements for Working with H2S",
+      "iogp_clause": "Clause 12.1 — IDLH and SCBA Requirement",
+      "oisd_standard": "OISD-RP-187: Safety in Handling H2S",
+      "oisd_clause": "Clause 3.4 — Entry into H2S Zones",
+      "historical_precedent": "Multiple fatalities from H2S exposure in confined and semi-confined sour gas areas where BA equipment was available but not worn",
+      "mitigation": "Immediately withdraw personnel from H2S zone. Issue SCBA and buddy assignments. Re-enter only with full protective equipment and continuous H2S monitoring."
+    },
+    {
+      "rule_id": "RULE_005",
+      "name": "High-Pressure Line Opening — LOTO + Zero Pressure Verification",
+      "trigger_entity_keywords": [
+        "flowline", "pipeline", "high pressure line", "process line",
+        "pressure pipe", "manifold spool", "pressure vessel",
+        "piping", "pressure connection", "instrumentation tap", "sample point"
+      ],
+      "trigger_action_keywords": [
+        "opened", "broke open", "disconnected", "broke out", "removed flange",
+        "disconnecting", "flanging out", "opening valve", "opening line",
+        "line break", "spade inserted", "blind inserted"
+      ],
+      "required_condition": "LOTO applied; pressure verified zero at work point; bleed confirmed open; PTW in place",
+      "required_condition_keywords": [
+        "loto", "lockout", "tagout", "lock out", "tag out",
+        "pressure zero", "zero pressure", "gauge reads zero",
+        "bled to zero", "no pressure", "pressure verified",
+        "isolation verified", "bleed confirmed", "energy isolated"
+      ],
+      "hazard_if_missing": "Stored pressure energy not confirmed zero at work point — risk of high-pressure fluid jet, hydrocarbon release, or sudden pressurization during work.",
+      "hazard_tag": "STORED_ENERGY_UNVERIFIED",
+      "severity_score": 0.91,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+      "iogp_clause": "Clause 3.4 — Energy Verification at Work Point",
+      "oisd_standard": "OISD-RP-238: Well Integrity Management",
+      "oisd_clause": "Clause 6.4 — Pressure Monitoring During Bleed",
+      "historical_precedent": "2005 Texas City Refinery — Raffinate splitter overpressure; stored energy in atmospheric vent not recognized; BLEVE killed 15",
+      "mitigation": "Stop work immediately. Verify LOTO applied at all energy sources. Test for zero pressure at the actual work point (not isolation point). Document gauge reading. Resume only when verified."
+    },
+    {
+      "rule_id": "RULE_006",
+      "name": "Confined Space Entry — Atmospheric Testing + Standby Required",
+      "trigger_entity_keywords": [
+        "tank", "vessel", "sump", "pit", "manhole", "confined space",
+        "storage tank", "process vessel", "separator", "column",
+        "drum", "reactor", "trenche", "culvert", "pipeline interior"
+      ],
+      "trigger_action_keywords": [
+        "entered", "entry", "inside", "went in", "descended into",
+        "climbing in", "accessing vessel", "working inside",
+        "opened manhole", "removed manhole cover"
+      ],
+      "required_condition": "Atmospheric testing completed (O2, LEL, H2S); standby person posted; rescue equipment ready; confined space permit issued",
+      "required_condition_keywords": [
+        "atmospheric test", "oxygen level", "o2 level", "lel test",
+        "gas test", "atmosphere tested", "standby", "standby man",
+        "rescue equipment", "confined space permit", "rescue team",
+        "monitor", "tested before entry", "atmospheric monitoring"
+      ],
+      "hazard_if_missing": "Atmospheric conditions in confined space UNKNOWN — risk of oxygen deficiency, toxic gas accumulation (H2S, CO), or flammable atmosphere exposure.",
+      "hazard_tag": "CONFINED_SPACE_ATMOSPHERE_UNKNOWN",
+      "severity_score": 0.89,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #6: Follow Requirements for Working in a Confined Space",
+      "iogp_clause": "Clause 6.1 — Atmospheric Testing; Clause 6.3 — Standby Person",
+      "oisd_standard": "OISD-RP-175: Safety in Petroleum Refineries — Confined Space",
+      "oisd_clause": "Clause 5.1 — Pre-Entry Testing; Clause 5.2 — Standby Person Requirements",
+      "historical_precedent": "Numerous fatalities from O2-deficient atmospheres in vessels and tanks across oil & gas industry where testing was assumed rather than performed",
+      "mitigation": "Immediately withdraw all personnel from confined space. Conduct full atmospheric testing. Post trained standby person. Set up rescue equipment. Issue formal confined space permit."
+    },
+    {
+      "rule_id": "RULE_007",
+      "name": "Electrical Equipment Work — LOTO Verification Required",
+      "trigger_entity_keywords": [
+        "electrical panel", "switchboard", "mcc", "motor control centre",
+        "transformer", "distribution board", "electrical equipment",
+        "cable", "motor", "generator", "inverter", "vfd",
+        "control panel", "junction box"
+      ],
+      "trigger_action_keywords": [
+        "maintenance", "working on", "repair", "replaced", "inspecting",
+        "testing", "commissioning", "wiring", "terminating", "connecting",
+        "installing", "modifying"
+      ],
+      "required_condition": "LOTO applied and verified; voltage tested at work point with approved tester; arc flash PPE worn",
+      "required_condition_keywords": [
+        "loto", "lockout", "tagout", "voltage test", "de-energized",
+        "isolation verified", "zero voltage", "no voltage", "tested dead",
+        "arc flash", "ppe", "gloves", "insulating gloves",
+        "electrical isolation", "powered down"
+      ],
+      "hazard_if_missing": "Electrical isolation not confirmed at work point — risk of electric shock, electrocution, or arc flash injury.",
+      "hazard_tag": "ELECTRICAL_ENERGY_UNVERIFIED",
+      "severity_score": 0.85,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+      "iogp_clause": "Clause 3.1 — Isolation and LOTO",
+      "oisd_standard": "OISD-137: Electrical Safety in Petroleum Industry",
+      "oisd_clause": "Clause 8.3 — Verification of Zero Energy",
+      "historical_precedent": "Multiple electrocution fatalities from assumption of de-energized state without verification at the actual work point in oil & gas facilities",
+      "mitigation": "Stop electrical work immediately. Apply LOTO at the disconnecting means. Use approved voltage tester to verify zero voltage at the work point. Don arc flash PPE rated for incident energy level."
+    },
+    {
+      "rule_id": "RULE_008",
+      "name": "Hazardous Chemical Handling — PPE and SDS Review Required",
+      "trigger_entity_keywords": [
+        "acid", "caustic", "chemical", "h2so4", "naoh", "hcl",
+        "hydrochloric", "sulfuric", "sodium hydroxide",
+        "scale inhibitor", "corrosion inhibitor", "biocide",
+        "solvent", "xylene", "methanol", "glycol", "inhibitor"
+      ],
+      "trigger_action_keywords": [
+        "handling", "transfer", "mixing", "pouring", "injecting",
+        "dosing", "adding", "applying", "chemical injection",
+        "handling chemicals", "working with"
+      ],
+      "required_condition": "Chemical-resistant gloves worn; chemical splash goggles/face shield on; SDS reviewed; emergency shower location known",
+      "required_condition_keywords": [
+        "gloves", "chemical gloves", "goggles", "face shield", "sds",
+        "safety data sheet", "msds", "ppe worn", "chemical ppe",
+        "apron", "chemical resistant", "protective equipment",
+        "emergency shower", "eye wash"
+      ],
+      "hazard_if_missing": "Hazardous chemical handling without confirmed PPE compliance — risk of chemical burn, eye injury, or toxic exposure.",
+      "hazard_tag": "CHEMICAL_EXPOSURE_RISK",
+      "severity_score": 0.72,
+      "sif_potential": false,
+      "iogp_rule": "IOGP Rule #5: Do Not Walk Past an Unsafe Act or Condition",
+      "iogp_clause": "General PPE compliance",
+      "oisd_standard": "OISD-RP-147: Safety in Handling Hazardous Chemicals",
+      "oisd_clause": "Clause 5.1 — PPE Requirements; Clause 5.3 — SDS Availability",
+      "historical_precedent": "Chemical splash injuries are among the most preventable yet frequent injuries in oil & gas chemical handling operations",
+      "mitigation": "Stop chemical handling. Issue appropriate chemical-resistant PPE (gloves, goggles, apron). Conduct SDS review. Confirm emergency shower location within 10 seconds travel time."
+    },
+    {
+      "rule_id": "RULE_009",
+      "name": "Non-Routine Work — Valid Permit to Work Required",
+      "trigger_entity_keywords": [
+        "maintenance", "repair work", "modification", "installation",
+        "inspection", "testing", "commissioning", "work on equipment",
+        "job", "task", "activity", "operation"
+      ],
+      "trigger_action_keywords": [
+        "commenced", "started", "began", "initiated", "proceeding",
+        "undertaken", "ongoing", "completed", "carried out",
+        "performed", "executed"
+      ],
+      "required_condition": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start",
+      "required_condition_keywords": [
+        "permit", "ptw", "permit to work", "work permit", "authorized",
+        "authorization", "permit number", "permit issued",
+        "permit valid", "work order", "approved", "signed off"
+      ],
+      "hazard_if_missing": "Work potentially proceeding without valid Permit to Work — risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+      "hazard_tag": "UNAUTHORIZED_WORK_RISK",
+      "severity_score": 0.78,
+      "sif_potential": false,
+      "iogp_rule": "IOGP Rule #1: Work with a Valid Permit to Work When Required",
+      "iogp_clause": "Never: Work without a Permit to Work when one is required",
+      "oisd_standard": "OISD-105: Permit to Work System",
+      "oisd_clause": "Clause 3.1 — PTW Applicability; Clause 3.3 — PTW Validity",
+      "historical_precedent": "1988 Piper Alpha — PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+      "mitigation": "Stop all work immediately. Verify PTW status with area authority. Issue new PTW if required. Do not restart work until a valid PTW is in place and all conditions are satisfied."
+    },
+    {
+      "rule_id": "RULE_010",
+      "name": "Working at Height — Fall Arrest System Required",
+      "trigger_entity_keywords": [
+        "scaffold", "scaffolding", "elevated platform", "platform",
+        "ladder", "rooftop", "mezzanine", "elevated work",
+        "structure", "height", "derrick", "mast", "tower",
+        "grating", "deck elevated"
+      ],
+      "trigger_action_keywords": [
+        "working at height", "working on", "climbing", "at height",
+        "elevated work", "on scaffold", "on platform",
+        "on ladder", "at elevation", "maintenance at height",
+        "inspection at height"
+      ],
+      "required_condition": "Full body harness worn and connected to certified anchor point; fall arrest system inspected; work at height permit in place",
+      "required_condition_keywords": [
+        "harness", "full body harness", "fall arrest", "lanyard",
+        "anchor point", "tied off", "secured", "fall protection",
+        "height permit", "safety line", "retractable lanyard",
+        "energy absorber", "certified anchor"
+      ],
+      "hazard_if_missing": "Personnel working at height without confirmed fall protection — risk of fatal fall from elevation.",
+      "hazard_tag": "FALL_PROTECTION_ABSENT",
+      "severity_score": 0.87,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #11: Follow Requirements for Working at Height",
+      "iogp_clause": "Clause 11.1 — Fall Arrest Systems",
+      "oisd_standard": "OISD-GDN-206: Safety in Working at Height",
+      "oisd_clause": "Clause 3.1 — Fall Protection Mandatory; Clause 3.3 — Anchor Point Certification",
+      "historical_precedent": "Falls from height are the second leading cause of fatality in the oil and gas industry, with many occurring from scaffolding without certified harness anchorage",
+      "mitigation": "Stop all work at height. Issue and inspect full body harness. Identify and verify certified anchor points. Issue working at height permit. Re-inspect scaffold before resuming."
+    },
+    {
+      "rule_id": "RULE_011",
+      "name": "Flammable Liquid Transfer — Bonding and Earthing Required",
+      "trigger_entity_keywords": [
+        "diesel", "fuel", "crude oil", "petroleum product", "gasoline",
+        "petrol", "jet fuel", "naphtha", "solvent", "flammable liquid",
+        "tanker", "bowser", "fuel truck", "iso tank"
+      ],
+      "trigger_action_keywords": [
+        "transfer", "pumping", "filling", "unloading", "loading",
+        "dispensing", "draining", "offloading", "fueling",
+        "topping up", "fuel transfer", "product transfer"
+      ],
+      "required_condition": "Earthing cable connected between tanker and earth point; bonding cable connected between tanker and receiving vessel; continuity verified",
+      "required_condition_keywords": [
+        "earthing", "bonding", "earth cable", "bond", "grounding",
+        "earth connection", "static", "anti-static", "earthed",
+        "bonded", "continuity", "ground cable", "earthing cable"
+      ],
+      "hazard_if_missing": "Static electricity accumulation during fuel transfer without bonding/earthing — risk of incendive spark discharge and flammable vapor ignition.",
+      "hazard_tag": "STATIC_IGNITION_RISK",
+      "severity_score": 0.80,
+      "sif_potential": false,
+      "iogp_rule": "IOGP Rule #2: Conduct a Gas Test When Required (adjacent hazard)",
+      "iogp_clause": "Flammable atmosphere control during transfer operations",
+      "oisd_standard": "OISD-117: Static Electricity Hazards in Petroleum Industry",
+      "oisd_clause": "Clause 4.1 — Bonding Requirement; Clause 4.2 — Earthing Requirement",
+      "historical_precedent": "Multiple fuel truck fires from static discharge during top-loading operations without earthing cable connections across oil & gas logistics",
+      "mitigation": "Stop transfer immediately. Connect dedicated earthing cable with continuity indicator. Connect bonding cable between source and receiving vessel. Verify continuity before restarting transfer."
+    },
+    {
+      "rule_id": "RULE_012",
+      "name": "ESD/PSV Safety System Bypass — MoC Required",
+      "trigger_entity_keywords": [
+        "esd", "emergency shutdown", "psv", "pressure safety valve",
+        "relief valve", "safety valve", "fire and gas system",
+        "f&g system", "sis", "safety instrumented system",
+        "shutdown system", "esv", "emergency shutdown valve"
+      ],
+      "trigger_action_keywords": [
+        "bypass", "overrid", "disabled", "inhibited", "defeated",
+        "isolated", "suppressed", "masked", "defeated", "bypassed",
+        "turned off", "deactivated", "out of service"
+      ],
+      "required_condition": "Management of Change (MoC) approved; compensatory measures documented; duration limited and tracked; control room notified",
+      "required_condition_keywords": [
+        "moc", "management of change", "change management",
+        "compensatory", "compensating measure", "bypass approval",
+        "authorized bypass", "control room informed",
+        "duration limited", "manual monitoring", "safety manager approved",
+        "formal approval", "documented authorization"
+      ],
+      "hazard_if_missing": "Safety-critical system bypassed without confirmed Management of Change approval — critical safety barrier removed without compensatory measures.",
+      "hazard_tag": "SAFETY_BARRIER_DEGRADATION",
+      "severity_score": 0.93,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #4: Obtain Authorization Before Overriding Safety-Critical Equipment",
+      "iogp_clause": "Clause 4.2 — Simultaneous bypass of multiple protection layers forbidden",
+      "oisd_standard": "OISD-RP-189: Pressure Safety Valve Management",
+      "oisd_clause": "Clause 6.3 — MoC Requirement for Safety System Bypass",
+      "historical_precedent": "2010 Deepwater Horizon — Multiple safety barrier bypasses (BOP test misinterpreted, centralizers omitted, lock-down sleeve not run) compounded without formal MoC; 11 fatalities",
+      "mitigation": "Immediately restore bypassed safety systems if possible. If bypass must continue, initiate emergency MoC process. Implement maximum manual compensation (15-min pressure monitoring). Notify Safety Manager and Operations Manager."
+    },
+    {
+      "rule_id": "RULE_013",
+      "name": "Structural Pin Removal — Line-of-Fire & Trajectory Hazard",
+      "trigger_entity_keywords": [
+        "pin", "structural pin", "rig pin", "structure", "mast pin", "derrick pin",
+        "pin removal", "hammering pin"
+      ],
+      "trigger_action_keywords": [
+        "removing pin", "hammered the pin", "came out at speed", "pin struck",
+        "hammering", "knocking out pin", "removing structural"
+      ],
+      "required_condition": "Rigman positioned clear of out-direction of blow; pin holder standing offset; trajectory barrier established",
+      "required_condition_keywords": [
+        "stand away", "held away", "offset position", "clear of blow",
+        "out direction", "direction of blow", "trajectory clear", "line of fire clear",
+        "positioned offset"
+      ],
+      "hazard_if_missing": "Rigman standing in direct line of fire of high-velocity projectile pin — risk of severe blunt force trauma or fatality.",
+      "hazard_tag": "LINE_OF_FIRE_PROJECTILE_HAZARD",
+      "severity_score": 0.89,
+      "sif_potential": true,
+      "iogp_rule": "IOGP Rule #5: Do Not Place Yourself in the Line of Fire",
+      "iogp_clause": "Line of Fire & Energy Release Protection",
+      "oisd_standard": "OISD-GDN-205: Safety in Structural Maintenance & Rig Operations",
+      "oisd_clause": "Section 5 — Line of Fire Trajectory Controls",
+      "historical_precedent": "Multiple severe injuries across rig workover operations during structural pin removal without offset positioning",
+      "mitigation": "Do not hold pin when hammering. If holding is required, use holding tongs and stand completely offset from the expulsion trajectory."
+    },
+    {
+      "rule_id": "RULE_014",
+      "name": "Line Testing Joint Tightening — Manual Tool Tethering & Drop Risk",
+      "trigger_entity_keywords": [
+        "hammer", "joint", "line testing", "sledgehammer", "impact wrench", "tightening joint",
+        "testing joint"
+      ],
+      "trigger_action_keywords": [
+        "tightening", "hammer got slipped", "fell down", "slipped from hand",
+        "hammering joint", "striking joint"
+      ],
+      "required_condition": "Impact tools tethered with safety lanyard; area below barricaded; full PPE worn",
+      "required_condition_keywords": [
+        "tethered", "tool lanyard", "safety lanyard", "barricaded below",
+        "tethered hammer", "tool secured", "full ppe worn", "wearing full ppe"
+      ],
+      "hazard_if_missing": "Manual impact tool used at height or pressurized line without tool tethering — risk of dropped object impact injury to crew below.",
+      "hazard_tag": "DROPPED_OBJECT_IMPACT_HAZARD",
+      "severity_score": 0.78,
+      "sif_potential": false,
+      "iogp_rule": "IOGP Rule #7: Prevent Dropped Objects",
+      "iogp_clause": "Clause 7.5 — Tool Securing & Lanyards",
+      "oisd_standard": "OISD-GDN-205: Safety in Lifting & Material Handling",
+      "oisd_clause": "Section 4.5 — Manual Tool Drop Prevention",
+      "historical_precedent": "Dropped hammer incidents during pressure line joint tightening causing head and limb injuries on rig floors",
+      "mitigation": "Ensure all manual impact tools are attached to certified tool lanyards. Barricade drop zone below joint tightening operations."
+    },
+    {
+      "rule_id": "RULE_015",
+      "name": "Derrick Floor & Chemical Store — Eyewash Station Maintenance",
+      "trigger_entity_keywords": [
+        "eyewash", "eye wash", "derrick floor eyewash", "chemical store eyewash",
+        "emergency eyewash", "eyewash station"
+      ],
+      "trigger_action_keywords": [
+        "routine checkup", "inspection", "observed eyewash", "filled with water",
+        "cleaning eyewash", "maintenance check"
+      ],
+      "required_condition": "Eyewash station inspected weekly, filled with clean potable water, and verified unblocked",
+      "required_condition_keywords": [
+        "properly filled", "filled with water", "clean water", "cleaned water",
+        "inspected weekly", "eyewash verified", "water level verified"
+      ],
+      "hazard_if_missing": "Emergency eyewash station dry, contaminated, or unserviceable on derrick floor or chemical store — risk of permanent eye damage during chemical splash or mud exposure.",
+      "hazard_tag": "EMERGENCY_PREPAREDNESS_GAP",
+      "severity_score": 0.65,
+      "sif_potential": false,
+      "iogp_rule": "IOGP Rule #5: Maintain Emergency Response Readiness",
+      "iogp_clause": "Emergency Equipment Inspection",
+      "oisd_standard": "OISD-RP-147: Safety in Handling Hazardous Chemicals",
+      "oisd_clause": "Clause 5.3 — Eyewash & Emergency Shower Availability",
+      "historical_precedent": "Delayed eye flushing due to dry or dirty eyewash stations resulting in severe chemical eye injuries",
+      "mitigation": "Immediately clean eyewash basin, flush fluid lines, refill with clean potable water, and log weekly inspection on the derrick floor check sheet."
+    }
+  ]
+}
+
