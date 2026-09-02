@@ -4,7 +4,7 @@ import { analyzeText } from '../api/client'
 
 const SAMPLE_REPORTS = [
   {
-    label: '🔴 [R] Structural Pin Removal Trajectory (AHWR-50-04)',
+    label: '🔴 Structural Pin Removal Trajectory',
     functional_location: 'AHWR-50-04 Work Over Rig (50MT)',
     item_no: '00001',
     incident_type: 'Near Miss',
@@ -13,14 +13,14 @@ const SAMPLE_REPORTS = [
     ehs_code: 'R',
     affected_person_type: 'Contractor Worker',
     designation: 'Rigman',
-    root_cause_analysis: 'UNAWARENESS OF RIGMAN STANDING EXACT OPPOSITE TO DIRECTION OF BLOW.',
-    potential_consequences: 'IT COULD HAVE HIT ANYWHERE RESULTING TO MINOR TO MAJOR INJURY.',
-    corrective_action: 'INSTRUCTED ALL CREW MEMBERS TO WORK SAFELY.',
-    preventive_action: '1. DON\'T HOLD PIN WHEN HAMMERING. 2. IF REQUIRED TO HOLD, THEN STAND AND HOLD AWAY FROM THE POSSIBLE OUT DIRECTION OF BLOW.',
+    root_cause_analysis: 'Unawareness of rigman standing opposite to direction of blow.',
+    potential_consequences: 'Could have resulted in minor or major injury.',
+    corrective_action: 'Instructed crew to stand clear of hammer trajectory.',
+    preventive_action: '1. Do not hold pin during hammering. 2. Use holding tongs when required.',
     text: 'DURING REMOVING PIN FROM A STRUCTURE, ONE RIGMAN HAMMERED THE PIN TO REMOVE IT AND IT CAME OUT AT SPEED PASSING NEARBY TO THE RIGMAN HOLDING THE PIN STANDING OPPOSITE TO IT.',
   },
   {
-    label: '🔴 [M] Line Testing Joint Hammering Slip (AHWR-50-04)',
+    label: '🔴 Line Testing Joint Hammering Slip',
     functional_location: 'AHWR-50-04 Work Over Rig (50MT)',
     item_no: '00001',
     incident_type: 'Near Miss',
@@ -29,14 +29,14 @@ const SAMPLE_REPORTS = [
     ehs_code: 'M',
     affected_person_type: 'Contractor Worker',
     designation: 'Joint Tester',
-    root_cause_analysis: 'DUE TO THE CARELESSNESS OF THE PERSON.',
-    potential_consequences: 'IT MAY HIT PERSONS STANDING NEARBY AND CAUSE SERIOUS INJURY.',
-    corrective_action: 'INSTRUCTED ALL CREW MEMBERS TO WORK SAFELY WITH WEARING FULL PPE.',
-    preventive_action: 'ENSURE MANUAL IMPACT TOOLS ARE TETHERED AND DROP ZONE BARRICADED.',
+    root_cause_analysis: 'Loss of tool grip during manual striking.',
+    potential_consequences: 'Potential impact to personnel nearby.',
+    corrective_action: 'Enforced tethered tool requirement.',
+    preventive_action: 'Ensure manual impact tools are tethered and drop zone barricaded.',
     text: 'DURING LINE TESTING, ONE PERSON WAS TIGHTENING THE JOINT WITH HAMMER. SUDDENLY THE HAMMER GOT SLIPPED FROM HIS HAND AND FELL DOWN ON THE GROUND. LUCKILY NO ONE GOT INJURED.',
   },
   {
-    label: '🟡 [V] Derrick Floor Eyewash Station (AHWR-50-04)',
+    label: '🟡 Derrick Floor Eyewash Inspection',
     functional_location: 'AHWR-50-04 Work Over Rig (50MT)',
     item_no: '00001',
     incident_type: 'Unsafe Condition',
@@ -45,14 +45,14 @@ const SAMPLE_REPORTS = [
     ehs_code: 'V',
     affected_person_type: 'Employee',
     designation: 'Derrickman',
-    root_cause_analysis: 'IMPROPER SUPERVISION.',
-    potential_consequences: 'DELAYED EYE FLUSHING DURING CHEMICAL OR MUD SPLASH.',
-    corrective_action: 'IMMEDIATELY CLEAN THE EYEWASH AND FILLED WITH WATER PROPERLY.',
-    preventive_action: 'ALWAYS KEEP THE EYEWASH FILLED WITH CLEANED WATER AT DERRICK FLOOR AND AT CHEMICAL STORES.',
+    root_cause_analysis: 'Routine checkup verification.',
+    potential_consequences: 'Delayed flushing during chemical splash.',
+    corrective_action: 'Verified fluid level in eyewash unit.',
+    preventive_action: 'Keep eyewash filled with clean water at derrick floor and chemical stores.',
     text: 'DURING ROUTINE CHECKUP, IT WAS OBSERVED THAT EYEWASH FITTED AT THE DERRICK FLOOR WAS PROPERLY FILLED WITH WATER.',
   },
   {
-    label: '🔴 [R] Pressure Bleed Depressurization (Rig-04)',
+    label: '🔴 Pressure Bleed Isolation Gap',
     functional_location: 'Rig-04 Production Manifold',
     item_no: '00002',
     incident_type: 'Unsafe Act',
@@ -62,7 +62,7 @@ const SAMPLE_REPORTS = [
     affected_person_type: 'Operator',
     designation: 'Manifold Operator',
     root_cause_analysis: 'Secondary isolation valve B status was left unverified during pressure bleed.',
-    potential_consequences: 'Premature energy release / SIF Blowout potential.',
+    potential_consequences: 'Premature energy release potential.',
     corrective_action: 'Physically verify and document double block isolation.',
     preventive_action: 'Enforce DBB checklist before opening bleed valves.',
     text: 'During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.',
@@ -111,9 +111,7 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
         preventive_action: preventiveAction,
       }
 
-      // Send to analyze endpoint
       const result = await analyzeText(payload.text)
-      // Merge structured fields
       Object.assign(result, payload)
 
       onAnalysisComplete(result)
@@ -147,16 +145,16 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
   return (
     <div className="space-y-4">
       {/* Sample Selector */}
-      <div>
-        <p className="text-xs text-slate-400 mb-2 font-semibold uppercase tracking-wider">
-          Quick Load Real SAP EHS Report Cases
+      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
+        <p className="text-xs text-slate-700 font-bold mb-2.5">
+          Quick Load Sample Reports
         </p>
         <div className="flex flex-wrap gap-2">
           {SAMPLE_REPORTS.map((s, i) => (
             <button
               key={i}
               onClick={() => handleSampleLoad(s)}
-              className="text-xs px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-full border border-slate-700 hover:border-slate-500 transition-colors font-medium"
+              className="text-xs px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-200 transition-all font-semibold shadow-2xs active:scale-[0.98]"
             >
               {s.label}
             </button>
@@ -165,110 +163,109 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
       </div>
 
       {/* Main Form Box */}
-      <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 space-y-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs space-y-4">
         {/* Toggle Full Form */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="text-blue-400" size={18} />
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-              SAP EHS Incident Form Input
+            <FileSpreadsheet className="text-indigo-600" size={18} />
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Incident Metadata
             </h3>
           </div>
           <button
             onClick={() => setShowFullForm(!showFullForm)}
-            className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-semibold"
+            className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-800 font-bold transition-colors active:scale-[0.98]"
           >
             {showFullForm ? (
               <>
-                Hide Full Structured Fields <ChevronUp size={14} />
+                Hide Metadata Fields <ChevronUp size={14} />
               </>
             ) : (
               <>
-                Expand Full SAP EHS Form Fields <ChevronDown size={14} />
+                Expand Metadata Fields <ChevronDown size={14} />
               </>
             )}
           </button>
         </div>
 
-        {/* Expandable SAP Fields */}
+        {/* Expandable Fields */}
         {showFullForm && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs pt-3 border-t border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs pt-4 border-t border-slate-200">
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Functional Location</label>
+              <label className="block text-slate-600 font-bold mb-1">Functional Location</label>
               <input
                 type="text"
                 value={functionalLocation}
                 onChange={(e) => setFunctionalLocation(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 font-mono"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-mono font-medium focus:bg-white focus:border-indigo-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">SAP EHS Category Code</label>
+              <label className="block text-slate-600 font-bold mb-1">Incident Classification Code</label>
               <select
                 value={ehsCode}
                 onChange={(e) => setEhsCode(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-amber-300 font-mono"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 font-mono font-bold focus:outline-none focus:border-indigo-500"
               >
-                <option value="R">R — Near Miss - High Potential (HIPO)</option>
-                <option value="M">M — Near Miss</option>
-                <option value="V">V — Unsafe Condition</option>
-                <option value="U">U — Unsafe Act</option>
-                <option value="G">G — Gas Release</option>
-                <option value="F">F — Fire without loss of property</option>
-                <option value="W">W — Fire with loss of property</option>
-                <option value="P">P — 2 Phase Release</option>
-                <option value="N">N — Nil Report</option>
+                <option value="R">R - Near Miss High Potential</option>
+                <option value="M">M - Near Miss Standard</option>
+                <option value="V">V - Unsafe Condition</option>
+                <option value="U">U - Unsafe Act</option>
+                <option value="G">G - Gas Release</option>
+                <option value="F">F - Fire without Property Loss</option>
+                <option value="W">W - Fire with Property Loss</option>
+                <option value="P">P - Process Release</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Incident Cause</label>
+              <label className="block text-slate-600 font-bold mb-1">Incident Cause</label>
               <input
                 type="text"
                 value={incidentCause}
                 onChange={(e) => setIncidentCause(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-semibold mb-1">Affected Person / Designation</label>
+              <label className="block text-slate-600 font-bold mb-1">Affected Designation</label>
               <input
                 type="text"
                 value={designation}
                 onChange={(e) => setDesignation(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-slate-400 font-semibold mb-1">Root Cause Analysis</label>
+              <label className="block text-slate-600 font-bold mb-1">Root Cause Category</label>
               <input
                 type="text"
                 value={rootCauseAnalysis}
                 onChange={(e) => setRootCauseAnalysis(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 font-medium focus:bg-white focus:border-indigo-500 outline-none"
               />
             </div>
 
             <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-emerald-400 font-semibold mb-1">Corrective Action Taken</label>
+                <label className="block text-emerald-800 font-bold mb-1">Corrective Action Taken</label>
                 <input
                   type="text"
                   value={correctiveAction}
                   onChange={(e) => setCorrectiveAction(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200"
+                  className="w-full bg-emerald-50/60 border border-emerald-200 rounded-lg px-3 py-2 text-emerald-900 font-medium focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-blue-400 font-semibold mb-1">Preventive Action Required</label>
+                <label className="block text-indigo-800 font-bold mb-1">Preventive Action Required</label>
                 <input
                   type="text"
                   value={preventiveAction}
                   onChange={(e) => setPreventiveAction(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200"
+                  className="w-full bg-indigo-50/60 border border-indigo-200 rounded-lg px-3 py-2 text-indigo-900 font-medium focus:outline-none"
                 />
               </div>
             </div>
@@ -277,23 +274,23 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
 
         {/* Textarea */}
         <div>
-          <label className="block text-xs text-slate-400 mb-1 font-semibold uppercase tracking-wider">
-            Field Incident Brief Summary / Narrative
+          <label className="block text-xs font-bold text-slate-700 mb-1">
+            Incident Description & Narrative
           </label>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Paste or type raw safety incident report narrative..."
+            placeholder="Paste or type field observation report narrative..."
             rows={5}
-            className="w-full bg-slate-950 border border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 rounded-lg p-3 text-sm text-slate-200 placeholder-slate-500 resize-none outline-none font-mono leading-relaxed"
+            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white rounded-lg p-3.5 text-xs text-slate-800 placeholder-slate-400 resize-none outline-none font-mono leading-relaxed font-medium"
           />
-          <div className="text-right text-xs text-slate-600 mt-1">{text.length} chars</div>
+          <div className="text-right text-[11px] font-mono text-slate-400 mt-1 tabular-nums">{text.length} characters</div>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="flex items-start gap-2 p-3 bg-red-900/30 border border-red-700 rounded-lg text-sm text-red-300">
-            <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2 p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs font-semibold text-rose-700">
+            <AlertCircle size={16} className="flex-shrink-0 mt-0.5 text-rose-600" />
             {error}
           </div>
         )}
@@ -302,17 +299,21 @@ export default function ReportAnalyzer({ onAnalysisComplete }) {
         <button
           onClick={handleAnalyze}
           disabled={loading || !text.trim()}
-          className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-500 text-white text-sm font-semibold rounded-lg transition-colors"
+          className={`flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 text-xs font-bold rounded-lg transition-all shadow-xs active:scale-[0.98] ${
+            loading || !text.trim()
+              ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed shadow-none'
+              : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+          }`}
         >
           {loading ? (
             <>
-              <Loader2 size={16} className="animate-spin" />
-              Executing Multi-Model Causal Pipeline...
+              <Loader2 size={15} className="animate-spin text-white" />
+              Evaluating Hazards & Rules...
             </>
           ) : (
             <>
-              <Send size={16} />
-              Run SIF Risk & Causal Graph Analysis
+              <Send size={15} />
+              Run Incident Risk Analysis
             </>
           )}
         </button>

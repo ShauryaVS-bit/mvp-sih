@@ -1,5 +1,1552 @@
 [
   {
+    "report_id": "a05d0bd2-6b97-477f-be97-9ca0aa12c439",
+    "raw_text": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.",
+    "functional_location": "AHWR-50-04 Work Over Rig (50MT)",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "fact_tuple": {
+      "activity": "Pressure Bleed Depressurization",
+      "activity_status": "EXPLICIT",
+      "equipment": "Manifold Bleed Valve",
+      "equipment_status": "EXPLICIT",
+      "hazard": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+      "hazard_status": "INFERRED",
+      "energy_source": "PRESSURE",
+      "energy_status": "EXPLICIT",
+      "exposure": "No Person Identified",
+      "exposure_status": "UNKNOWN",
+      "barrier": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+      "barrier_condition": "ABSENT",
+      "barrier_status": "INFERRED"
+    },
+    "extracted_facts": [
+      {
+        "entity": "Valve A",
+        "action": "bleed",
+        "state": "open",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+        "triggered_rule_id": "RULE_001"
+      },
+      {
+        "entity": "Operation",
+        "action": "completed",
+        "state": "active",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "Operation was completed without incident.",
+        "triggered_rule_id": "RULE_009"
+      }
+    ],
+    "inferred_hazards": [
+      {
+        "rule_id": "RULE_001",
+        "rule_name": "Pressure Bleed / Double Block Isolation",
+        "stated_facts": [
+          {
+            "entity": "Valve A",
+            "action": "bleed",
+            "state": "open",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+            "triggered_rule_id": "RULE_001"
+          }
+        ],
+        "inferred_gap": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "IMPLICIT_BARRIER_RISK",
+        "hazard_description": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+        "severity_score": 0.95,
+        "sif_potential": true,
+        "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+        "iogp_clause": "Clause 3.7 \u2014 Secondary Barrier Integrity",
+        "oisd_standard": "OISD-RP-238: Well Integrity Management",
+        "oisd_clause": "Clause 6.2.1 \u2014 Secondary Valve Verification in Bleed Operations",
+        "historical_precedent": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+        "mitigation": "Immediately halt downstream work. Physically verify and document secondary valve (Valve B) closed position via valve position indicator and downstream pressure gauge reading.",
+        "required_condition": "Secondary isolation valve (Valve B) confirmed CLOSED and verified"
+      },
+      {
+        "rule_id": "RULE_009",
+        "rule_name": "Non-Routine Work \u2014 Valid Permit to Work Required",
+        "stated_facts": [
+          {
+            "entity": "Operation",
+            "action": "completed",
+            "state": "active",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "Operation was completed without incident.",
+            "triggered_rule_id": "RULE_009"
+          }
+        ],
+        "inferred_gap": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "UNAUTHORIZED_WORK_RISK",
+        "hazard_description": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+        "severity_score": 0.78,
+        "sif_potential": false,
+        "iogp_rule": "IOGP Rule #1: Work with a Valid Permit to Work When Required",
+        "iogp_clause": "Never: Work without a Permit to Work when one is required",
+        "oisd_standard": "OISD-105: Permit to Work System",
+        "oisd_clause": "Clause 3.1 \u2014 PTW Applicability; Clause 3.3 \u2014 PTW Validity",
+        "historical_precedent": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+        "mitigation": "Stop all work immediately. Verify PTW status with area authority. Issue new PTW if required. Do not restart work until a valid PTW is in place and all conditions are satisfied.",
+        "required_condition": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start"
+      }
+    ],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0017",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations during which secondary isolation integrity was compromised during a pressure bleed operation. The absence of verified secondary barrier status is cited as a contributing factor in the post-incident investigation.",
+        "similarity_score": 0.8431,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0016",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure operations, when primary isolation (Valve A) is opened for bleed-down, the secondary isolation valve (Valve B) must be positively confirmed CLOSED before commencement. Omission of this confirmation represents a critical barrier gap even when the primary operation appears to complete without incident.",
+        "similarity_score": 0.8395,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0005",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Relevance to Major Incidents:** Many major industrial accidents (Piper Alpha 1988, Texas City 2005) have been linked to failures in Permit to Work systems, including expired permits, miscommunication during shift handovers, and unauthorized bypass of PTW requirements.",
+        "similarity_score": 0.899,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0004",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Never Do This:**\n- Work without a Permit to Work when one is required.\n- Proceed with work if the PTW has expired or conditions have changed significantly.\n- Bypass or circumvent the PTW system.",
+        "similarity_score": 0.8772,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "causal_graph": {
+      "nodes": [
+        {
+          "node_id": "STMT_1",
+          "statement_index": 1,
+          "raw_statement": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+          "extracted_entity": "Valve A",
+          "extracted_action": "bleed",
+          "extracted_state": "open",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_2",
+          "statement_index": 2,
+          "raw_statement": "Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_3",
+          "statement_index": 3,
+          "raw_statement": "Operation was completed without incident.",
+          "extracted_entity": "Operation",
+          "extracted_action": "completed",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_4",
+          "statement_index": 4,
+          "raw_statement": "Crew proceeded to change the manifold spool piece following the bleed-down.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "BARRIER_GAP_1",
+          "statement_index": 991,
+          "raw_statement": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+          "extracted_entity": "Pressure Bleed / Double Block Isolation",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_1",
+          "statement_index": 996,
+          "raw_statement": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "extracted_entity": "IMPLICIT_BARRIER_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 95%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_1",
+          "statement_index": 999,
+          "raw_statement": "IOGP Rule #3: Verify Isolation Before Work Begins | OISD-RP-238: Well Integrity Management",
+          "extracted_entity": "OISD-RP-238: Well Integrity Management",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations dur...",
+          "node_type": "GROUNDING_PROOF"
+        },
+        {
+          "node_id": "BARRIER_GAP_2",
+          "statement_index": 992,
+          "raw_statement": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start",
+          "extracted_entity": "Non-Routine Work \u2014 Valid Permit to Work Required",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_2",
+          "statement_index": 997,
+          "raw_statement": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "extracted_entity": "UNAUTHORIZED_WORK_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 78%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_2",
+          "statement_index": 1000,
+          "raw_statement": "IOGP Rule #1: Work with a Valid Permit to Work When Required | OISD-105: Permit to Work System",
+          "extracted_entity": "OISD-105: Permit to Work System",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure o...",
+          "node_type": "GROUNDING_PROOF"
+        }
+      ],
+      "edges": [
+        {
+          "source_id": "STMT_1",
+          "target_id": "STMT_2",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_2",
+          "target_id": "STMT_3",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "STMT_4",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_1",
+          "target_id": "BARRIER_GAP_1",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_1",
+          "target_id": "HAZARD_1",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_1",
+          "target_id": "PROOF_1",
+          "label": "grounded by standard"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "BARRIER_GAP_2",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_2",
+          "target_id": "HAZARD_2",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_2",
+          "target_id": "PROOF_2",
+          "label": "grounded by standard"
+        }
+      ],
+      "summary_path": "Parsed 4 operational statements into DAG graph (10 nodes, 9 edges)."
+    },
+    "overall_risk_score": 1.0,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "processing_time_ms": 27.96,
+    "analyzed_at": "2026-09-02T12:42:46.511842",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "72f0ae9b-2001-4a8a-94ab-55a24befe485",
+    "raw_text": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.",
+    "functional_location": "AHWR-50-04 Work Over Rig (50MT)",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "fact_tuple": {
+      "activity": "Pressure Bleed Depressurization",
+      "activity_status": "EXPLICIT",
+      "equipment": "Manifold Bleed Valve",
+      "equipment_status": "EXPLICIT",
+      "hazard": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+      "hazard_status": "INFERRED",
+      "energy_source": "PRESSURE",
+      "energy_status": "EXPLICIT",
+      "exposure": "No Person Identified",
+      "exposure_status": "UNKNOWN",
+      "barrier": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+      "barrier_condition": "ABSENT",
+      "barrier_status": "INFERRED"
+    },
+    "extracted_facts": [
+      {
+        "entity": "Valve A",
+        "action": "bleed",
+        "state": "open",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+        "triggered_rule_id": "RULE_001"
+      },
+      {
+        "entity": "Operation",
+        "action": "completed",
+        "state": "active",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "Operation was completed without incident.",
+        "triggered_rule_id": "RULE_009"
+      }
+    ],
+    "inferred_hazards": [
+      {
+        "rule_id": "RULE_001",
+        "rule_name": "Pressure Bleed / Double Block Isolation",
+        "stated_facts": [
+          {
+            "entity": "Valve A",
+            "action": "bleed",
+            "state": "open",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+            "triggered_rule_id": "RULE_001"
+          }
+        ],
+        "inferred_gap": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "IMPLICIT_BARRIER_RISK",
+        "hazard_description": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+        "severity_score": 0.95,
+        "sif_potential": true,
+        "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+        "iogp_clause": "Clause 3.7 \u2014 Secondary Barrier Integrity",
+        "oisd_standard": "OISD-RP-238: Well Integrity Management",
+        "oisd_clause": "Clause 6.2.1 \u2014 Secondary Valve Verification in Bleed Operations",
+        "historical_precedent": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+        "mitigation": "Immediately halt downstream work. Physically verify and document secondary valve (Valve B) closed position via valve position indicator and downstream pressure gauge reading.",
+        "required_condition": "Secondary isolation valve (Valve B) confirmed CLOSED and verified"
+      },
+      {
+        "rule_id": "RULE_009",
+        "rule_name": "Non-Routine Work \u2014 Valid Permit to Work Required",
+        "stated_facts": [
+          {
+            "entity": "Operation",
+            "action": "completed",
+            "state": "active",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "Operation was completed without incident.",
+            "triggered_rule_id": "RULE_009"
+          }
+        ],
+        "inferred_gap": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "UNAUTHORIZED_WORK_RISK",
+        "hazard_description": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+        "severity_score": 0.78,
+        "sif_potential": false,
+        "iogp_rule": "IOGP Rule #1: Work with a Valid Permit to Work When Required",
+        "iogp_clause": "Never: Work without a Permit to Work when one is required",
+        "oisd_standard": "OISD-105: Permit to Work System",
+        "oisd_clause": "Clause 3.1 \u2014 PTW Applicability; Clause 3.3 \u2014 PTW Validity",
+        "historical_precedent": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+        "mitigation": "Stop all work immediately. Verify PTW status with area authority. Issue new PTW if required. Do not restart work until a valid PTW is in place and all conditions are satisfied.",
+        "required_condition": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start"
+      }
+    ],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0017",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations during which secondary isolation integrity was compromised during a pressure bleed operation. The absence of verified secondary barrier status is cited as a contributing factor in the post-incident investigation.",
+        "similarity_score": 0.8431,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0016",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure operations, when primary isolation (Valve A) is opened for bleed-down, the secondary isolation valve (Valve B) must be positively confirmed CLOSED before commencement. Omission of this confirmation represents a critical barrier gap even when the primary operation appears to complete without incident.",
+        "similarity_score": 0.8395,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0005",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Relevance to Major Incidents:** Many major industrial accidents (Piper Alpha 1988, Texas City 2005) have been linked to failures in Permit to Work systems, including expired permits, miscommunication during shift handovers, and unauthorized bypass of PTW requirements.",
+        "similarity_score": 0.899,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0004",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Never Do This:**\n- Work without a Permit to Work when one is required.\n- Proceed with work if the PTW has expired or conditions have changed significantly.\n- Bypass or circumvent the PTW system.",
+        "similarity_score": 0.8772,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "causal_graph": {
+      "nodes": [
+        {
+          "node_id": "STMT_1",
+          "statement_index": 1,
+          "raw_statement": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+          "extracted_entity": "Valve A",
+          "extracted_action": "bleed",
+          "extracted_state": "open",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_2",
+          "statement_index": 2,
+          "raw_statement": "Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_3",
+          "statement_index": 3,
+          "raw_statement": "Operation was completed without incident.",
+          "extracted_entity": "Operation",
+          "extracted_action": "completed",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_4",
+          "statement_index": 4,
+          "raw_statement": "Crew proceeded to change the manifold spool piece following the bleed-down.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "BARRIER_GAP_1",
+          "statement_index": 991,
+          "raw_statement": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+          "extracted_entity": "Pressure Bleed / Double Block Isolation",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_1",
+          "statement_index": 996,
+          "raw_statement": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "extracted_entity": "IMPLICIT_BARRIER_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 95%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_1",
+          "statement_index": 999,
+          "raw_statement": "IOGP Rule #3: Verify Isolation Before Work Begins | OISD-RP-238: Well Integrity Management",
+          "extracted_entity": "OISD-RP-238: Well Integrity Management",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations dur...",
+          "node_type": "GROUNDING_PROOF"
+        },
+        {
+          "node_id": "BARRIER_GAP_2",
+          "statement_index": 992,
+          "raw_statement": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start",
+          "extracted_entity": "Non-Routine Work \u2014 Valid Permit to Work Required",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_2",
+          "statement_index": 997,
+          "raw_statement": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "extracted_entity": "UNAUTHORIZED_WORK_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 78%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_2",
+          "statement_index": 1000,
+          "raw_statement": "IOGP Rule #1: Work with a Valid Permit to Work When Required | OISD-105: Permit to Work System",
+          "extracted_entity": "OISD-105: Permit to Work System",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure o...",
+          "node_type": "GROUNDING_PROOF"
+        }
+      ],
+      "edges": [
+        {
+          "source_id": "STMT_1",
+          "target_id": "STMT_2",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_2",
+          "target_id": "STMT_3",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "STMT_4",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_1",
+          "target_id": "BARRIER_GAP_1",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_1",
+          "target_id": "HAZARD_1",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_1",
+          "target_id": "PROOF_1",
+          "label": "grounded by standard"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "BARRIER_GAP_2",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_2",
+          "target_id": "HAZARD_2",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_2",
+          "target_id": "PROOF_2",
+          "label": "grounded by standard"
+        }
+      ],
+      "summary_path": "Parsed 4 operational statements into DAG graph (10 nodes, 9 edges)."
+    },
+    "overall_risk_score": 1.0,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "processing_time_ms": 27.75,
+    "analyzed_at": "2026-09-02T12:42:46.430382",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "aaae8f33-2a48-4eeb-b5a6-94b3050ff5a2",
+    "raw_text": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.",
+    "functional_location": "AHWR-50-04 Work Over Rig (50MT)",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "fact_tuple": {
+      "activity": "Pressure Bleed Depressurization",
+      "activity_status": "EXPLICIT",
+      "equipment": "Manifold Bleed Valve",
+      "equipment_status": "EXPLICIT",
+      "hazard": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+      "hazard_status": "INFERRED",
+      "energy_source": "PRESSURE",
+      "energy_status": "EXPLICIT",
+      "exposure": "No Person Identified",
+      "exposure_status": "UNKNOWN",
+      "barrier": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+      "barrier_condition": "ABSENT",
+      "barrier_status": "INFERRED"
+    },
+    "extracted_facts": [
+      {
+        "entity": "Valve A",
+        "action": "bleed",
+        "state": "open",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+        "triggered_rule_id": "RULE_001"
+      },
+      {
+        "entity": "Operation",
+        "action": "completed",
+        "state": "active",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "Operation was completed without incident.",
+        "triggered_rule_id": "RULE_009"
+      }
+    ],
+    "inferred_hazards": [
+      {
+        "rule_id": "RULE_001",
+        "rule_name": "Pressure Bleed / Double Block Isolation",
+        "stated_facts": [
+          {
+            "entity": "Valve A",
+            "action": "bleed",
+            "state": "open",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+            "triggered_rule_id": "RULE_001"
+          }
+        ],
+        "inferred_gap": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "IMPLICIT_BARRIER_RISK",
+        "hazard_description": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+        "severity_score": 0.95,
+        "sif_potential": true,
+        "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+        "iogp_clause": "Clause 3.7 \u2014 Secondary Barrier Integrity",
+        "oisd_standard": "OISD-RP-238: Well Integrity Management",
+        "oisd_clause": "Clause 6.2.1 \u2014 Secondary Valve Verification in Bleed Operations",
+        "historical_precedent": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+        "mitigation": "Immediately halt downstream work. Physically verify and document secondary valve (Valve B) closed position via valve position indicator and downstream pressure gauge reading.",
+        "required_condition": "Secondary isolation valve (Valve B) confirmed CLOSED and verified"
+      },
+      {
+        "rule_id": "RULE_009",
+        "rule_name": "Non-Routine Work \u2014 Valid Permit to Work Required",
+        "stated_facts": [
+          {
+            "entity": "Operation",
+            "action": "completed",
+            "state": "active",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "Operation was completed without incident.",
+            "triggered_rule_id": "RULE_009"
+          }
+        ],
+        "inferred_gap": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "UNAUTHORIZED_WORK_RISK",
+        "hazard_description": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+        "severity_score": 0.78,
+        "sif_potential": false,
+        "iogp_rule": "IOGP Rule #1: Work with a Valid Permit to Work When Required",
+        "iogp_clause": "Never: Work without a Permit to Work when one is required",
+        "oisd_standard": "OISD-105: Permit to Work System",
+        "oisd_clause": "Clause 3.1 \u2014 PTW Applicability; Clause 3.3 \u2014 PTW Validity",
+        "historical_precedent": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+        "mitigation": "Stop all work immediately. Verify PTW status with area authority. Issue new PTW if required. Do not restart work until a valid PTW is in place and all conditions are satisfied.",
+        "required_condition": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start"
+      }
+    ],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0017",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations during which secondary isolation integrity was compromised during a pressure bleed operation. The absence of verified secondary barrier status is cited as a contributing factor in the post-incident investigation.",
+        "similarity_score": 0.8431,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0016",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure operations, when primary isolation (Valve A) is opened for bleed-down, the secondary isolation valve (Valve B) must be positively confirmed CLOSED before commencement. Omission of this confirmation represents a critical barrier gap even when the primary operation appears to complete without incident.",
+        "similarity_score": 0.8395,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0005",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Relevance to Major Incidents:** Many major industrial accidents (Piper Alpha 1988, Texas City 2005) have been linked to failures in Permit to Work systems, including expired permits, miscommunication during shift handovers, and unauthorized bypass of PTW requirements.",
+        "similarity_score": 0.899,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0004",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Never Do This:**\n- Work without a Permit to Work when one is required.\n- Proceed with work if the PTW has expired or conditions have changed significantly.\n- Bypass or circumvent the PTW system.",
+        "similarity_score": 0.8772,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "causal_graph": {
+      "nodes": [
+        {
+          "node_id": "STMT_1",
+          "statement_index": 1,
+          "raw_statement": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+          "extracted_entity": "Valve A",
+          "extracted_action": "bleed",
+          "extracted_state": "open",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_2",
+          "statement_index": 2,
+          "raw_statement": "Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_3",
+          "statement_index": 3,
+          "raw_statement": "Operation was completed without incident.",
+          "extracted_entity": "Operation",
+          "extracted_action": "completed",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_4",
+          "statement_index": 4,
+          "raw_statement": "Crew proceeded to change the manifold spool piece following the bleed-down.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "BARRIER_GAP_1",
+          "statement_index": 991,
+          "raw_statement": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+          "extracted_entity": "Pressure Bleed / Double Block Isolation",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_1",
+          "statement_index": 996,
+          "raw_statement": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "extracted_entity": "IMPLICIT_BARRIER_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 95%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_1",
+          "statement_index": 999,
+          "raw_statement": "IOGP Rule #3: Verify Isolation Before Work Begins | OISD-RP-238: Well Integrity Management",
+          "extracted_entity": "OISD-RP-238: Well Integrity Management",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations dur...",
+          "node_type": "GROUNDING_PROOF"
+        },
+        {
+          "node_id": "BARRIER_GAP_2",
+          "statement_index": 992,
+          "raw_statement": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start",
+          "extracted_entity": "Non-Routine Work \u2014 Valid Permit to Work Required",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_2",
+          "statement_index": 997,
+          "raw_statement": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "extracted_entity": "UNAUTHORIZED_WORK_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 78%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_2",
+          "statement_index": 1000,
+          "raw_statement": "IOGP Rule #1: Work with a Valid Permit to Work When Required | OISD-105: Permit to Work System",
+          "extracted_entity": "OISD-105: Permit to Work System",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure o...",
+          "node_type": "GROUNDING_PROOF"
+        }
+      ],
+      "edges": [
+        {
+          "source_id": "STMT_1",
+          "target_id": "STMT_2",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_2",
+          "target_id": "STMT_3",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "STMT_4",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_1",
+          "target_id": "BARRIER_GAP_1",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_1",
+          "target_id": "HAZARD_1",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_1",
+          "target_id": "PROOF_1",
+          "label": "grounded by standard"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "BARRIER_GAP_2",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_2",
+          "target_id": "HAZARD_2",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_2",
+          "target_id": "PROOF_2",
+          "label": "grounded by standard"
+        }
+      ],
+      "summary_path": "Parsed 4 operational statements into DAG graph (10 nodes, 9 edges)."
+    },
+    "overall_risk_score": 1.0,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "processing_time_ms": 36.42,
+    "analyzed_at": "2026-09-02T12:42:46.394928",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "f308249d-5c99-43f1-b49a-de084a7d1e82",
+    "raw_text": "Worker observed not wearing a hard hat while walking through the PPE-mandatory zone near the site office compound. Worker was reminded of PPE requirements and immediately replaced their hard hat.",
+    "functional_location": "AHWR-50-04 Work Over Rig (50MT)",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "fact_tuple": {
+      "activity": "Routine Operation",
+      "activity_status": "INFERRED",
+      "equipment": "Oilfield Asset Component",
+      "equipment_status": "INFERRED",
+      "hazard": "Uncontrolled Operational Risk",
+      "hazard_status": "INFERRED",
+      "energy_source": "UNKNOWN",
+      "energy_status": "UNKNOWN",
+      "exposure": "No Person Identified",
+      "exposure_status": "UNKNOWN",
+      "barrier": "Physical Control Barrier",
+      "barrier_condition": "UNKNOWN",
+      "barrier_status": "UNKNOWN"
+    },
+    "extracted_facts": [],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "oisd_guidelines",
+        "source_label": "OISD Process Safety Standards",
+        "chunk_id": "oisd_guidelines_chunk_0033",
+        "text": "[Section 5: Chemical Handling PPE]\n**Clause 5.1 \u2014 PPE Requirements:**\nBefore handling any hazardous chemical, the Safety Data Sheet (SDS) must be consulted to determine required PPE. Minimum requirements for corrosive chemicals (acids, caustics, oxidizers): chemical-resistant gloves, chemical splash goggles, face shield, chemical-resistant apron.",
+        "similarity_score": 0.6942,
+        "metadata": {
+          "section": "Section 5: Chemical Handling PPE",
+          "source_label": "OISD Process Safety Standards"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0015",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.4 \u2014 Energy Verification:** Mechanical zero-pressure verification shall be performed by observing a calibrated pressure gauge at the work point, not at the isolation point. A gauge reading of zero at the isolation valve does not confirm zero pressure at the downstream work location.",
+        "similarity_score": 0.6695,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "causal_graph": {
+      "nodes": [
+        {
+          "node_id": "STMT_1",
+          "statement_index": 1,
+          "raw_statement": "Worker observed not wearing a hard hat while walking through the PPE-mandatory zone near the site office compound.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_2",
+          "statement_index": 2,
+          "raw_statement": "Worker was reminded of PPE requirements and immediately replaced their hard hat.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        }
+      ],
+      "edges": [
+        {
+          "source_id": "STMT_1",
+          "target_id": "STMT_2",
+          "label": "then"
+        }
+      ],
+      "summary_path": "Parsed 2 operational statements into DAG graph (2 nodes, 1 edges)."
+    },
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "processing_time_ms": 17.41,
+    "analyzed_at": "2026-09-02T12:42:46.349979",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "518f94bc-e82d-424d-b40c-6f911008d8cd",
+    "raw_text": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.",
+    "functional_location": "AHWR-50-04 Work Over Rig (50MT)",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "fact_tuple": {
+      "activity": "Pressure Bleed Depressurization",
+      "activity_status": "EXPLICIT",
+      "equipment": "Manifold Bleed Valve",
+      "equipment_status": "EXPLICIT",
+      "hazard": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+      "hazard_status": "INFERRED",
+      "energy_source": "PRESSURE",
+      "energy_status": "EXPLICIT",
+      "exposure": "No Person Identified",
+      "exposure_status": "UNKNOWN",
+      "barrier": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+      "barrier_condition": "ABSENT",
+      "barrier_status": "INFERRED"
+    },
+    "extracted_facts": [
+      {
+        "entity": "Valve A",
+        "action": "bleed",
+        "state": "open",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+        "triggered_rule_id": "RULE_001"
+      },
+      {
+        "entity": "Operation",
+        "action": "completed",
+        "state": "active",
+        "location": "Rig-04",
+        "confidence": 0.82,
+        "raw_text_span": "Operation was completed without incident.",
+        "triggered_rule_id": "RULE_009"
+      }
+    ],
+    "inferred_hazards": [
+      {
+        "rule_id": "RULE_001",
+        "rule_name": "Pressure Bleed / Double Block Isolation",
+        "stated_facts": [
+          {
+            "entity": "Valve A",
+            "action": "bleed",
+            "state": "open",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+            "triggered_rule_id": "RULE_001"
+          }
+        ],
+        "inferred_gap": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "IMPLICIT_BARRIER_RISK",
+        "hazard_description": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+        "severity_score": 0.95,
+        "sif_potential": true,
+        "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+        "iogp_clause": "Clause 3.7 \u2014 Secondary Barrier Integrity",
+        "oisd_standard": "OISD-RP-238: Well Integrity Management",
+        "oisd_clause": "Clause 6.2.1 \u2014 Secondary Valve Verification in Bleed Operations",
+        "historical_precedent": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+        "mitigation": "Immediately halt downstream work. Physically verify and document secondary valve (Valve B) closed position via valve position indicator and downstream pressure gauge reading.",
+        "required_condition": "Secondary isolation valve (Valve B) confirmed CLOSED and verified"
+      },
+      {
+        "rule_id": "RULE_009",
+        "rule_name": "Non-Routine Work \u2014 Valid Permit to Work Required",
+        "stated_facts": [
+          {
+            "entity": "Operation",
+            "action": "completed",
+            "state": "active",
+            "location": "Rig-04",
+            "confidence": 0.82,
+            "raw_text_span": "Operation was completed without incident.",
+            "triggered_rule_id": "RULE_009"
+          }
+        ],
+        "inferred_gap": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "UNAUTHORIZED_WORK_RISK",
+        "hazard_description": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+        "severity_score": 0.78,
+        "sif_potential": false,
+        "iogp_rule": "IOGP Rule #1: Work with a Valid Permit to Work When Required",
+        "iogp_clause": "Never: Work without a Permit to Work when one is required",
+        "oisd_standard": "OISD-105: Permit to Work System",
+        "oisd_clause": "Clause 3.1 \u2014 PTW Applicability; Clause 3.3 \u2014 PTW Validity",
+        "historical_precedent": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+        "mitigation": "Stop all work immediately. Verify PTW status with area authority. Issue new PTW if required. Do not restart work until a valid PTW is in place and all conditions are satisfied.",
+        "required_condition": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start"
+      }
+    ],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0017",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations during which secondary isolation integrity was compromised during a pressure bleed operation. The absence of verified secondary barrier status is cited as a contributing factor in the post-incident investigation.",
+        "similarity_score": 0.8431,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0016",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure operations, when primary isolation (Valve A) is opened for bleed-down, the secondary isolation valve (Valve B) must be positively confirmed CLOSED before commencement. Omission of this confirmation represents a critical barrier gap even when the primary operation appears to complete without incident.",
+        "similarity_score": 0.8395,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0005",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Relevance to Major Incidents:** Many major industrial accidents (Piper Alpha 1988, Texas City 2005) have been linked to failures in Permit to Work systems, including expired permits, miscommunication during shift handovers, and unauthorized bypass of PTW requirements.",
+        "similarity_score": 0.899,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0004",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Never Do This:**\n- Work without a Permit to Work when one is required.\n- Proceed with work if the PTW has expired or conditions have changed significantly.\n- Bypass or circumvent the PTW system.",
+        "similarity_score": 0.8772,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "causal_graph": {
+      "nodes": [
+        {
+          "node_id": "STMT_1",
+          "statement_index": 1,
+          "raw_statement": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule.",
+          "extracted_entity": "Valve A",
+          "extracted_action": "bleed",
+          "extracted_state": "open",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_2",
+          "statement_index": 2,
+          "raw_statement": "Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_3",
+          "statement_index": 3,
+          "raw_statement": "Operation was completed without incident.",
+          "extracted_entity": "Operation",
+          "extracted_action": "completed",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "STMT_4",
+          "statement_index": 4,
+          "raw_statement": "Crew proceeded to change the manifold spool piece following the bleed-down.",
+          "extracted_entity": "Operation",
+          "extracted_action": "proceeded",
+          "extracted_state": "active",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "STATEMENT"
+        },
+        {
+          "node_id": "BARRIER_GAP_1",
+          "statement_index": 991,
+          "raw_statement": "Secondary isolation valve (Valve B) confirmed CLOSED and verified",
+          "extracted_entity": "Pressure Bleed / Double Block Isolation",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Valve A 'bleed' operation but does NOT mention: Secondary isolation valve (Valve B) confirmed CLOSED and verified. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_1",
+          "statement_index": 996,
+          "raw_statement": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "extracted_entity": "IMPLICIT_BARRIER_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 95%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Unverified Energy Isolation \u2014 Secondary Barrier Status UNKNOWN. Upstream pressure may re-communicate through unverified valve.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_1",
+          "statement_index": 999,
+          "raw_statement": "IOGP Rule #3: Verify Isolation Before Work Begins | OISD-RP-238: Well Integrity Management",
+          "extracted_entity": "OISD-RP-238: Well Integrity Management",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "2020 Baghjan-5 Well Blowout \u2014 Premature barrier removal during pressure operations; secondary valve physically unverified",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations dur...",
+          "node_type": "GROUNDING_PROOF"
+        },
+        {
+          "node_id": "BARRIER_GAP_2",
+          "statement_index": 992,
+          "raw_statement": "Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start",
+          "extracted_entity": "Non-Routine Work \u2014 Valid Permit to Work Required",
+          "extracted_action": "UNVERIFIED / OMITTED",
+          "extracted_state": "MISSING_BARRIER",
+          "has_missing_barrier": true,
+          "missing_barrier_description": "Report describes Maintenance 'commenced' operation but does NOT mention: Valid Permit to Work issued and displayed at work site; all conditions satisfied before work start. This is an UNVERIFIED SAFETY STATE.",
+          "hazard_consequence": "",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "MISSING_BARRIER"
+        },
+        {
+          "node_id": "HAZARD_2",
+          "statement_index": 997,
+          "raw_statement": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "extracted_entity": "UNAUTHORIZED_WORK_RISK",
+          "extracted_action": "RISK ESCALATION",
+          "extracted_state": "SEVERITY 78%",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "Work potentially proceeding without valid Permit to Work \u2014 risk of uncontrolled work, missed hazard controls, and conflict with concurrent activities.",
+          "matched_evidence_source": "",
+          "matched_evidence_snippet": "",
+          "node_type": "HAZARD_CONSEQUENCE"
+        },
+        {
+          "node_id": "PROOF_2",
+          "statement_index": 1000,
+          "raw_statement": "IOGP Rule #1: Work with a Valid Permit to Work When Required | OISD-105: Permit to Work System",
+          "extracted_entity": "OISD-105: Permit to Work System",
+          "extracted_action": "GROUNDING PROOF",
+          "extracted_state": "REGULATORY STANDARD",
+          "has_missing_barrier": false,
+          "missing_barrier_description": "",
+          "hazard_consequence": "",
+          "matched_evidence_source": "1988 Piper Alpha \u2014 PTW system failed during shift handover; condensate pump started while maintenance was ongoing",
+          "matched_evidence_snippet": "[Rule 3: Verify isolation before work begins]\n**Key Clause 3.7 \u2014 Secondary Barrier Integrity:** In well intervention and manifold pressure o...",
+          "node_type": "GROUNDING_PROOF"
+        }
+      ],
+      "edges": [
+        {
+          "source_id": "STMT_1",
+          "target_id": "STMT_2",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_2",
+          "target_id": "STMT_3",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "STMT_4",
+          "label": "then"
+        },
+        {
+          "source_id": "STMT_1",
+          "target_id": "BARRIER_GAP_1",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_1",
+          "target_id": "HAZARD_1",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_1",
+          "target_id": "PROOF_1",
+          "label": "grounded by standard"
+        },
+        {
+          "source_id": "STMT_3",
+          "target_id": "BARRIER_GAP_2",
+          "label": "omits required barrier"
+        },
+        {
+          "source_id": "BARRIER_GAP_2",
+          "target_id": "HAZARD_2",
+          "label": "escalates to hazard"
+        },
+        {
+          "source_id": "HAZARD_2",
+          "target_id": "PROOF_2",
+          "label": "grounded by standard"
+        }
+      ],
+      "summary_path": "Parsed 4 operational statements into DAG graph (10 nodes, 9 edges)."
+    },
+    "overall_risk_score": 1.0,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "processing_time_ms": 75.64,
+    "analyzed_at": "2026-09-02T12:42:46.324835",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
     "report_id": "93b458ea-2dc0-4407-940f-d242c90967bb",
     "raw_text": "During morning shift, Valve A on the Rig-04 manifold was opened to bleed surface pressure as per workover schedule. Pressure gauge dropped from 210 bar to near-zero over approximately 15 minutes. Operation was completed without incident. Crew proceeded to change the manifold spool piece following the bleed-down.",
     "functional_location": "AHWR-50-04 Work Over Rig (50MT)",

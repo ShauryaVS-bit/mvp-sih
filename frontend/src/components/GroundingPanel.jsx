@@ -1,43 +1,46 @@
-import { BookOpen, ExternalLink } from 'lucide-react'
+import { BookOpen } from 'lucide-react'
 
 const SOURCE_CONFIG = {
   iogp_rules: {
     icon: '📋',
-    color: 'border-blue-500 bg-blue-900/20',
-    headerColor: 'text-blue-300',
-    badgeColor: 'bg-blue-800/60 text-blue-200',
-    label: 'IOGP Life-Saving Rules',
+    color: 'border-indigo-200 bg-indigo-50/70',
+    headerColor: 'text-indigo-900',
+    badgeColor: 'bg-indigo-100 text-indigo-900 border border-indigo-200',
+    label: 'IOGP Safety Standards',
   },
   oisd_guidelines: {
     icon: '📐',
-    color: 'border-purple-500 bg-purple-900/20',
-    headerColor: 'text-purple-300',
-    badgeColor: 'bg-purple-800/60 text-purple-200',
-    label: 'OISD Process Safety Standards',
+    color: 'border-purple-200 bg-purple-50/70',
+    headerColor: 'text-purple-900',
+    badgeColor: 'bg-purple-100 text-purple-900 border border-purple-200',
+    label: 'OISD Process Safety Rules',
   },
   baghjan_investigation: {
     icon: '🔥',
-    color: 'border-orange-500 bg-orange-900/20',
-    headerColor: 'text-orange-300',
-    badgeColor: 'bg-orange-800/60 text-orange-200',
-    label: 'Baghjan-5 Case Study (2020)',
+    color: 'border-amber-200 bg-amber-50/70',
+    headerColor: 'text-amber-900',
+    badgeColor: 'bg-amber-100 text-amber-900 border border-amber-200',
+    label: 'Industry Case Reference',
   },
 }
 
 function SimilarityMeter({ score }) {
   const pct = Math.round(score * 100)
   const color =
-    score >= 0.7 ? 'bg-emerald-500' : score >= 0.5 ? 'bg-blue-400' : 'bg-slate-400'
+    score >= 0.7 ? 'bg-emerald-500' : score >= 0.5 ? 'bg-indigo-500' : 'bg-slate-400'
+  const textColor =
+    score >= 0.7 ? 'text-emerald-700' : score >= 0.5 ? 'text-indigo-700' : 'text-slate-600'
+
   return (
-    <div className="flex items-center gap-2 mt-2">
-      <span className="text-xs text-slate-500">Relevance</span>
-      <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-200/60">
+      <span className="text-xs text-slate-500 font-semibold">Rule Relevance</span>
+      <div className="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${color}`}
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className={`text-xs font-mono font-semibold ${color.replace('bg-', 'text-')}`}>
+      <span className={`text-xs font-mono font-bold ${textColor} tabular-nums`}>
         {pct}%
       </span>
     </div>
@@ -47,33 +50,32 @@ function SimilarityMeter({ score }) {
 export default function GroundingPanel({ evidenceMatches }) {
   if (!evidenceMatches || evidenceMatches.length === 0) {
     return (
-      <div className="p-4 text-center text-slate-500 text-sm bg-slate-800/30 rounded-lg border border-slate-700">
-        <BookOpen size={20} className="mx-auto mb-2 text-slate-600" />
-        No evidence retrieved yet.
+      <div className="p-5 text-center text-slate-400 text-xs bg-white rounded-xl border border-slate-200 shadow-2xs">
+        <BookOpen size={20} className="mx-auto mb-2 text-slate-300" />
+        No regulatory evidence matches retrieved.
       </div>
     )
   }
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-2">
-        <BookOpen size={16} className="text-blue-400" />
-        <h3 className="text-sm font-semibold text-white">📘 Grounding Evidence</h3>
-        <span className="ml-auto text-xs text-slate-400">
-          {evidenceMatches.length} match{evidenceMatches.length !== 1 ? 'es' : ''}
+      <div className="flex items-center gap-2 mb-1">
+        <BookOpen size={16} className="text-indigo-600" />
+        <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">Regulatory & Industry Standards</h3>
+        <span className="ml-auto text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200 tabular-nums">
+          {evidenceMatches.length} Rule{evidenceMatches.length !== 1 ? 's' : ''} Matched
         </span>
       </div>
 
       {evidenceMatches.map((chunk, idx) => {
         const src = SOURCE_CONFIG[chunk.source] || {
           icon: '📄',
-          color: 'border-slate-500 bg-slate-800/30',
-          headerColor: 'text-slate-300',
-          badgeColor: 'bg-slate-700 text-slate-300',
+          color: 'border-slate-200 bg-slate-50',
+          headerColor: 'text-slate-800',
+          badgeColor: 'bg-slate-100 text-slate-700 border border-slate-200',
           label: chunk.source_label || chunk.source,
         }
 
-        // Truncate long evidence text
         const maxLen = 450
         const displayText =
           chunk.text.length > maxLen
@@ -83,27 +85,27 @@ export default function GroundingPanel({ evidenceMatches }) {
         return (
           <div
             key={`${chunk.chunk_id}-${idx}`}
-            className={`rounded-lg border-l-4 p-3 ${src.color} fade-in`}
+            className={`rounded-xl p-3.5 ${src.color} border shadow-2xs fade-in`}
           >
             {/* Header */}
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-2 gap-2">
               <div className="flex items-center gap-2">
                 <span>{src.icon}</span>
-                <span className={`text-xs font-semibold ${src.headerColor}`}>
+                <span className={`text-xs font-extrabold ${src.headerColor}`}>
                   {src.label}
                 </span>
               </div>
               {chunk.metadata?.section && (
-                <span className={`text-xs px-2 py-0.5 rounded ${src.badgeColor}`}>
-                  {chunk.metadata.section.length > 40
-                    ? chunk.metadata.section.substring(0, 40) + '…'
+                <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-medium ${src.badgeColor}`}>
+                  {chunk.metadata.section.length > 35
+                    ? chunk.metadata.section.substring(0, 35) + '…'
                     : chunk.metadata.section}
                 </span>
               )}
             </div>
 
             {/* Evidence text */}
-            <p className="text-xs text-slate-300 leading-relaxed font-mono bg-slate-900/40 rounded p-2 border border-slate-700/50">
+            <p className="text-xs text-slate-800 leading-relaxed font-sans bg-white rounded-lg p-2.5 border border-slate-200 shadow-2xs font-medium">
               {displayText}
             </p>
 

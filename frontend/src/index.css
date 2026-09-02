@@ -1,32 +1,50 @@
 @import "tailwindcss";
 
-/* Custom global styles */
+/* Custom global styles - Impeccable Modern Enterprise Theme */
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background-color: rgba(99, 102, 241, 0.18);
+  color: #1e1b4b;
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background-color: #0f172a;
-  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar styling */
+/* Tabular figures for alignment in data tables and scores */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus rings with accessible offset */
+:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Custom crisp scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #cbd5e1;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #94a3b8;
 }
 
 /* Evidence tree connector lines */
@@ -40,7 +58,7 @@ body {
   top: 50%;
   width: 16px;
   height: 1px;
-  background-color: #475569;
+  background-color: #cbd5e1;
 }
 .tree-connector::after {
   content: '';
@@ -49,26 +67,27 @@ body {
   top: 0;
   width: 1px;
   height: 50%;
-  background-color: #475569;
+  background-color: #cbd5e1;
 }
 .tree-connector:last-child::after {
   display: none;
 }
 
-/* Pulse animation for SIF badge */
+/* Pulse animation for SIF alert badges */
 @keyframes sif-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.03); }
 }
 .sif-pulse {
-  animation: sif-pulse 1.5s ease-in-out infinite;
+  animation: sif-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Fade-in for analysis results */
+/* Smooth spring-like fade-in for analysis results */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .fade-in {
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
