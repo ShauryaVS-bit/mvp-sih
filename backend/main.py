@@ -120,13 +120,16 @@ def _load_synthetic_reports() -> list[SyntheticReport]:
 # Core Pipeline Function
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_pipeline(text: str, report_id: str | None = None) -> FullAnalysisResult:
+def run_pipeline(text: str, report_id: str | None = None, extracted_facts: list | None = None) -> FullAnalysisResult:
     """Execute the full 3-step neuro-symbolic analysis pipeline."""
     t_start = time.perf_counter()
 
     # Step 1: Fact Extraction
-    logger.info("Step 1: Extracting facts...")
-    extracted_facts = extract_facts(text)
+    if extracted_facts is None:
+        logger.info("Step 1: Extracting facts...")
+        extracted_facts = extract_facts(text)
+    else:
+        logger.info("Step 1: Using pre-extracted facts...")
 
     # Step 2: Constraint Inference
     logger.info("Step 2: Inferring hazards...")
@@ -427,7 +430,8 @@ async def get_reports():
                 preview=n.get("raw_text", "")[:100],
                 overall_risk_score=n.get("overall_risk_score", 0.5),
                 risk_level=n.get("risk_level", "LOW").upper(),
-                sif_potential=n.get("sif_potential", False)
+                sif_potential=n.get("sif_potential", False),
+                escalated_pattern=n.get("escalated_pattern", False)
             ))
     except Exception as e:
         logger.error(f"Failed to load reports for dashboard: {e}")
@@ -515,8 +519,22 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
         
         # We will chunk the reports to batch LLM graph extraction (10 per batch)
         BATCH_SIZE = 10
+        from engine.extractor import extract_facts_batch
+        
         for chunk_idx in range(0, len(reports_to_process), BATCH_SIZE):
             chunk = reports_to_process[chunk_idx:chunk_idx + BATCH_SIZE]
+            
+            # Extract facts in batch
+            chunk_texts = []
+            for metadata in chunk:
+                parsed_text = metadata.get("text", metadata.get("description", ""))
+                if parsed_text and parsed_text == request.text:
+                    text_match = re.search(r'"text"\s*:\s*"((?:\\.|[^"\\])*)"', parsed_text)
+                    if text_match:
+                        parsed_text = text_match.group(1).encode('utf-8').decode('unicode_escape')
+                chunk_texts.append(parsed_text)
+                
+            batch_facts = extract_facts_batch(chunk_texts)
             
             # Step 1: Prepare the batch payload for Agent 1
             batch_payload = []
@@ -524,19 +542,16 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
             
             for i, metadata in enumerate(chunk):
                 try:
-                    parsed_text = metadata.get("text", metadata.get("description", ""))
-                    if parsed_text and parsed_text == request.text:
-                        text_match = re.search(r'"text"\s*:\s*"((?:\\.|[^"\\])*)"', parsed_text)
-                        if text_match:
-                            parsed_text = text_match.group(1).encode('utf-8').decode('unicode_escape')
+                    parsed_text = chunk_texts[i]
 
                     if not parsed_text:
                         continue
                     
                     report_id = metadata.get("report_id", None)
+                    facts = batch_facts[i] if i < len(batch_facts) else None
                     
                     # Run pipeline WITHOUT Agent 1 Graph Ingestion (Offline Fast Path)
-                    result = run_pipeline(text=parsed_text, report_id=report_id)
+                    result = run_pipeline(text=parsed_text, report_id=report_id, extracted_facts=facts)
                     
                     loc = metadata.get("site_id", metadata.get("asset_id", result.functional_location))
                     if loc: result.functional_location = loc
@@ -569,6 +584,8 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
                         )
                         
                         if "SIF_PATTERN_DETECTED" in chat_res.upper() or in_batch_count >= 2:
+                            if not result.sif_potential:
+                                result.escalated_pattern = True
                             result.sif_potential = True
                             result.risk_level = RiskLevel.HIGH
                             if in_batch_count >= 2:
@@ -586,6 +603,7 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
                                     if prev_res.functional_location == result.functional_location and prev_res.incident_cause == result.incident_cause:
                                         if not prev_res.sif_potential:
                                             prev_res.sif_potential = True
+                                            prev_res.escalated_pattern = True
                                             prev_res.risk_level = RiskLevel.HIGH
                                             existing_prev = prev_res.root_cause_analysis or "No explicit root cause determined."
                                             prev_res.root_cause_analysis = f"⚠️ PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: {existing_prev}"
@@ -595,6 +613,7 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
                                             for bp in batch_payload:
                                                 if bp["report_id"] == prev_res.report_id:
                                                     bp["metadata"]["sif_potential"] = True
+                                                    bp["metadata"]["escalated_pattern"] = True
                                                     bp["metadata"]["overall_risk_score"] = prev_res.overall_risk_score
                                                     bp["metadata"]["risk_level"] = prev_res.risk_level
                                                     break
@@ -607,6 +626,7 @@ async def analyze_bulk(request: AnalyzeRequest, background_tasks: BackgroundTask
                         "text": parsed_text,
                         "metadata": {
                             "sif_potential": result.sif_potential,
+                            "escalated_pattern": result.escalated_pattern,
                             "overall_risk_score": result.overall_risk_score,
                             "risk_level": result.risk_level,
                             "ehs_code": result.ehs_code
@@ -730,6 +750,27 @@ async def get_linked_reports(report_id: str):
     # No synthetic slop fallback. If the graph fails or is empty, return empty graph structure.
     return {
         "source_id": report_id,
+        "nodes": [],
+        "edges": [],
+        "total_linked": 0,
+    }
+
+@app.get("/api/graph/global")
+async def get_full_graph_endpoint():
+    """
+    GET /api/graph/global
+    Return the full knowledge graph.
+    """
+    if GRAPH_AGENTS_READY:
+        try:
+            logger.info("Using Agent 2 to fetch full knowledge graph")
+            result = reasoning_agent.get_full_graph()
+            if result and result.get("nodes"):
+                return result
+        except Exception as e:
+            logger.error(f"Agent 2 Graph retrieval failed: {e}")
+
+    return {
         "nodes": [],
         "edges": [],
         "total_linked": 0,

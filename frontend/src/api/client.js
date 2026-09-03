@@ -80,13 +80,19 @@ export async function fetchMonthlyReport(month = 'All-Time') {
   const res = await api.get('/analytics/monthly_report', { params: { month } })
   return res.data
 }
+const linkedReportsCache = new Map()
+
 /**
  * GET /api/reports/:id/linked
  * Returns graph of related reports { nodes, edges, source_id, total_linked }
  */
 export async function fetchLinkedReports(reportId) {
-  const res = await api.get(`/reports/${reportId}/linked`)
-  return res.data
+  if (linkedReportsCache.has(reportId)) {
+    return linkedReportsCache.get(reportId)
+  }
+  const promise = api.get(`/reports/${reportId}/linked`).then(res => res.data)
+  linkedReportsCache.set(reportId, promise)
+  return promise
 }
 
 export async function deleteReport(reportId) {
@@ -106,6 +112,11 @@ export async function fetchGlobalInsights() {
 
 export async function fetchManualInsights(prompt = "") {
   const res = await api.post('/insights/query', { prompt })
+  return res.data
+}
+
+export async function fetchGlobalGraph() {
+  const res = await api.get('/graph/global')
   return res.data
 }
 

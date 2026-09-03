@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ReportGraph from './ReportGraph';
 import { fetchLinkedReports } from '../api/client';
 
 export default function ReportDetail({ report, analysis, analysisLoading, onNavigate, onSelectReport }) {
-  const [linkedView, setLinkedView] = useState('list'); // 'list' | 'graph'
   const [graphData, setGraphData] = useState(null);
   const [graphLoading, setGraphLoading] = useState(false);
 
@@ -277,8 +275,8 @@ Actions
 </div>
 )}
 
-{/* Linked Reports — List/Graph toggle */}
-<div className="bg-surface-container-lowest border border-outline-variant rounded p-5 flex flex-col" style={{ height: linkedView === 'graph' ? '450px' : 'auto', minHeight: '300px' }}>
+{/* Linked Reports */}
+<div className="bg-surface-container-lowest border border-outline-variant rounded p-5 flex flex-col" style={{ height: 'auto', minHeight: '300px', maxHeight: '450px' }}>
 <div className="flex items-center justify-between mb-4">
 <h3 className="font-headline-sm text-headline-sm text-on-surface">
   Linked Reports
@@ -286,49 +284,9 @@ Actions
     <span className="font-data-tabular text-data-tabular text-on-surface-variant ml-2">({graphData.total_linked})</span>
   )}
 </h3>
-<div className="flex bg-surface-container rounded p-0.5">
-<button
-  aria-label="List View"
-  onClick={() => setLinkedView('list')}
-  className={`px-2 py-1 rounded flex items-center justify-center transition-colors ${
-    linkedView === 'list'
-      ? 'bg-surface-container-lowest shadow-sm text-on-surface'
-      : 'text-on-surface-variant hover:text-on-surface'
-  }`}
->
-  <span className="material-symbols-outlined text-[16px]">format_list_bulleted</span>
-</button>
-<button
-  aria-label="Graph View"
-  onClick={() => setLinkedView('graph')}
-  className={`px-2 py-1 rounded flex items-center justify-center transition-colors ${
-    linkedView === 'graph'
-      ? 'bg-surface-container-lowest shadow-sm text-on-surface'
-      : 'text-on-surface-variant hover:text-on-surface'
-  }`}
->
-  <span className="material-symbols-outlined text-[16px]">hub</span>
-</button>
-</div>
 </div>
 
-{/* Graph View */}
-{linkedView === 'graph' && (
-  <div className="flex-grow relative">
-    {graphLoading ? (
-      <div className="flex items-center justify-center h-full text-on-surface-variant">
-        <span className="material-symbols-outlined animate-spin mr-2">sync</span>
-        <span className="font-body-sm text-body-sm">Loading graph...</span>
-      </div>
-    ) : (
-      <ReportGraph graphData={graphData} onNodeClick={handleGraphNodeClick} />
-    )}
-  </div>
-)}
-
-{/* List View */}
-{linkedView === 'list' && (
-  <div className="flex-grow overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+<div className="flex-grow overflow-y-auto pr-2 space-y-3 custom-scrollbar">
     {graphLoading ? (
       <div className="flex items-center justify-center py-8 text-on-surface-variant">
         <span className="material-symbols-outlined animate-spin mr-2">sync</span>
@@ -375,7 +333,6 @@ Actions
       </div>
     )}
   </div>
-)}
 
 </div>
 

@@ -255,6 +255,67 @@ Return only facts that are EXPLICITLY STATED in the text. Do not infer or guess.
         return _extract_facts_pattern(text)
 
 
+def _extract_facts_llm_batch(texts: list[str]) -> list[list[ExtractedFact]]:
+    """
+    LLM-backed fact extraction for a batch of reports to reduce API calls.
+    """
+    try:
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        from pydantic import BaseModel
+
+        class LLMFactList(BaseModel):
+            facts: list[ExtractedFact]
+
+        class LLMBatchFactList(BaseModel):
+            results: list[LLMFactList]
+
+        llm = ChatGoogleGenerativeAI(
+            model="gemini-3.5-flash", 
+            temperature=0,
+            convert_system_message_to_human=True
+        )
+        structured_llm = llm.with_structured_output(LLMBatchFactList)
+
+        system_prompt = """You are a process safety expert analyzing a batch of industrial incident reports.
+Extract all explicit physical facts from each report. Focus on:
+- Physical entities (valves, equipment, people, chemicals)
+- Actions performed (opened, welded, entered, transferred)
+- Resulting states (open, closed, bypassed, absent)
+- Locations (rig names, equipment IDs, area names)
+
+Return a list of results, where each result corresponds to one report in the exact order they were provided.
+Return only facts that are EXPLICITLY STATED in the text. Do not infer or guess."""
+
+        prompt = system_prompt + "\n\nBatch of reports to analyze:\n"
+        for i, text in enumerate(texts):
+            prompt += f"\n--- Report {i} ---\n{text}\n"
+
+        result = structured_llm.invoke(prompt)
+
+        all_llm_facts = []
+        for i, llm_list in enumerate(result.results):
+            text_lc = texts[i].lower() if i < len(texts) else ""
+            facts = llm_list.facts
+            for fact in facts:
+                for rule in _RULES:
+                    entity_match = any(kw.lower() in fact.entity.lower() for kw in rule["trigger_entity_keywords"])
+                    action_match = any(kw.lower() in fact.action.lower() for kw in rule["trigger_action_keywords"])
+                    if entity_match and action_match:
+                        fact.triggered_rule_id = rule["rule_id"]
+                        break
+            all_llm_facts.append(facts)
+        
+        # Pad with pattern matching if LLM missed some
+        while len(all_llm_facts) < len(texts):
+            all_llm_facts.append(_extract_facts_pattern(texts[len(all_llm_facts)]))
+
+        return all_llm_facts
+
+    except Exception as e:
+        logger.warning(f"Batch LLM extraction failed ({e}), falling back to pattern matching.")
+        return [_extract_facts_pattern(text) for text in texts]
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Public entry point
 # ─────────────────────────────────────────────────────────────────────────────
@@ -280,3 +341,22 @@ def extract_facts(text: str) -> list[ExtractedFact]:
 
     logger.info(f"Extracted {len(facts)} facts from report")
     return facts
+
+
+def extract_facts_batch(texts: list[str]) -> list[list[ExtractedFact]]:
+    """
+    Main entry point for Batch Fact Extraction.
+    """
+    use_llm = (
+        os.getenv("GEMINI_API_KEY") is not None
+        and os.getenv("USE_MOCK", "false").lower() != "true"
+    )
+
+    if use_llm:
+        logger.info(f"Using Batch LLM-backed fact extraction for {len(texts)} reports")
+        facts_list = _extract_facts_llm_batch(texts)
+    else:
+        logger.info(f"Using pattern-based fact extraction (offline mode) for {len(texts)} reports")
+        facts_list = [_extract_facts_pattern(text) for text in texts]
+
+    return facts_list

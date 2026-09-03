@@ -172,6 +172,7 @@ class FullAnalysisResult(BaseModel):
     overall_risk_score: float = Field(default=0.0, ge=0.0, le=1.0)
     risk_level: RiskLevel = Field(default=RiskLevel.LOW)
     sif_potential: bool = Field(default=False)
+    escalated_pattern: bool = Field(default=False)
     processing_time_ms: float = Field(default=0.0)
     analyzed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     pipeline_mode: str = Field(default="multi_model_causal_dag", description="Active model architecture")
@@ -248,6 +249,7 @@ class ReportListItem(BaseModel):
     overall_risk_score: float
     risk_level: str
     sif_potential: bool
+    escalated_pattern: bool = False
 
 
 class HealthResponse(BaseModel):

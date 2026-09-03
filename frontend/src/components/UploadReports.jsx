@@ -63,8 +63,8 @@ export default function UploadReports({ onNavigate }) {
 <div className="flex items-center gap-container-padding h-full">
 <span className="font-display-lg text-display-lg font-bold text-primary">OIL Sentinel</span>
 <div className="hidden md:flex h-full items-center gap-gutter">
-<a onClick={() => onNavigate('DASHBOARD')} className="h-full flex items-center px-unit text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer active:opacity-80">Dashboard</a>
-<a onClick={() => onNavigate('INSIGHTS')} className="h-full flex items-center px-unit text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer active:opacity-80">Insights</a>
+<a onClick={() => onNavigate('DASHBOARD')} className="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80">Dashboard</a>
+<a onClick={() => onNavigate('INSIGHTS')} className="text-on-surface-variant font-body-md text-body-md h-full flex items-center border-b-2 border-transparent hover:bg-surface-container transition-colors px-2 cursor-pointer active:opacity-80">Insights</a>
 <a className="h-full flex items-center px-unit text-primary border-b-2 border-primary pb-1 hover:bg-surface-container transition-colors cursor-pointer active:opacity-80" href="#">New Report</a>
 </div>
 </div>

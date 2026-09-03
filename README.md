@@ -8,77 +8,90 @@ An AI/NLP process safety decision-support engine designed for oilfield operation
 
 ## 🌟 Key Features
 
-1. **Full SAP EHS Form Support**: Parses complete SAP EHS incident records including Functional Location (`AHWR-50-04 Work Over Rig 50MT`), SAP Short Description Codes (`F`, `G`, `M`, `N`, `P`, `R`, `U`, `V`, `W`), Incident Cause, Root Cause Analysis, Affected Persons Details, Corrective Actions, and Preventive Actions.
-2. **Statement-to-Statement & Evidence-to-Evidence Causal Mapping**: Segments field narratives into operational statements ($S_1 \to S_2 \to S_3$) and connects them directly to extracted 5-tuples, missing barrier nodes (❌), risk escalation nodes (🔴), and regulatory grounding proof nodes (📘).
-3. **Evidence Discipline**: Every extracted fact carries strict evidence status (`EXPLICIT` vs `INFERRED` vs `UNKNOWN`), preventing hallucinated safety claims.
-4. **Dense Vector RAG Retriever**: Local ChromaDB persistent vector database powered by `sentence-transformers/all-MiniLM-L6-v2`. Indexes IOGP Life-Saving Rules (#1–#12), OISD guidelines, and the 2020 Baghjan-5 blowout case study.
+1. **Full SAP EHS Form Support**: Parses unstructured field safety records including root causes, functional locations, and incident narratives.
+2. **Enterprise Knowledge Graph**: Translates isolated text reports into a highly connected Neo4j property graph linking Hazards, Equipment, Locations, Energy Sources, and People.
+3. **Agentic Reasoning (Agent 1 & 2)**:
+   - **Agent 1 (Ingestion)**: Autonomously maps incoming unstructured reports to Neo4j graph nodes and relationships using `gemini-3.5-flash`.
+   - **Agent 2 (Insights)**: An autonomous graph-reasoning agent that executes deep cypher queries to uncover hidden escalation chains, hazard correlations, and cross-site precursor patterns.
+4. **Dense Vector RAG Retriever**: Local ChromaDB persistent vector database powered by `sentence-transformers/all-MiniLM-L6-v2`. Indexes IOGP Life-Saving Rules and historical blowout case studies.
+5. **Cross-Fact Checking**: Retroactively flags precursor events in the ingestion pipeline if a batch contains repeated, escalating hazard patterns.
 
 ---
 
-## 🧠 Multi-Model Architecture & Tech Stack
+## 🧠 Multi-Agent Architecture & Tech Stack
 
 ```
 RAW SAP EHS REPORT / FIELD NARRATIVE
                  │
                  ▼
- [Model 1: SetFit / DeBERTa-v3 Multi-Aspect Classifier]
-  ├── Activity: Structural Pin Removal [EXPLICIT]
-  ├── Equipment: Rig Mast Pin [EXPLICIT]
-  ├── Hazard: High-Velocity Ejection [INFERRED]
-  ├── Energy Source: Kinetic / Stored Mechanical [EXPLICIT]
-  ├── Exposure: Rigman in direct line of fire [EXPLICIT]
-  └── Barrier Condition: Line of Fire Offset [ABSENT]
+ [Step 1: Fact Extraction via LangChain + Gemini 3.5 Flash]
+  ├── Identifies Entities (Equipment, People, Locations)
+  └── Identifies Actions and States
                  │
                  ▼
- [Model 2: NetworkX Heterogeneous Causal DAG Reasoner]
-  ├── Sentence S1 ➔ Sentence S2 (Sequence Edge)
-  ├── Sentence S2 ➔ Missing Barrier Node (Omission Edge)
-  └── Missing Barrier Node ➔ Risk Escalation Node
+ [Step 2: Constraint Inference Engine]
+  ├── Evaluates facts against rules_graph.json
+  └── Synthesizes Inferred Hazards (Missing Barriers)
                  │
                  ▼
- [Model 3: ChromaDB + SentenceTransformers Dense RAG]
-  ├── Top-k Vector Embedding Similarity Match
-  └── Grounds Risk Node to IOGP Rule #5 & OISD-GDN-205
+ [Step 3: Graph Ingestion (Agent 1)]
+  ├── Maps inferred hazards & facts into Neo4j
+  └── Connects incidents across locations and equipment
                  │
                  ▼
- [Model 4: Rolling Window Temporal Velocity Engine]
-  └── Tracks 7/14/30-day Asset-Barrier Accumulation
+ [Step 4: Global Pattern Reasoning (Agent 2)]
+  └── Runs complex cypher queries to expose hidden SIF chains
 ```
 
 ---
 
 ## 💻 Tech Stack Breakdown
 
-- **Backend**: FastAPI (Python 3.14), Pydantic v2 schemas, Uvicorn server.
-- **Graph & Logic Engine**: NetworkX (Causal DAG traversal), Custom Constraint Rule Solver (`rules_graph.json`).
-- **Vector RAG Store**: ChromaDB (Local persistent client), `sentence-transformers/all-MiniLM-L6-v2`.
-- **Frontend Dashboard**: React 18, Vite 5, Tailwind CSS v4, Lucide Icons.
+- **Backend**: FastAPI (Python 3.10+), LangChain, Pydantic v2.
+- **Graph Database**: Neo4j (Cypher querying, Property Graph).
+- **LLM Engine**: Google Gemini API (`gemini-3.5-flash`).
+- **Vector RAG Store**: ChromaDB (Local persistent client), `sentence-transformers`.
+- **Frontend Dashboard**: React 18, Vite 5, Tailwind CSS, Lucide Icons.
 
 ---
 
-## 🧪 Verification & Automated Tests
+## 🚀 How to Run
 
-Run the backend test suite:
+### 1. Prerequisites
+- Docker (for Neo4j)
+- Node.js & npm (for frontend)
+- Python 3.10+ (for backend)
+
+### 2. Set Environment Variables
+In the `backend` directory, create or edit the `.env` file with your Gemini API key:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=password
+```
+
+### 3. Start the Neo4j Database
+From the root directory:
+```bash
+docker-compose up -d
+```
+
+### 4. Start the Backend (FastAPI)
 ```bash
 cd backend
-python -m pytest tests/test_pipeline.py -v
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
 ```
-**Results**: `33 passed in 16.78s` (100% pass rate).
 
-Build the production frontend bundle:
+### 5. Start the Frontend (React/Vite)
+Open a new terminal window:
 ```bash
 cd frontend
-npm run build
-```
-**Results**: `✓ built in 1.95s` (0 errors).
-
----
-
-## 🚀 One-Click Launch
-
-Double-click `start.bat` in the root folder:
-```cmd
-start.bat
+npm install
+npm run dev
 ```
 
 - **Interactive Dashboard**: [http://localhost:5173](http://localhost:5173)

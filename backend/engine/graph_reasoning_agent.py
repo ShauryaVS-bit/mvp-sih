@@ -67,9 +67,10 @@ class GraphReasoningAgent:
                 # Add intermediate node
                 n = record["n"]
                 n_id = n.get("id", str(hash(str(n))))
+                labels = list(n.labels) if hasattr(n, 'labels') else []
                 nodes[n_id] = {
                     "id": n_id,
-                    "label": list(n.labels)[0] if hasattr(n, 'labels') else "Entity",
+                    "label": labels[0] if labels else "Entity",
                     "type": "entity",
                     "preview": str(n)
                 }
@@ -218,3 +219,71 @@ class GraphReasoningAgent:
             logger.error(f"Agent 2 global insights failed: {e}")
             
         return insights
+
+    def get_full_graph(self) -> Dict[str, Any]:
+        """
+        Executes a Cypher query to retrieve a sample of the full knowledge graph.
+        Returns nodes and edges formatted for the frontend visualization.
+        """
+        logger.info("Agent 2: Fetching full knowledge graph...")
+        
+        # We query for reports and their connections, limited to a reasonable number to prevent browser crash
+        cypher_query = """
+        MATCH (r:Report)-[e:MENTIONS]->(n)
+        RETURN r, e, n
+        LIMIT 300
+        """
+        
+        try:
+            results = self.graph.query(cypher_query)
+            
+            nodes = {}
+            edges = []
+            
+            for record in results:
+                r = record["r"]
+                n = record["n"]
+                e = record["e"]
+                
+                # Add Report Node
+                r_id = r.get("id")
+                if r_id and r_id not in nodes:
+                    nodes[r_id] = {
+                        "id": r_id,
+                        "label": r_id,
+                        "type": "report",
+                        "preview": r.get("text", "")[:100],
+                        "category": r.get("ehs_code", "Unknown"),
+                        "risk_level": r.get("risk_level", "LOW"),
+                        "sif_potential": r.get("sif_potential", False)
+                    }
+                
+                # Add Entity Node
+                n_id = n.get("id", str(hash(str(n))))
+                if n_id and n_id not in nodes:
+                    labels = list(n.labels) if hasattr(n, 'labels') else []
+                    nodes[n_id] = {
+                        "id": n_id,
+                        "label": n.get("id", labels[0] if labels else "Entity"),
+                        "type": "entity",
+                        "preview": str(n)
+                    }
+                
+                # Add Edge
+                if r_id and n_id:
+                    edges.append({
+                        "source": r_id,
+                        "target": n_id,
+                        "label": e[1] if isinstance(e, tuple) else "RELATED",
+                        "strength": 0.5
+                    })
+                
+            return {
+                "nodes": list(nodes.values()),
+                "edges": edges,
+                "total_linked": len(edges)
+            }
+            
+        except Exception as e:
+            logger.error(f"Agent 2 Failed to fetch full graph: {e}")
+            return {"nodes": [], "edges": [], "total_linked": 0}
