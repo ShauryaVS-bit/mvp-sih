@@ -1327,13 +1327,49 @@
     "iogp_rule": "",
     "extracted_facts": [
       {
-        "entity": "Task",
-        "action": "began",
-        "state": "active",
-        "location": "T 14",
-        "confidence": 0.82,
-        "raw_text_span": "Shift Supervisor noticed unpermitted work during routine rounds and suspended the task immediately.",
-        "triggered_rule_id": "RULE_009"
+        "entity": "mechanical contractor technicians",
+        "action": "initiated valve replacement",
+        "state": "initiated",
+        "location": "BAGHJAN-EPS-03, GAS-COMPRESSOR-02 discharge header",
+        "confidence": 1.0,
+        "raw_text_span": "mechanical contractor technicians initiated valve replacement on GAS-COMPRESSOR-02 discharge header",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "cold work permit",
+        "action": "drafted",
+        "state": "lacked final signatures",
+        "location": "BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "cold work permit had been drafted but lacked final signatures",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "4-inch line",
+        "action": "unbolting",
+        "state": "unbolted",
+        "location": "BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "unbolting the 4-inch line",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "residual condensate",
+        "action": "drained",
+        "state": "spilled",
+        "location": "skid deck",
+        "confidence": 1.0,
+        "raw_text_span": "residual condensate drained onto the skid deck",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Shift Supervisor",
+        "action": "suspended the task",
+        "state": "suspended",
+        "location": "BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "Shift Supervisor noticed unpermitted work during routine rounds and suspended the task immediately",
+        "triggered_rule_id": null
       }
     ],
     "inferred_hazards": [],
@@ -1364,11 +1400,11 @@
     "overall_risk_score": 0.95,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 179.67,
-    "analyzed_at": "2026-09-02T22:58:23.643385Z",
+    "processing_time_ms": 52306.12,
+    "analyzed_at": "2026-09-03T00:11:23.708472Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:34.588887Z"
+    "deleted_at": "2026-09-03T00:29:48.398304Z"
   },
   {
     "report_id": "5ebf9bc7-1acd-49fd-9be7-73e2f3fa1ded",
@@ -1394,7 +1430,53 @@
     "corrective_action": "",
     "preventive_action": "",
     "iogp_rule": "",
-    "extracted_facts": [],
+    "extracted_facts": [
+      {
+        "entity": "hydra crane",
+        "action": "reversing back",
+        "state": "moving towards manifold skid",
+        "location": "manifold skid at NAHARKATIA-EPS-01 CRUDE-PUMP-02 site",
+        "confidence": 1.0,
+        "raw_text_span": "hydra crane reversing back towards manifold skid at NAHARKATIA-EPS-01 CRUDE-PUMP-02 site",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "banksman",
+        "action": "present",
+        "state": "absent",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 site",
+        "confidence": 1.0,
+        "raw_text_span": "without any banksman",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "reverse alarm",
+        "action": "sounding",
+        "state": "not sounding",
+        "location": "hydra crane",
+        "confidence": 1.0,
+        "raw_text_span": "reverse alarm sounding",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "rig assistant",
+        "action": "standing",
+        "state": "standing in blind spot near rear tyre",
+        "location": "near rear tyre",
+        "confidence": 1.0,
+        "raw_text_span": "rig assistant was standing in blind spot near rear tyre",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "rig assistant",
+        "action": "shouted and stopped",
+        "state": "driver stopped",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 site",
+        "confidence": 1.0,
+        "raw_text_span": "shouted and stopped driver immediately",
+        "triggered_rule_id": null
+      }
+    ],
     "inferred_hazards": [],
     "evidence_matches": [
       {
@@ -1423,11 +1505,11 @@
     "overall_risk_score": 0.95,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 27.4,
-    "analyzed_at": "2026-09-02T22:58:23.357499Z",
+    "processing_time_ms": 8691.68,
+    "analyzed_at": "2026-09-03T00:10:31.295627Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:34.756464Z"
+    "deleted_at": "2026-09-03T00:29:48.584089Z"
   },
   {
     "report_id": "57f3ffad-a71c-4c0f-a859-4112ef2591f9",
@@ -1455,13 +1537,49 @@
     "iogp_rule": "",
     "extracted_facts": [
       {
-        "entity": "Tank",
-        "action": "entry",
-        "state": "active",
-        "location": "unspecified",
-        "confidence": 0.82,
-        "raw_text_span": "caught tank cleaning gang entering crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard without taking multi-gas detector reading or gas clearance ticket.",
-        "triggered_rule_id": "RULE_006"
+        "entity": "tank cleaning gang",
+        "action": "entering",
+        "state": "entering without gas clearance",
+        "location": "crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard",
+        "confidence": 1.0,
+        "raw_text_span": "tank cleaning gang entering crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard without taking multi-gas detector reading or gas clearance ticket",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "entry hatch",
+        "action": "was",
+        "state": "open",
+        "location": "crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard",
+        "confidence": 1.0,
+        "raw_text_span": "entry hatch was open",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "guy",
+        "action": "was inside",
+        "state": "half body inside with torch",
+        "location": "crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard",
+        "confidence": 1.0,
+        "raw_text_span": "guy was already inside half body with torch",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "guy",
+        "action": "pulled out",
+        "state": "outside tank",
+        "location": "crude storage tank at KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard",
+        "confidence": 1.0,
+        "raw_text_span": "pulled him out right away",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "HSE officer",
+        "action": "called",
+        "state": "notified",
+        "location": "KUMCHAI-FIELD-03 LOGISTICS-VEH-05 yard",
+        "confidence": 1.0,
+        "raw_text_span": "called HSE officer",
+        "triggered_rule_id": null
       }
     ],
     "inferred_hazards": [],
@@ -1492,11 +1610,11 @@
     "overall_risk_score": 0.05,
     "risk_level": "LOW",
     "sif_potential": false,
-    "processing_time_ms": 22.32,
-    "analyzed_at": "2026-09-02T22:58:23.220497Z",
+    "processing_time_ms": 31725.56,
+    "analyzed_at": "2026-09-03T00:10:22.492528Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:34.923904Z"
+    "deleted_at": "2026-09-03T00:29:48.755015Z"
   },
   {
     "report_id": "8974d863-fbb7-4c2c-8cb2-8426b4466aa7",
@@ -1522,7 +1640,53 @@
     "corrective_action": "",
     "preventive_action": "",
     "iogp_rule": "",
-    "extracted_facts": [],
+    "extracted_facts": [
+      {
+        "entity": "12-inch adjustable spanner",
+        "action": "dropped",
+        "state": "dropped from about 15m height",
+        "location": "top platform of CRUDE-PUMP-02 at NAHARKATIA-EPS-01",
+        "confidence": 1.0,
+        "raw_text_span": "dropped 12-inch adjustable spanner from top platform of CRUDE-PUMP-02 at NAHARKATIA-EPS-01 from about 15m height",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "12-inch adjustable spanner",
+        "action": "fell",
+        "state": "fell right near walkways",
+        "location": "walkways",
+        "confidence": 1.0,
+        "raw_text_span": "tool fell right near walkways",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "floor hand",
+        "action": "was passing",
+        "state": "passing",
+        "location": "walkways",
+        "confidence": 1.0,
+        "raw_text_span": "floor hand was passing",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "tool tethering harness",
+        "action": "was missing",
+        "state": "missing",
+        "location": "spanner bag",
+        "confidence": 1.0,
+        "raw_text_span": "tool tethering harness was missing on spanner bag",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "fitter supervisor",
+        "action": "warned",
+        "state": "warned to use lanyards always",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 1.0,
+        "raw_text_span": "warned fitter supervisor to use lanyards always",
+        "triggered_rule_id": null
+      }
+    ],
     "inferred_hazards": [],
     "evidence_matches": [
       {
@@ -1551,11 +1715,11 @@
     "overall_risk_score": 0.9,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 24.32,
-    "analyzed_at": "2026-09-02T22:58:23.091618Z",
+    "processing_time_ms": 18143.87,
+    "analyzed_at": "2026-09-03T00:09:50.422332Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.088860Z"
+    "deleted_at": "2026-09-03T00:29:48.932686Z"
   },
   {
     "report_id": "ee927873-4b9b-4bf7-8f46-9f120a971e4d",
@@ -1581,7 +1745,53 @@
     "corrective_action": "",
     "preventive_action": "",
     "iogp_rule": "",
-    "extracted_facts": [],
+    "extracted_facts": [
+      {
+        "entity": "mechanical team",
+        "action": "loosening BOP stack side outlet valve",
+        "state": "loosening",
+        "location": "AHWR-50MT-RIG at BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "mechanical team loosening BOP stack side outlet valve on AHWR-50MT-RIG at BAGHJAN-EPS-03",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "accumulator unit",
+        "action": "retaining trapped hydraulic pressure",
+        "state": "not bled off",
+        "location": "AHWR-50MT-RIG at BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "without bleeding off trapped hydraulic pressure from accumulator unit",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "hose",
+        "action": "popped",
+        "state": "popped",
+        "location": "AHWR-50MT-RIG at BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "hose popped with loud bang",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "hydraulic fluid",
+        "action": "sprayed",
+        "state": "sprayed across floor",
+        "location": "floor",
+        "confidence": 1.0,
+        "raw_text_span": "sprayed hydraulic fluid across floor",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "work",
+        "action": "stopped",
+        "state": "stopped",
+        "location": "AHWR-50MT-RIG at BAGHJAN-EPS-03",
+        "confidence": 1.0,
+        "raw_text_span": "stopped work instantly",
+        "triggered_rule_id": null
+      }
+    ],
     "inferred_hazards": [],
     "evidence_matches": [
       {
@@ -1610,11 +1820,11 @@
     "overall_risk_score": 0.9,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 25.98,
-    "analyzed_at": "2026-09-02T22:58:22.958631Z",
+    "processing_time_ms": 32523.86,
+    "analyzed_at": "2026-09-03T00:09:32.167452Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.262467Z"
+    "deleted_at": "2026-09-03T00:29:49.105801Z"
   },
   {
     "report_id": "36f961e0-16ff-45fc-b18a-98ae53079ede",
@@ -1635,92 +1845,118 @@
     "designation": "Rigman / Rigger",
     "ehs_code": "R",
     "ehs_short_desc": "Near Miss \u2013 High Potential",
-    "root_cause_analysis": "",
+    "root_cause_analysis": "\u26a0\ufe0f PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: No explicit root cause determined.",
     "potential_consequences": "",
     "corrective_action": "",
     "preventive_action": "",
-    "iogp_rule": "IOGP Rule #4: Obtain Authorization Before Overriding Safety-Critical Equipment",
+    "iogp_rule": "",
     "extracted_facts": [
       {
-        "entity": "Maintenance",
-        "action": "commenced",
-        "state": "active",
-        "location": "T 08",
-        "confidence": 0.82,
-        "raw_text_span": "At 08:30 hrs at BAGHJAN-EPS-03, maintenance crew commenced overhaul on GAS-COMPRESSOR-02 unit prior to formal PTW sign-off by Asset Integrity Manager.",
+        "entity": "maintenance crew",
+        "action": "commenced overhaul",
+        "state": "overhaul commenced",
+        "location": "BAGHJAN-EPS-03, GAS-COMPRESSOR-02 unit",
+        "confidence": 1.0,
+        "raw_text_span": "maintenance crew commenced overhaul on GAS-COMPRESSOR-02 unit",
         "triggered_rule_id": "RULE_009"
       },
       {
-        "entity": "Esd",
-        "action": "isolated",
-        "state": "closed",
-        "location": "T 08",
-        "confidence": 0.82,
-        "raw_text_span": "Hydrocarbon gas escaped from the flange joint, triggering local LEL detectors and sounding site ESD alarm.",
-        "triggered_rule_id": "RULE_012"
-      }
-    ],
-    "inferred_hazards": [
+        "entity": "compressor skid",
+        "action": "pressurized",
+        "state": "pressurized at 12 kg/cm2",
+        "location": "compressor skid",
+        "confidence": 1.0,
+        "raw_text_span": "The compressor skid was still pressurized at 12 kg/cm2",
+        "triggered_rule_id": null
+      },
       {
-        "rule_id": "RULE_012",
-        "rule_name": "ESD/PSV Safety System Bypass \u2014 MoC Required",
-        "stated_facts": [
-          {
-            "entity": "Esd",
-            "action": "isolated",
-            "state": "closed",
-            "location": "T 08",
-            "confidence": 0.82,
-            "raw_text_span": "Hydrocarbon gas escaped from the flange joint, triggering local LEL detectors and sounding site ESD alarm.",
-            "triggered_rule_id": "RULE_012"
-          }
-        ],
-        "inferred_gap": "Report describes Esd 'bypass' operation but does NOT mention: Management of Change (MoC) approved; compensatory measures documented; duration limited and tracked; control room notified. This is an UNVERIFIED SAFETY STATE.",
-        "hazard_tag": "SAFETY_BARRIER_DEGRADATION",
-        "hazard_description": "Safety-critical system bypassed without confirmed Management of Change approval \u2014 critical safety barrier removed without compensatory measures.",
-        "severity_score": 0.93,
-        "sif_potential": true,
-        "iogp_rule": "IOGP Rule #4: Obtain Authorization Before Overriding Safety-Critical Equipment",
-        "iogp_clause": "Clause 4.2 \u2014 Simultaneous bypass of multiple protection layers forbidden",
-        "oisd_standard": "OISD-RP-189: Pressure Safety Valve Management",
-        "oisd_clause": "Clause 6.3 \u2014 MoC Requirement for Safety System Bypass",
-        "historical_precedent": "2010 Deepwater Horizon \u2014 Multiple safety barrier bypasses (BOP test misinterpreted, centralizers omitted, lock-down sleeve not run) compounded without formal MoC; 11 fatalities",
-        "mitigation": "Immediately restore bypassed safety systems if possible. If bypass must continue, initiate emergency MoC process. Implement maximum manual compensation (15-min pressure monitoring). Notify Safety Manager and Operations Manager.",
-        "required_condition": "Management of Change (MoC) approved; compensatory measures documented; duration limited and tracked; control room notified"
+        "entity": "fitters",
+        "action": "loosened",
+        "state": "loosened flange bolts",
+        "location": "discharge line",
+        "confidence": 1.0,
+        "raw_text_span": "fitters started loosening flange bolts on the discharge line",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Hydrocarbon gas",
+        "action": "escaped",
+        "state": "escaped",
+        "location": "flange joint",
+        "confidence": 1.0,
+        "raw_text_span": "Hydrocarbon gas escaped from the flange joint",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "local LEL detectors",
+        "action": "triggered",
+        "state": "triggered",
+        "location": "local",
+        "confidence": 1.0,
+        "raw_text_span": "triggering local LEL detectors",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "site ESD alarm",
+        "action": "sounded",
+        "state": "sounding",
+        "location": "site",
+        "confidence": 1.0,
+        "raw_text_span": "sounding site ESD alarm",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Shift Supervisor",
+        "action": "isolated",
+        "state": "isolated",
+        "location": "suction manifold valve",
+        "confidence": 1.0,
+        "raw_text_span": "Shift Supervisor immediately isolated the suction manifold valve",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Shift Supervisor",
+        "action": "evacuated",
+        "state": "evacuated",
+        "location": "skid area",
+        "confidence": 1.0,
+        "raw_text_span": "evacuated the skid area",
+        "triggered_rule_id": null
       }
     ],
+    "inferred_hazards": [],
     "evidence_matches": [
       {
-        "source": "iogp_rules",
-        "source_label": "IOGP Life-Saving Rules",
-        "chunk_id": "iogp_rules_chunk_0019",
-        "text": "[Rule 4: Obtain authorization before overriding or disabling safety critical equipment]\n**Do This:**\n- Obtain formal written authorization (MoC approval, Bypass Approval Form) before disabling any safety device.\n- Implement compensatory measures that provide equivalent protection during the bypass period.\n- Set a maximum duration for the bypass and restore the system before that deadline.\n- Notify all affected personnel and the control room of the bypass status.",
-        "similarity_score": 0.8293,
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0003",
+        "text": "[Pre-Blowout Operations (May 2020)]\n**Critical Pre-Blowout Sequence (Reconstructed from Investigation):**",
+        "similarity_score": 0.722,
         "metadata": {
-          "section": "Rule 4: Obtain authorization before overriding or disabling safety critical equipment",
-          "source_label": "IOGP Life-Saving Rules"
+          "section": "Pre-Blowout Operations (May 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
         }
       },
       {
-        "source": "iogp_rules",
-        "source_label": "IOGP Life-Saving Rules",
-        "chunk_id": "iogp_rules_chunk_0018",
-        "text": "[Rule 4: Obtain authorization before overriding or disabling safety critical equipment]\nSafety-critical equipment \u2014 including Emergency Shutdown Devices (ESD), Pressure Safety Valves (PSV), Fire and Gas Detection systems, and Safety Instrumented Systems (SIS) \u2014 must never be bypassed, overridden, or disabled without formal authorization through a Management of Change (MoC) process.",
-        "similarity_score": 0.8287,
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0009",
+        "text": "[Blowout Development (May 27 \u2014 June 9, 2020)]\n- May 27: Well blowout initiated. Uncontrolled gas and condensate release from Baghjan-5.\n- May 27\u2013June 8: Attempted interventions (mud injection, BOP activation attempts) unsuccessful due to loss of wellhead control.\n- June 9: Blowout gas cloud ignited, causing massive fire and explosion, killing two OISD firefighters.\n- The fire burned continuously for 173 days, releasing approximately 500 MMSCFD of gas and associated condensate into the environment during this period.",
+        "similarity_score": 0.712,
         "metadata": {
-          "section": "Rule 4: Obtain authorization before overriding or disabling safety critical equipment",
-          "source_label": "IOGP Life-Saving Rules"
+          "section": "Blowout Development (May 27 \u2014 June 9, 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
         }
       }
     ],
-    "overall_risk_score": 0.93,
+    "overall_risk_score": 0.9,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 18.49,
-    "analyzed_at": "2026-09-02T22:58:22.825247Z",
+    "processing_time_ms": 8707.6,
+    "analyzed_at": "2026-09-03T00:08:59.539188Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.420393Z"
+    "deleted_at": "2026-09-03T00:29:49.280081Z"
   },
   {
     "report_id": "0af825a7-6067-49dd-95ff-20edfafd78a6",
@@ -1748,13 +1984,49 @@
     "iogp_rule": "",
     "extracted_facts": [
       {
-        "entity": "Vessel",
-        "action": "inside",
-        "state": "entered",
-        "location": "Separator Boot",
-        "confidence": 0.82,
-        "raw_text_span": "ROOT CAUSE ANALYSIS\nFailure to perform continuous atmospheric monitoring and inadequate forced draft ventilation inside vessel (ERP Cause Code: CODE-045).",
-        "triggered_rule_id": "RULE_006"
+        "entity": "contract technician",
+        "action": "collapsed",
+        "state": "collapsed",
+        "location": "inside Separator Boot at DULIAJAN-CW-01 WELLHEAD-04",
+        "confidence": 1.0,
+        "raw_text_span": "A contract technician experienced mild dizziness and collapsed while carrying out internal visual inspection inside Separator Boot at DULIAJAN-CW-01 WELLHEAD-04.",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "contract technician",
+        "action": "carrying out internal visual inspection",
+        "state": "inspecting",
+        "location": "inside Separator Boot at DULIAJAN-CW-01 WELLHEAD-04",
+        "confidence": 1.0,
+        "raw_text_span": "carrying out internal visual inspection inside Separator Boot at DULIAJAN-CW-01 WELLHEAD-04",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "forced draft ventilation",
+        "action": "ventilating",
+        "state": "inadequate",
+        "location": "inside vessel",
+        "confidence": 0.9,
+        "raw_text_span": "inadequate forced draft ventilation inside vessel",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "standby watcher",
+        "action": "extracted technician",
+        "state": "extracted safely",
+        "location": "Separator Boot at DULIAJAN-CW-01 WELLHEAD-04",
+        "confidence": 1.0,
+        "raw_text_span": "Technician extracted safely by standby watcher",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "contract technician",
+        "action": "referred to hospital",
+        "state": "under observation",
+        "location": "hospital",
+        "confidence": 1.0,
+        "raw_text_span": "referred to hospital for observation",
+        "triggered_rule_id": null
       }
     ],
     "inferred_hazards": [],
@@ -1785,11 +2057,11 @@
     "overall_risk_score": 0.05,
     "risk_level": "LOW",
     "sif_potential": false,
-    "processing_time_ms": 29.31,
-    "analyzed_at": "2026-09-02T22:58:22.699956Z",
+    "processing_time_ms": 14519.16,
+    "analyzed_at": "2026-09-03T00:08:50.729600Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.601818Z"
+    "deleted_at": "2026-09-03T00:29:49.459426Z"
   },
   {
     "report_id": "b4d542dd-a167-491c-8339-119fc29d04cd",
@@ -1815,7 +2087,62 @@
     "corrective_action": "",
     "preventive_action": "",
     "iogp_rule": "IOGP Rule #11: Follow Requirements for Working at Height",
-    "extracted_facts": [],
+    "extracted_facts": [
+      {
+        "entity": "elevated scaffolding structure",
+        "action": "collapsed",
+        "state": "partially collapsed",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 1.0,
+        "raw_text_span": "an elevated scaffolding structure partially collapsed",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "CRANE-MOB-01",
+        "action": "used",
+        "state": "in use",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 1.0,
+        "raw_text_span": "using CRANE-MOB-01",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "tubular scaffolding",
+        "action": "anchored",
+        "state": "improperly anchored",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 0.9,
+        "raw_text_span": "Improper anchoring of tubular scaffolding",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "work",
+        "action": "halted",
+        "state": "halted",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 1.0,
+        "raw_text_span": "Work was halted immediately",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "site",
+        "action": "cordoned off",
+        "state": "cordoned off",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 1.0,
+        "raw_text_span": "site cordoned off",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "damaged scaffolding",
+        "action": "dismantled",
+        "state": "dismantled",
+        "location": "SHALMARI-WH-09 flare stack",
+        "confidence": 1.0,
+        "raw_text_span": "damaged scaffolding dismantled",
+        "triggered_rule_id": null
+      }
+    ],
     "inferred_hazards": [
       {
         "rule_id": "RULE_010",
@@ -1872,11 +2199,11 @@
     "overall_risk_score": 0.87,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 28.71,
-    "analyzed_at": "2026-09-02T22:58:22.562560Z",
+    "processing_time_ms": 6537.95,
+    "analyzed_at": "2026-09-03T00:08:36.097758Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.773872Z"
+    "deleted_at": "2026-09-03T00:29:49.761228Z"
   },
   {
     "report_id": "c8921cd0-357c-465f-b640-915121b1aa43",
@@ -1897,83 +2224,82 @@
     "designation": "Rigman / Rigger",
     "ehs_code": "R",
     "ehs_short_desc": "Near Miss \u2013 High Potential",
-    "root_cause_analysis": "",
+    "root_cause_analysis": "\u26a0\ufe0f PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: No explicit root cause determined.",
     "potential_consequences": "",
     "corrective_action": "",
     "preventive_action": "",
-    "iogp_rule": "IOGP Rule #4: Obtain Authorization Before Overriding Safety-Critical Equipment",
+    "iogp_rule": "",
     "extracted_facts": [
       {
-        "entity": "Sis",
-        "action": "bypass",
-        "state": "bypassed",
-        "location": "Compressor Startup",
-        "confidence": 0.82,
-        "raw_text_span": "ROOT CAUSE ANALYSIS\nInadequate troubleshooting procedure and operator non-compliance led to safety interlock bypass (ERP Cause Code: CODE-053).",
-        "triggered_rule_id": "RULE_012"
-      }
-    ],
-    "inferred_hazards": [
+        "entity": "operator",
+        "action": "engaged manual override on low suction pressure trip switch",
+        "state": "override engaged",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 area",
+        "confidence": 1.0,
+        "raw_text_span": "operator engaged manual override on low suction pressure trip switch",
+        "triggered_rule_id": null
+      },
       {
-        "rule_id": "RULE_012",
-        "rule_name": "ESD/PSV Safety System Bypass \u2014 MoC Required",
-        "stated_facts": [
-          {
-            "entity": "Sis",
-            "action": "bypass",
-            "state": "bypassed",
-            "location": "Compressor Startup",
-            "confidence": 0.82,
-            "raw_text_span": "ROOT CAUSE ANALYSIS\nInadequate troubleshooting procedure and operator non-compliance led to safety interlock bypass (ERP Cause Code: CODE-053).",
-            "triggered_rule_id": "RULE_012"
-          }
-        ],
-        "inferred_gap": "Report describes Esd 'bypass' operation but does NOT mention: Management of Change (MoC) approved; compensatory measures documented; duration limited and tracked; control room notified. This is an UNVERIFIED SAFETY STATE.",
-        "hazard_tag": "SAFETY_BARRIER_DEGRADATION",
-        "hazard_description": "Safety-critical system bypassed without confirmed Management of Change approval \u2014 critical safety barrier removed without compensatory measures.",
-        "severity_score": 0.93,
-        "sif_potential": true,
-        "iogp_rule": "IOGP Rule #4: Obtain Authorization Before Overriding Safety-Critical Equipment",
-        "iogp_clause": "Clause 4.2 \u2014 Simultaneous bypass of multiple protection layers forbidden",
-        "oisd_standard": "OISD-RP-189: Pressure Safety Valve Management",
-        "oisd_clause": "Clause 6.3 \u2014 MoC Requirement for Safety System Bypass",
-        "historical_precedent": "2010 Deepwater Horizon \u2014 Multiple safety barrier bypasses (BOP test misinterpreted, centralizers omitted, lock-down sleeve not run) compounded without formal MoC; 11 fatalities",
-        "mitigation": "Immediately restore bypassed safety systems if possible. If bypass must continue, initiate emergency MoC process. Implement maximum manual compensation (15-min pressure monitoring). Notify Safety Manager and Operations Manager.",
-        "required_condition": "Management of Change (MoC) approved; compensatory measures documented; duration limited and tracked; control room notified"
+        "entity": "compressor",
+        "action": "startup",
+        "state": "starting up",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 area",
+        "confidence": 1.0,
+        "raw_text_span": "compressor startup at NAHARKATIA-EPS-01 CRUDE-PUMP-02 area",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Interlock manual bypass",
+        "action": "was reset",
+        "state": "reset",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 area",
+        "confidence": 1.0,
+        "raw_text_span": "Interlock manual bypass was reset immediately",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "compressor",
+        "action": "taken offline",
+        "state": "offline",
+        "location": "NAHARKATIA-EPS-01 CRUDE-PUMP-02 area",
+        "confidence": 1.0,
+        "raw_text_span": "compressor taken offline",
+        "triggered_rule_id": null
       }
     ],
+    "inferred_hazards": [],
     "evidence_matches": [
       {
-        "source": "iogp_rules",
-        "source_label": "IOGP Life-Saving Rules",
-        "chunk_id": "iogp_rules_chunk_0019",
-        "text": "[Rule 4: Obtain authorization before overriding or disabling safety critical equipment]\n**Do This:**\n- Obtain formal written authorization (MoC approval, Bypass Approval Form) before disabling any safety device.\n- Implement compensatory measures that provide equivalent protection during the bypass period.\n- Set a maximum duration for the bypass and restore the system before that deadline.\n- Notify all affected personnel and the control room of the bypass status.",
-        "similarity_score": 0.8293,
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0017",
+        "text": "[Contributing Causes]\n**4. Organizational Factors**\n- Production pressure had been cited as a reason for procedural shortcuts in multiple pre-incident safety observations (which were not escalated to management level).\n- PTW documentation for the bleed-down operation was present but did not require explicit secondary valve verification as a checkpoint.",
+        "similarity_score": 0.7354,
         "metadata": {
-          "section": "Rule 4: Obtain authorization before overriding or disabling safety critical equipment",
-          "source_label": "IOGP Life-Saving Rules"
+          "section": "Contributing Causes",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
         }
       },
       {
-        "source": "iogp_rules",
-        "source_label": "IOGP Life-Saving Rules",
-        "chunk_id": "iogp_rules_chunk_0018",
-        "text": "[Rule 4: Obtain authorization before overriding or disabling safety critical equipment]\nSafety-critical equipment \u2014 including Emergency Shutdown Devices (ESD), Pressure Safety Valves (PSV), Fire and Gas Detection systems, and Safety Instrumented Systems (SIS) \u2014 must never be bypassed, overridden, or disabled without formal authorization through a Management of Change (MoC) process.",
-        "similarity_score": 0.8287,
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0015",
+        "text": "[Contributing Causes]\n**3. Implicit Risk in Operational Reports**\nInvestigation of historical operational reports from Baghjan-5 workover period revealed a pattern: pressure bleed-down operations were routinely reported as \"completed without incident\" with no mention of secondary valve status in any of the preceding 7 operations. This creates a situation where absence of a negative outcome creates implicit false confidence in a potentially deficient procedure \u2014 the very dynamic that neuro-symbolic safety analysis systems are designed to detect.",
+        "similarity_score": 0.7337,
         "metadata": {
-          "section": "Rule 4: Obtain authorization before overriding or disabling safety critical equipment",
-          "source_label": "IOGP Life-Saving Rules"
+          "section": "Contributing Causes",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
         }
       }
     ],
-    "overall_risk_score": 0.93,
+    "overall_risk_score": 0.9,
     "risk_level": "HIGH",
     "sif_potential": true,
-    "processing_time_ms": 43.99,
-    "analyzed_at": "2026-09-02T22:58:22.420989Z",
+    "processing_time_ms": 7017.23,
+    "analyzed_at": "2026-09-03T00:08:29.450191Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:35.957906Z"
+    "deleted_at": "2026-09-03T00:29:49.952695Z"
   },
   {
     "report_id": "86ab660c-2a30-4228-851b-02d7f5090fe3",
@@ -1999,7 +2325,53 @@
     "corrective_action": "",
     "preventive_action": "",
     "iogp_rule": "",
-    "extracted_facts": [],
+    "extracted_facts": [
+      {
+        "entity": "roustabout",
+        "action": "wedging a wooden wedge under the PRV lever",
+        "state": "wedged",
+        "location": "Flare Knockout Drum at JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "confidence": 1.0,
+        "raw_text_span": "roustabout wedging a wooden wedge under the PRV lever on Flare Knockout Drum at JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "line pressure",
+        "action": "crossing 35 bar",
+        "state": "crossing 35 bar",
+        "location": "Flare Knockout Drum at JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "confidence": 1.0,
+        "raw_text_span": "line pressure was crossing 35 bar",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "roustabout",
+        "action": "manually holding it shut",
+        "state": "holding shut",
+        "location": "Flare Knockout Drum at JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "confidence": 1.0,
+        "raw_text_span": "guy tried manually holding it shut",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "observer",
+        "action": "removed wedge",
+        "state": "removed",
+        "location": "Flare Knockout Drum at JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "confidence": 1.0,
+        "raw_text_span": "removed wedge",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "observer",
+        "action": "notified driller",
+        "state": "notified",
+        "location": "JORHAT-RIG-04 asset AHWR-50MT-RIG",
+        "confidence": 1.0,
+        "raw_text_span": "notified driller",
+        "triggered_rule_id": null
+      }
+    ],
     "inferred_hazards": [],
     "evidence_matches": [
       {
@@ -2028,11 +2400,11 @@
     "overall_risk_score": 0.05,
     "risk_level": "LOW",
     "sif_potential": false,
-    "processing_time_ms": 268.18,
-    "analyzed_at": "2026-09-02T22:58:22.269849Z",
+    "processing_time_ms": 23775.67,
+    "analyzed_at": "2026-09-03T00:08:22.324627Z",
     "pipeline_mode": "multi_model_causal_dag",
     "is_deleted": true,
-    "deleted_at": "2026-09-02T23:27:36.136045Z"
+    "deleted_at": "2026-09-03T00:29:50.516412Z"
   },
   {
     "report_id": "59f76bf3-c1b8-42b2-864c-c177a816041c",
