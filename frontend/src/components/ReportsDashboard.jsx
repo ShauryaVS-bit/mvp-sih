@@ -81,7 +81,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       processed = processed.filter(r => {
-        const iogp = deriveIOGP(r.category, r.incident_cause).rule.toLowerCase();
+        const iogp = formatIOGP(r.iogp_rule).rule.toLowerCase();
         const sifStatus = r.sif_potential ? 'positive' : 'negative';
         const timeStr = formatTimestamp(r.timestamp).toLowerCase();
         const desc = (r.preview || r.raw_text || '').toLowerCase();
@@ -125,7 +125,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
     // IOGP Rule Filter
     if (iogpFilter) {
       processed = processed.filter(r => {
-        const iogp = deriveIOGP(r.category, r.incident_cause);
+        const iogp = formatIOGP(r.iogp_rule);
         const rule = iogp.rule.toLowerCase();
         if (iogpFilter === 'energy') return rule.includes('energy isolation');
         if (iogpFilter === 'lifting') return rule.includes('lifting');
@@ -250,7 +250,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
 <div className="w-24">SIF TIER</div>
 <div className="w-24">TIME</div>
 <div className="w-[450px]">LOCATION</div>
-<div className="w-48">IOGP RULE</div>
+<div className="w-[300px]">IOGP RULE</div>
 <div className="w-64">CATEGORY</div>
 <div className="flex-1">SIF</div>
 <div className="w-20 text-center">ACTIONS</div>
@@ -298,10 +298,9 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
           </div>
         </div>
         {/* IOGP RULE */}
-        <div className="w-48 pr-2">
-          <span className="inline-flex items-center gap-1 font-label-caps text-label-caps font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded truncate max-w-full" title={iogp.rule}>
-            {iogp.icon && <span className="material-symbols-outlined text-[14px] leading-none">{iogp.icon}</span>}
-            <span className="truncate">{iogp.rule}</span>
+        <div className="w-[300px] pr-2 flex items-center min-w-0">
+          <span className="inline-block font-label-caps text-label-caps font-bold text-on-surface-variant bg-surface-container px-2 py-0.5 rounded truncate max-w-full" title={iogp.rule}>
+            {iogp.rule}
           </span>
         </div>
         {/* CATEGORY (was cause before, but category makes more sense here, cause drives the fact) */}

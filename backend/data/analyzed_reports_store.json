@@ -1,5 +1,1028 @@
 [
   {
+    "report_id": "08b91fa6-be45-48c3-8007-6571e2b3a710",
+    "raw_text": "at BAGHJAN-EPS-03 near GAS-COMPRESSOR-02, Farana crane swung a 6-inch manifold spool without tagline during heavy breeze near AHWR-50MT rig site. Load swung out of control & clipped the rigged-up Wireline Lubricator on top of BOP Stack, knocking the lubricator bleed-off valve out of alignment. Rigger was standing blind behind Separator Boot drum instead of holding taglines, SWA invoked immediately before HP gas line compromised.",
+    "functional_location": "BAGHJAN-EPS-03",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UC",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Safe Mechanical Lifting",
+    "extracted_facts": [
+      {
+        "entity": "Farana crane",
+        "action": "swung",
+        "state": "swung a 6-inch manifold spool without tagline",
+        "location": "BAGHJAN-EPS-03 near GAS-COMPRESSOR-02",
+        "confidence": 0.95,
+        "raw_text_span": "Farana crane swung a 6-inch manifold spool without tagline",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Load",
+        "action": "swung",
+        "state": "swung out of control",
+        "location": "near AHWR-50MT rig site",
+        "confidence": 0.95,
+        "raw_text_span": "Load swung out of control",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Load",
+        "action": "clipped",
+        "state": "clipped the rigged-up Wireline Lubricator on top of BOP Stack",
+        "location": "near AHWR-50MT rig site",
+        "confidence": 0.95,
+        "raw_text_span": "clipped the rigged-up Wireline Lubricator on top of BOP Stack",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Load",
+        "action": "knocking",
+        "state": "knocking the lubricator bleed-off valve out of alignment",
+        "location": "near AHWR-50MT rig site",
+        "confidence": 0.95,
+        "raw_text_span": "knocking the lubricator bleed-off valve out of alignment",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Rigger",
+        "action": "standing",
+        "state": "standing blind behind Separator Boot drum",
+        "location": "behind Separator Boot drum",
+        "confidence": 0.95,
+        "raw_text_span": "Rigger was standing blind behind Separator Boot drum",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0004",
+        "text": "[Pre-Blowout Operations (May 2020)]\n1. The workover team initiated a pressure bleed-down via the primary bleed line (equivalent to Valve A configuration) to reduce wellhead pressure from approximately 210 bar to near-atmospheric.",
+        "similarity_score": 0.6999,
+        "metadata": {
+          "section": "Pre-Blowout Operations (May 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      },
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0007",
+        "text": "[Pre-Blowout Operations (May 2020)]\n4. Unknown to the workover team, the secondary isolation was compromised \u2014 the wing valve was in a partially open position due to mechanical wear on the gate seating, which was not detected during verbal-only confirmation. This wear had not been identified in the most recent valve inspection record (which was over 9 months old at the time of the incident).",
+        "similarity_score": 0.6975,
+        "metadata": {
+          "section": "Pre-Blowout Operations (May 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 43.29,
+    "analyzed_at": "2026-09-03T01:24:45.321555Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "786c2abc-fe8c-4861-948c-aff3148f080a",
+    "raw_text": "DESCRIPTION OF THE INCIDENT\nDuring production fluid processing at NAHARKATIA-EPS-01, an operator violated the 'Bypassing Safety Controls' rule by manually bypassing the high-pressure safety interlock on the gas compressor connected to CRUDE-PUMP-02, downstream of the Separator Boot and Flare Knockout Drum. This caused a Moderate SIF incident as pressure fluctuated across the Manifold Skid while receiving well fluids routed from the AHWR-50MT Workover Rig and nearby GGS operations.\n\nROOT CAUSE ANALYSIS\nThe incident was caused by unauthorized operational workarounds to prevent production trips during high-load transfer from the Mud Tanks, categorized under CODE-029. Inadequate management of change enforcement and poor supervisory oversight allowed the critical safety interlock override without a valid permit.\n\nCORRECTIVE ACTION\nImmediately restored the safety interlock on the gas compressor, shut down CRUDE-PUMP-02, and safely isolated the Manifold Skid and Flare Knockout Drum for integrity inspection. Issued a safety freeze across the EPS site and re-verified control systems on adjacent equipment, including the Wireline Lubricator and TDS system.\n\nPREVENTIVE ACTION\nImplement tamper-proof physical interlock enclosures and mandatory SAP ERP bypass authorization workflows for all safety-critical instruments at NAHARKATIA-EPS-01. Conduct refresher training on IOGP Life-Saving Rules for all personnel operating Workover Rigs, Kelly Bushing assemblies, and BOP Stack systems.",
+    "functional_location": "NAHARKATIA-EPS-01",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Incident",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "\u26a0\ufe0f CRITICAL ALERT - RECURRING SIF PATTERN: 2 similar incidents detected in current batch for IMPROPER MATERIAL HANDLING at NAHARKATIA-EPS-01.\n\n[Original Narrative Context]: No explicit root cause determined.",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Bypassing Safety Controls",
+    "extracted_facts": [
+      {
+        "entity": "operator",
+        "action": "bypassing",
+        "state": "manually bypassing the high-pressure safety interlock on the gas compressor",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "operator violated the 'Bypassing Safety Controls' rule by manually bypassing the high-pressure safety interlock on the gas compressor connected to CRUDE-PUMP-02",
+        "triggered_rule_id": "Bypassing Safety Controls"
+      },
+      {
+        "entity": "CRUDE-PUMP-02",
+        "action": "shut down",
+        "state": "shut down",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "shut down CRUDE-PUMP-02",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Manifold Skid and Flare Knockout Drum",
+        "action": "isolated",
+        "state": "safely isolated",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "safely isolated the Manifold Skid and Flare Knockout Drum",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0017",
+        "text": "[Contributing Causes]\n**4. Organizational Factors**\n- Production pressure had been cited as a reason for procedural shortcuts in multiple pre-incident safety observations (which were not escalated to management level).\n- PTW documentation for the bleed-down operation was present but did not require explicit secondary valve verification as a checkpoint.",
+        "similarity_score": 0.7552,
+        "metadata": {
+          "section": "Contributing Causes",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      },
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0008",
+        "text": "[Pre-Blowout Operations (May 2020)]\n5. Reservoir pressure re-communicated through the compromised secondary barrier and pressurized the downstream section. The workover activity on the downstream section breached the pressurized spool, initiating the blowout.",
+        "similarity_score": 0.7467,
+        "metadata": {
+          "section": "Pre-Blowout Operations (May 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      }
+    ],
+    "overall_risk_score": 0.95,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "escalated_pattern": true,
+    "processing_time_ms": 27.4,
+    "analyzed_at": "2026-09-03T01:24:45.171975Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "0a2fb14e-aa24-404c-bba7-2eb44b55a1a3",
+    "raw_text": "DESCRIPTION OF THE INCIDENT\nAt KUMCHAI-FIELD-03, during well testing operations managed via LOGISTICS-VEH-05 near the Workover Rig, a floorhand entered the Line of Fire between the Mud Tanks and Manifold Skid and was struck by a high-pressure hose whip that detached from the Wireline Lubricator manifold. The incident resulted in potential injuries with a SIF severity rating of Insufficient Evidence.\n\nROOT CAUSE ANALYSIS\nThe incident was triggered under ERP cause classification CODE-021 after a high-pressure line running from the BOP Stack past the Kelly Bushing was energized without installing required whipcheck safety restraints. This procedural failure allowed the pressurized hose to detach and violently whip into the operational area adjacent to the TDS control panel.\n\nCORRECTIVE ACTION\nOperations personnel immediately depressurized the system back to the Separator Boot and Flare Knockout Drum, isolated LOGISTICS-VEH-05, and replaced the ruptured hose assembly with certified, pressure-tested fittings.\n\nPREVENTIVE ACTION\nSafety management implemented mandatory whipcheck verification protocols across all AHWR-50MT units in the EPS and GGS asset sectors, enforcing strict adherence to the IOGP 'Line of Fire' Life-Saving Rule during high-pressure well-servicing routines.",
+    "functional_location": "KUMCHAI-FIELD-03",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UC",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Line of Fire",
+    "extracted_facts": [
+      {
+        "entity": "floorhand",
+        "action": "entered",
+        "state": "entered the Line of Fire",
+        "location": "between the Mud Tanks and Manifold Skid at KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "floorhand entered the Line of Fire between the Mud Tanks and Manifold Skid",
+        "triggered_rule_id": "Line of Fire"
+      },
+      {
+        "entity": "high-pressure hose whip",
+        "action": "detached",
+        "state": "detached from the Wireline Lubricator manifold",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "high-pressure hose whip that detached from the Wireline Lubricator manifold",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "floorhand",
+        "action": "struck",
+        "state": "struck by a high-pressure hose whip",
+        "location": "between the Mud Tanks and Manifold Skid",
+        "confidence": 0.95,
+        "raw_text_span": "was struck by a high-pressure hose whip",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "high-pressure line",
+        "action": "energized",
+        "state": "energized without installing required whipcheck safety restraints",
+        "location": "running from the BOP Stack past the Kelly Bushing",
+        "confidence": 0.95,
+        "raw_text_span": "high-pressure line running from the BOP Stack past the Kelly Bushing was energized without installing required whipcheck safety restraints",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Operations personnel",
+        "action": "depressurized",
+        "state": "depressurized the system back to the Separator Boot and Flare Knockout Drum",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "Operations personnel immediately depressurized the system back to the Separator Boot and Flare Knockout Drum",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Operations personnel",
+        "action": "isolated",
+        "state": "isolated LOGISTICS-VEH-05",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "isolated LOGISTICS-VEH-05",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Operations personnel",
+        "action": "replaced",
+        "state": "replaced the ruptured hose assembly with certified, pressure-tested fittings",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "replaced the ruptured hose assembly with certified, pressure-tested fittings",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [
+      {
+        "rule_id": "RULE_007",
+        "rule_name": "Electrical Equipment Work \u2014 LOTO Verification Required",
+        "stated_facts": [
+          {
+            "entity": "Control Panel",
+            "action": "replaced",
+            "state": "active",
+            "location": "Manifold Skid",
+            "confidence": 0.6,
+            "raw_text_span": "DESCRIPTION OF THE INCIDENT\nAt KUMCHAI-FIELD-03, during well testing operations managed via LOGISTICS-VEH-05 near the Workover Rig, a floorhand entered the Line of Fire between the Mud Tanks and Manifold Skid and was struck by a high-pressure hose whip that detached from the Wireline Lubricator manifold.",
+            "triggered_rule_id": "RULE_007"
+          }
+        ],
+        "inferred_gap": "Report describes Electrical Panel 'maintenance' operation but does NOT mention: LOTO applied and verified; voltage tested at work point with approved tester; arc flash PPE worn. This is an UNVERIFIED SAFETY STATE.",
+        "hazard_tag": "ELECTRICAL_ENERGY_UNVERIFIED",
+        "hazard_description": "Electrical isolation not confirmed at work point \u2014 risk of electric shock, electrocution, or arc flash injury.",
+        "severity_score": 0.85,
+        "sif_potential": true,
+        "iogp_rule": "IOGP Rule #3: Verify Isolation Before Work Begins",
+        "iogp_clause": "Clause 3.1 \u2014 Isolation and LOTO",
+        "oisd_standard": "OISD-137: Electrical Safety in Petroleum Industry",
+        "oisd_clause": "Clause 8.3 \u2014 Verification of Zero Energy",
+        "historical_precedent": "Multiple electrocution fatalities from assumption of de-energized state without verification at the actual work point in oil & gas facilities",
+        "mitigation": "Stop electrical work immediately. Apply LOTO at the disconnecting means. Use approved voltage tester to verify zero voltage at the work point. Don arc flash PPE rated for incident energy level.",
+        "required_condition": "LOTO applied and verified; voltage tested at work point with approved tester; arc flash PPE worn"
+      }
+    ],
+    "evidence_matches": [
+      {
+        "source": "oisd_guidelines",
+        "source_label": "OISD Process Safety Standards",
+        "chunk_id": "oisd_guidelines_chunk_0023",
+        "text": "[Section 8: Lockout/Tagout (LOTO) Procedure]\n**Clause 8.5 \u2014 Electrical Arc Flash:**\nAll electrical work on energized equipment must be performed with appropriate arc flash PPE rated for the incident energy level at that location. Arc flash hazard analysis shall be performed for all electrical equipment where work may be performed without full de-energization.",
+        "similarity_score": 0.7903,
+        "metadata": {
+          "section": "Section 8: Lockout/Tagout (LOTO) Procedure",
+          "source_label": "OISD Process Safety Standards"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0013",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Never Do This:**\n- Rely solely on a closed valve as isolation for high-pressure or high-energy systems without secondary isolation (double block and bleed).\n- Assume that equipment is isolated without personally verifying the isolation.\n- Remove isolation (locks, tags, blinds) without authorization from the work authority.",
+        "similarity_score": 0.7888,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "overall_risk_score": 0.85,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "escalated_pattern": false,
+    "processing_time_ms": 25.41,
+    "analyzed_at": "2026-09-03T01:24:45.039293Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "a64360e6-8af1-46b0-b39d-a365f33d2b75",
+    "raw_text": "On 14th October 2023 at 11:30 IST at MORAN-GGS-02, the rig crew on Workover Rig AHWR-50MT commenced a mechanical lift to transfer an 11-inch 5K BOP Stack past the Manifold Skid toward MUD-TANK-01. With the TDS racked and the load clearing the Kelly Bushing area, the Crane Operator and Rigger guided the lift trajectory adjacent to the Separator Boot and Flare Knockout Drum tie-in lines. At 11:42 IST, a 19mm wire rope sling parted under dynamic load, causing the 4.8 MT BOP Stack to drop 1.5 meters onto the grating of MUD-TANK-01 before coming to rest near a stored Wireline Lubricator assembly. Investigation revealed critical barrier failures including failure to adhere to the IOGP 'Safe Mechanical Lifting' Life-Saving Rule, specifically the use of uninspected, severely degraded lifting tackle and ineffective load path clearance controls near the active EPS line. Although the Assistant Driller successfully maintained red-zone management to prevent personnel injuries, the dropped load caused moderate structural damage to the tank framework and surrounding GGS piping, classifying this event as a Moderate SIF incident.",
+    "functional_location": "MORAN-GGS-02",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Near-Miss",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Safe Mechanical Lifting",
+    "extracted_facts": [
+      {
+        "entity": "rig crew on Workover Rig AHWR-50MT",
+        "action": "commenced",
+        "state": "commenced a mechanical lift to transfer an 11-inch 5K BOP Stack",
+        "location": "MORAN-GGS-02",
+        "confidence": 0.95,
+        "raw_text_span": "rig crew on Workover Rig AHWR-50MT commenced a mechanical lift to transfer an 11-inch 5K BOP Stack past the Manifold Skid toward MUD-TANK-01",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Crane Operator and Rigger",
+        "action": "guided",
+        "state": "guided the lift trajectory adjacent to the Separator Boot and Flare Knockout Drum tie-in lines",
+        "location": "adjacent to the Separator Boot and Flare Knockout Drum tie-in lines",
+        "confidence": 0.95,
+        "raw_text_span": "Crane Operator and Rigger guided the lift trajectory adjacent to the Separator Boot and Flare Knockout Drum tie-in lines",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "19mm wire rope sling",
+        "action": "parted",
+        "state": "parted under dynamic load",
+        "location": "MORAN-GGS-02",
+        "confidence": 0.95,
+        "raw_text_span": "19mm wire rope sling parted under dynamic load",
+        "triggered_rule_id": "Safe Mechanical Lifting"
+      },
+      {
+        "entity": "4.8 MT BOP Stack",
+        "action": "dropped",
+        "state": "dropped 1.5 meters onto the grating of MUD-TANK-01",
+        "location": "MUD-TANK-01",
+        "confidence": 0.95,
+        "raw_text_span": "causing the 4.8 MT BOP Stack to drop 1.5 meters onto the grating of MUD-TANK-01",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0031",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Key Clause 7.5 \u2014 Slinging and Rigging:** All rigging equipment (slings, shackles, spreader bars) must have valid load testing certificates and must be inspected before use. Damaged or uncertified rigging equipment shall not be used.",
+        "similarity_score": 0.6926,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0032",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Never Do This:**\n- Stand or work under a suspended load.\n- Allow a lift to proceed without establishing an exclusion zone.\n- Use damaged or uncertified rigging equipment.",
+        "similarity_score": 0.6895,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 31.54,
+    "analyzed_at": "2026-09-03T01:24:44.906129Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "a0464814-dcd2-4098-939a-98c09f3cdb59",
+    "raw_text": "On 12th November 2023 at 08:15 hrs, LOGISTICS-VEH-05 (driven by a Senior Logistics Operator) departed the EPS at KUMCHAI-FIELD-03 to deliver a Wireline Lubricator, Manifold Skid assembly, and TDS spare components to Workover Rig AHWR-50MT. While transiting the unpaved kutcha access road passing between the main GGS facility and the active well site, the vehicle accelerated past the Flare Knockout Drum and low-pressure Separator Boot boundary. At 08:28 hrs, upon approaching the staging area for the Mud Tanks and BOP Stack, the driver encountered a deep waterlogged rut on the unmaintained roadway. In direct violation of the IOGP 'Driving' Life-Saving Rule due to failure to adapt driving to adverse road conditions and failure to maintain vehicle control, LOGISTICS-VEH-05 veered off the carriageway, clipped a stored Kelly Bushing sub, and executed a single-side rollover onto its roof. The driver and onboard technician suffered minor injuries in this Moderate SIF incident, after which emergency response personnel safely extracted the occupants, secured the asset, and suspended all mobile logistics movements across KUMCHAI-FIELD-03 pending formal investigation.",
+    "functional_location": "KUMCHAI-FIELD-03",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UA",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Driving",
+    "extracted_facts": [
+      {
+        "entity": "LOGISTICS-VEH-05",
+        "action": "departed",
+        "state": "departed the EPS",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "LOGISTICS-VEH-05 (driven by a Senior Logistics Operator) departed the EPS at KUMCHAI-FIELD-03",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "LOGISTICS-VEH-05",
+        "action": "accelerated",
+        "state": "accelerated past the Flare Knockout Drum and low-pressure Separator Boot boundary",
+        "location": "unpaved kutcha access road",
+        "confidence": 0.95,
+        "raw_text_span": "vehicle accelerated past the Flare Knockout Drum and low-pressure Separator Boot boundary",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "LOGISTICS-VEH-05",
+        "action": "veered off",
+        "state": "veered off the carriageway",
+        "location": "staging area for the Mud Tanks and BOP Stack",
+        "confidence": 0.95,
+        "raw_text_span": "LOGISTICS-VEH-05 veered off the carriageway",
+        "triggered_rule_id": "Driving"
+      },
+      {
+        "entity": "LOGISTICS-VEH-05",
+        "action": "clipped",
+        "state": "clipped a stored Kelly Bushing sub",
+        "location": "staging area for the Mud Tanks and BOP Stack",
+        "confidence": 0.95,
+        "raw_text_span": "clipped a stored Kelly Bushing sub",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "LOGISTICS-VEH-05",
+        "action": "executed",
+        "state": "executed a single-side rollover onto its roof",
+        "location": "staging area for the Mud Tanks and BOP Stack",
+        "confidence": 0.95,
+        "raw_text_span": "executed a single-side rollover onto its roof",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "emergency response personnel",
+        "action": "extracted",
+        "state": "safely extracted the occupants",
+        "location": "KUMCHAI-FIELD-03",
+        "confidence": 0.95,
+        "raw_text_span": "emergency response personnel safely extracted the occupants",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0010",
+        "text": "[Emergency Response]\nOil India Limited enlisted international well control specialists (ALERT Disaster Control, subsequently John Wright Company) to perform the kill operation. A relief well was drilled and the blowout was finally controlled in November 2020.",
+        "similarity_score": 0.6706,
+        "metadata": {
+          "section": "Emergency Response",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      },
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0001",
+        "text": "[Pre-Blowout Operations (May 2020)]\nBaghjan-5 had been a suspended well undergoing workover operations to restore and enhance production. Prior to the blowout, the well was undergoing workover activities that involved interventions in the wellhead and surface manifold.",
+        "similarity_score": 0.6673,
+        "metadata": {
+          "section": "Pre-Blowout Operations (May 2020)",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 76.7,
+    "analyzed_at": "2026-09-03T01:24:44.766129Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "e20fac94-52df-451d-b686-35ab1b0ef5ce",
+    "raw_text": "DESCRIPTION OF THE INCIDENT\nDuring routine workover operations at site JORHAT-RIG-04 on asset AHWR-50MT-RIG, a roustabout standing between the pipe rack and manifold skid was hit on the leg by a dropped 3.5-inch tubular that rolled off the pipe rack during transfer toward the TDS. The worker breached the IOGP 'Line of Fire' protocol, resulting in a minor contusion with Low SIF severity.\n\nROOT CAUSE ANALYSIS\nThe incident was caused by unpinned safety stops on the pipe rack tier allowing the tubular to roll, identified under ERP Cause Code CODE-017 for failure to secure material against motion. Inadequate visual communication between the floor crew near the Kelly Bushing and the pipe yard personnel contributed to the unsafe positioning.\n\nCORRECTIVE ACTION\nFirst aid was administered to the injured employee on site, and the affected pipe rack bay on the AHWR-50MT-RIG was immediately isolated to install proper locking pins. Rig management conducted an emergency safety stand-down with all crew members to reinforce Line of Fire exclusion zones around the Workover Rig catwalk and pipe handling areas.\n\nPREVENTIVE ACTION\nEngineering will install positive mechanical drop-stops on all pipe racks across JORHAT-RIG-04 assets before transferring tubulars to the BOP Stack or Wireline Lubricator. Standard Operating Procedures (SOP) for pipe handling feeding the EPS and GGS manifolds will be updated to enforce zero-entry zones during tubular movement.",
+    "functional_location": "JORHAT-RIG-04",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UA",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Line of Fire",
+    "extracted_facts": [
+      {
+        "entity": "roustabout",
+        "action": "standing",
+        "state": "standing between the pipe rack and manifold skid",
+        "location": "site JORHAT-RIG-04 on asset AHWR-50MT-RIG",
+        "confidence": 0.95,
+        "raw_text_span": "roustabout standing between the pipe rack and manifold skid",
+        "triggered_rule_id": "Line of Fire"
+      },
+      {
+        "entity": "dropped 3.5-inch tubular",
+        "action": "rolled off",
+        "state": "rolled off the pipe rack",
+        "location": "pipe rack",
+        "confidence": 0.95,
+        "raw_text_span": "dropped 3.5-inch tubular that rolled off the pipe rack",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "dropped 3.5-inch tubular",
+        "action": "hit",
+        "state": "hit on the leg",
+        "location": "between the pipe rack and manifold skid",
+        "confidence": 0.95,
+        "raw_text_span": "hit on the leg by a dropped 3.5-inch tubular",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "affected pipe rack bay",
+        "action": "isolated",
+        "state": "isolated to install proper locking pins",
+        "location": "AHWR-50MT-RIG",
+        "confidence": 0.95,
+        "raw_text_span": "affected pipe rack bay on the AHWR-50MT-RIG was immediately isolated",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0032",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Never Do This:**\n- Stand or work under a suspended load.\n- Allow a lift to proceed without establishing an exclusion zone.\n- Use damaged or uncertified rigging equipment.",
+        "similarity_score": 0.7208,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0031",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Key Clause 7.5 \u2014 Slinging and Rigging:** All rigging equipment (slings, shackles, spreader bars) must have valid load testing certificates and must be inspected before use. Damaged or uncertified rigging equipment shall not be used.",
+        "similarity_score": 0.7195,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 26.37,
+    "analyzed_at": "2026-09-03T01:24:44.588064Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "34440a28-7f96-42e2-ba2e-b92df5b17eda",
+    "raw_text": "Spotted contract rigman up on AHWR-50MT Workover Rig mast crown directly above CRUDE-PUMP-02 section without double lanyard harness tied off while adjusting wireline lubricator sheaves. Slicks from nearby Mud Tanks line made the rungs slippery, clear fall threat onto the manifold skid. Raised verbal alarm instantly, initiated Stop Work at NAHARKATIA-EPS-01 and got him down for safety briefing.",
+    "functional_location": "NAHARKATIA-EPS-01",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "Incident",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "\u26a0\ufe0f PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: No explicit root cause determined.",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Working at Height",
+    "extracted_facts": [
+      {
+        "entity": "contract rigman",
+        "action": "adjusting",
+        "state": "adjusting wireline lubricator sheaves without double lanyard harness tied off",
+        "location": "AHWR-50MT Workover Rig mast crown",
+        "confidence": 0.95,
+        "raw_text_span": "contract rigman up on AHWR-50MT Workover Rig mast crown directly above CRUDE-PUMP-02 section without double lanyard harness tied off while adjusting wireline lubricator sheaves",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Slicks",
+        "action": "made",
+        "state": "made the rungs slippery",
+        "location": "nearby Mud Tanks line",
+        "confidence": 0.95,
+        "raw_text_span": "Slicks from nearby Mud Tanks line made the rungs slippery",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0031",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Key Clause 7.5 \u2014 Slinging and Rigging:** All rigging equipment (slings, shackles, spreader bars) must have valid load testing certificates and must be inspected before use. Damaged or uncertified rigging equipment shall not be used.",
+        "similarity_score": 0.6861,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0032",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Never Do This:**\n- Stand or work under a suspended load.\n- Allow a lift to proceed without establishing an exclusion zone.\n- Use damaged or uncertified rigging equipment.",
+        "similarity_score": 0.6827,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "overall_risk_score": 0.9,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "escalated_pattern": true,
+    "processing_time_ms": 22.71,
+    "analyzed_at": "2026-09-03T01:24:44.457423Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "5a23e951-5d03-4094-8b59-2a496d6337b2",
+    "raw_text": "DESCRIPTION OF THE INCIDENT\nDuring routine maintenance at NAHARKATIA-EPS-01, the field crew commenced mechanical work on CRUDE-PUMP-02 adjacent to the Manifold Skid before the Permit to Work (PTW) was formally signed by the shift supervisor. This premature execution near the active Flare Knockout Drum constituted a low-SIF Work Authorization rule violation, though no process fluid release or personnel injuries occurred.\n\nROOT CAUSE ANALYSIS\nThe maintenance team prioritized clearing the transfer pipeline to the main GGS ahead of schedule to prepare for incoming AHWR-50MT Workover Rig operations, leading to shortcutting safety workflows. This deliberate commencement of work without an authorized PTW is classified under ERP Cause Code CODE-031.\n\nCORRECTIVE ACTION\nThe Shift Supervisor immediately issued a Stop Work Order, safely secured CRUDE-PUMP-02, and ensured all required signatures and isolation verifications were fully executed before work resumed.\n\nPREVENTIVE ACTION\nRefresher training on the IOGP Work Authorization Life-Saving Rule was conducted for all NAHARKATIA-EPS-01 operational staff, and mandatory physical PTW verification gates were enforced in the SAP ERP system prior to work order release.",
+    "functional_location": "NAHARKATIA-EPS-01",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UC",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "\u26a0\ufe0f PRECURSOR EVENT TO RECURRING SIF PATTERN.\n\n[Original Narrative Context]: No explicit root cause determined.",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Work Authorization",
+    "extracted_facts": [
+      {
+        "entity": "field crew",
+        "action": "commenced mechanical work",
+        "state": "commenced mechanical work on CRUDE-PUMP-02",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "field crew commenced mechanical work on CRUDE-PUMP-02 adjacent to the Manifold Skid",
+        "triggered_rule_id": "Work Authorization"
+      },
+      {
+        "entity": "Shift Supervisor",
+        "action": "issued",
+        "state": "issued a Stop Work Order",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "Shift Supervisor immediately issued a Stop Work Order",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Shift Supervisor",
+        "action": "secured",
+        "state": "safely secured CRUDE-PUMP-02",
+        "location": "NAHARKATIA-EPS-01",
+        "confidence": 0.95,
+        "raw_text_span": "safely secured CRUDE-PUMP-02",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "baghjan_investigation",
+        "source_label": "Baghjan-5 Blowout Case Study (2020)",
+        "chunk_id": "baghjan_investigation_chunk_0017",
+        "text": "[Contributing Causes]\n**4. Organizational Factors**\n- Production pressure had been cited as a reason for procedural shortcuts in multiple pre-incident safety observations (which were not escalated to management level).\n- PTW documentation for the bleed-down operation was present but did not require explicit secondary valve verification as a checkpoint.",
+        "similarity_score": 0.7377,
+        "metadata": {
+          "section": "Contributing Causes",
+          "source_label": "Baghjan-5 Blowout Case Study (2020)"
+        }
+      },
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0005",
+        "text": "[Rule 1: Work with a valid Permit to Work when required]\n**Relevance to Major Incidents:** Many major industrial accidents (Piper Alpha 1988, Texas City 2005) have been linked to failures in Permit to Work systems, including expired permits, miscommunication during shift handovers, and unauthorized bypass of PTW requirements.",
+        "similarity_score": 0.7283,
+        "metadata": {
+          "section": "Rule 1: Work with a valid Permit to Work when required",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      }
+    ],
+    "overall_risk_score": 0.9,
+    "risk_level": "HIGH",
+    "sif_potential": true,
+    "escalated_pattern": true,
+    "processing_time_ms": 30.07,
+    "analyzed_at": "2026-09-03T01:24:44.332547Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "699f36c2-455f-4b2e-b40b-ccdab9d13316",
+    "raw_text": "On 14 October 2023 at 10:15 IST, during workover intervention at wellsite SHALMARI-WH-09 in the ONGC Assam Asset, Workover Rig AHWR-50MT was deployed to service the BOP Stack and TDS, with auxiliary support provided by mobile crane CRANE-MOB-01 staged between the Mud Tanks and Manifold Skid. At 10:22 IST, a Roustabout positioned on the 15-metre platform above the Separator Boot was preparing to latch a Wireline Lubricator assembly above the Kelly Bushing. In direct violation of the IOGP 'Working at Height' Life-Saving Rule, the worker used an un-tethered 24-inch pipe wrench on the elevated grating without installing a secondary tool lanyard or toe-board drop netting. The unsecured tool slipped from the 15-metre platform, falling freely through the rig superstructure and striking the cab roof of CRANE-MOB-01 before deflecting onto the flowline header connected to the EPS and GGS Flare Knockout Drum. Formally categorized as a High-Severity SIF Potential near-miss, the investigation identified severe barrier failures in Drops Prevention Scheme compliance, task hazard identification, and site supervisory controls.",
+    "functional_location": "SHALMARI-WH-09",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UA",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Working at Height",
+    "extracted_facts": [
+      {
+        "entity": "Workover Rig AHWR-50MT",
+        "action": "deployed",
+        "state": "deployed to service the BOP Stack and TDS",
+        "location": "wellsite SHALMARI-WH-09",
+        "confidence": 0.95,
+        "raw_text_span": "Workover Rig AHWR-50MT was deployed to service the BOP Stack and TDS",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "mobile crane CRANE-MOB-01",
+        "action": "staged",
+        "state": "staged between the Mud Tanks and Manifold Skid",
+        "location": "wellsite SHALMARI-WH-09",
+        "confidence": 0.95,
+        "raw_text_span": "mobile crane CRANE-MOB-01 staged between the Mud Tanks and Manifold Skid",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "Roustabout",
+        "action": "preparing to latch",
+        "state": "preparing to latch a Wireline Lubricator assembly above the Kelly Bushing",
+        "location": "15-metre platform above the Separator Boot",
+        "confidence": 0.95,
+        "raw_text_span": "Roustabout positioned on the 15-metre platform above the Separator Boot was preparing to latch a Wireline Lubricator assembly above the Kelly Bushing",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "worker",
+        "action": "used",
+        "state": "used an un-tethered 24-inch pipe wrench on the elevated grating",
+        "location": "elevated grating",
+        "confidence": 0.95,
+        "raw_text_span": "worker used an un-tethered 24-inch pipe wrench on the elevated grating",
+        "triggered_rule_id": "Working at Height"
+      },
+      {
+        "entity": "unsecured tool",
+        "action": "slipped",
+        "state": "slipped from the 15-metre platform",
+        "location": "15-metre platform",
+        "confidence": 0.95,
+        "raw_text_span": "unsecured tool slipped from the 15-metre platform",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "unsecured tool",
+        "action": "striking",
+        "state": "striking the cab roof of CRANE-MOB-01",
+        "location": "cab roof of CRANE-MOB-01",
+        "confidence": 0.95,
+        "raw_text_span": "striking the cab roof of CRANE-MOB-01",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0032",
+        "text": "[Rule 7: Do not place yourself under a suspended load]\n**Never Do This:**\n- Stand or work under a suspended load.\n- Allow a lift to proceed without establishing an exclusion zone.\n- Use damaged or uncertified rigging equipment.",
+        "similarity_score": 0.7191,
+        "metadata": {
+          "section": "Rule 7: Do not place yourself under a suspended load",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "oisd_guidelines",
+        "source_label": "OISD Process Safety Standards",
+        "chunk_id": "oisd_guidelines_chunk_0013",
+        "text": "[Section 7: Well Intervention and Workover]\n**Clause 7.5 \u2014 Blowout Prevention:**\nAll workover operations on wells with reservoir pressure > 34.5 bar (500 psi) must have Blowout Prevention Equipment (BOP) installed and tested before the primary well barrier is breached. The BOP test shall be documented in the Well Intervention Record.",
+        "similarity_score": 0.7188,
+        "metadata": {
+          "section": "Section 7: Well Intervention and Workover",
+          "source_label": "OISD Process Safety Standards"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 42.72,
+    "analyzed_at": "2026-09-03T01:24:44.192286Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
+    "report_id": "2075a9e6-83fe-45ba-8d72-a376b89e1ec7",
+    "raw_text": "at DIGBOI-STATION-01 saw 2 contract boys inside SEPARATOR-SKID-03 mud pit cleaning slop sludge w/o CSE work permit or continuous gas testing while AHWR-50MT workover rig line was flushing to EPS. trapped H2S pocket popped up when digging near Separator Boot, sensor alarmed >14ppm and worker got lightheaded before jumping out near Flare Knockout Drum manifold skid. stopped job immediately, informed GGS shift lead to isolate line and force air blower before any re-entry.",
+    "functional_location": "DIGBOI-STATION-01",
+    "functional_location_description": "Work Over Rig (50MT)",
+    "item_no": "00001",
+    "incident_type": "UA",
+    "incident_sub_type": "Near Miss \u2013 High Potential",
+    "incident_cause": "IMPROPER MATERIAL HANDLING",
+    "incident_time": "16:29:49",
+    "incident_duration": "00:10:00",
+    "man_hours_lost": "00:00",
+    "operational_time_lost": "00:00",
+    "financial_implication": "0.00",
+    "currency": "INR",
+    "affected_person_type": "Contractor Worker",
+    "designation": "Rigman / Rigger",
+    "ehs_code": "R",
+    "ehs_short_desc": "Near Miss \u2013 High Potential",
+    "root_cause_analysis": "",
+    "potential_consequences": "",
+    "corrective_action": "",
+    "preventive_action": "",
+    "iogp_rule": "Confined Space",
+    "extracted_facts": [
+      {
+        "entity": "2 contract boys",
+        "action": "cleaning",
+        "state": "inside SEPARATOR-SKID-03 mud pit cleaning slop sludge",
+        "location": "SEPARATOR-SKID-03 mud pit at DIGBOI-STATION-01",
+        "confidence": 0.95,
+        "raw_text_span": "2 contract boys inside SEPARATOR-SKID-03 mud pit cleaning slop sludge",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "AHWR-50MT workover rig line",
+        "action": "flushing",
+        "state": "flushing to EPS",
+        "location": "DIGBOI-STATION-01",
+        "confidence": 0.95,
+        "raw_text_span": "AHWR-50MT workover rig line was flushing to EPS",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "trapped H2S pocket",
+        "action": "popped up",
+        "state": "popped up when digging near Separator Boot",
+        "location": "near Separator Boot",
+        "confidence": 0.95,
+        "raw_text_span": "trapped H2S pocket popped up when digging near Separator Boot",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "sensor",
+        "action": "alarmed",
+        "state": "alarmed >14ppm",
+        "location": "DIGBOI-STATION-01",
+        "confidence": 0.95,
+        "raw_text_span": "sensor alarmed >14ppm",
+        "triggered_rule_id": null
+      },
+      {
+        "entity": "worker",
+        "action": "jumping out",
+        "state": "jumped out near Flare Knockout Drum manifold skid",
+        "location": "near Flare Knockout Drum manifold skid",
+        "confidence": 0.95,
+        "raw_text_span": "worker got lightheaded before jumping out near Flare Knockout Drum manifold skid",
+        "triggered_rule_id": null
+      }
+    ],
+    "inferred_hazards": [],
+    "evidence_matches": [
+      {
+        "source": "iogp_rules",
+        "source_label": "IOGP Life-Saving Rules",
+        "chunk_id": "iogp_rules_chunk_0017",
+        "text": "[Rule 3: Verify isolation before work begins]\n**Historical Linkage:** The 2020 Baghjan-5 Well Blowout (Assam, India) involved operations during which secondary isolation integrity was compromised during a pressure bleed operation. The absence of verified secondary barrier status is cited as a contributing factor in the post-incident investigation.",
+        "similarity_score": 0.7313,
+        "metadata": {
+          "section": "Rule 3: Verify isolation before work begins",
+          "source_label": "IOGP Life-Saving Rules"
+        }
+      },
+      {
+        "source": "oisd_guidelines",
+        "source_label": "OISD Process Safety Standards",
+        "chunk_id": "oisd_guidelines_chunk_0032",
+        "text": "[Section 3: H2S Control Measures]\n**Clause 3.6 \u2014 H2S Emergency Response:**\nIf a person is overcome by H2S, do NOT attempt rescue without SCBA. Activate the alarm, call for emergency response, and move to upwind muster point. Rescuers without SCBA must not enter the affected area.",
+        "similarity_score": 0.7216,
+        "metadata": {
+          "section": "Section 3: H2S Control Measures",
+          "source_label": "OISD Process Safety Standards"
+        }
+      }
+    ],
+    "overall_risk_score": 0.05,
+    "risk_level": "LOW",
+    "sif_potential": false,
+    "escalated_pattern": false,
+    "processing_time_ms": 516.94,
+    "analyzed_at": "2026-09-03T01:24:43.838040Z",
+    "pipeline_mode": "multi_model_causal_dag"
+  },
+  {
     "report_id": "CHAIN-005",
     "raw_text": "The pressure relief valve completely blew out, causing a massive release of high-pressure fluid. A nearby worker narrowly avoided being struck by flying metal shrapnel. Emergency shutdown initiated.",
     "functional_location": "SITE-ALPHA-VALVE",
