@@ -56,10 +56,10 @@ export default function UploadReports({ onNavigate }) {
     }
   };
   return (
-    <>
+    <div className="h-full flex flex-col">
       
 {/* TopNavBar (Shared Component) */}
-<nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard bg-surface-container-lowest border-b border-outline-variant">
+<nav className="w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard bg-surface-container-lowest border-b border-outline-variant shrink-0">
 <div className="flex items-center gap-container-padding h-full">
 <span className="font-display-lg text-display-lg font-bold text-primary">OIL Sentinel</span>
 <div className="hidden md:flex h-full items-center gap-gutter">
@@ -78,7 +78,7 @@ export default function UploadReports({ onNavigate }) {
 </div>
 </nav>
 {/* Main Content Canvas */}
-<main className="flex-grow py-container-padding px-container-padding overflow-y-auto">
+<main className="flex-1 py-container-padding px-container-padding overflow-y-auto">
 <div className="w-full flex flex-col gap-container-padding">
 <header className="flex flex-col gap-unit pb-gutter border-b border-surface-container-high">
 <h1 className="font-headline-md text-headline-md text-primary">Upload and Process Reports</h1>
@@ -189,6 +189,6 @@ export default function UploadReports({ onNavigate }) {
 </main>
 {/* Script removed, drag and drop logic needs to be Reactified if fully functional, but for now we keep UI exact */}
 
-    </>
+    </div>
   );
 }

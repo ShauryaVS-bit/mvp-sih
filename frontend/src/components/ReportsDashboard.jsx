@@ -146,10 +146,10 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
   }, [reports, searchQuery, sifFilter, categoryFilter, iogpFilter, sortOrder]);
 
   return (
-    <>
+    <div className="h-full flex flex-col">
       
 {/* TopNavBar Component */}
-<header className="bg-surface-container-lowest border-b border-outline-variant fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard">
+<header className="bg-surface-container-lowest border-b border-outline-variant w-full z-50 flex justify-between items-center px-container-padding h-row-height-standard shrink-0">
 <div className="flex items-center gap-6 h-full">
 <span className="font-display-lg text-display-lg font-bold text-primary tracking-tight">OIL Sentinel</span>
 <nav className="hidden md:flex h-full items-center gap-6 ml-4">
@@ -192,7 +192,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
 </div>
 </div>
 </header>
-<main className="flex-1 mt-[48px] overflow-hidden flex flex-col">
+<main className="flex-1 overflow-hidden flex flex-col">
 {/* Filter Bar */}
 <div className="bg-surface-container-lowest border-b border-outline-variant py-2 px-container-padding flex flex-wrap gap-3 items-center">
 <span className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mr-1">FILTERS</span>
@@ -246,7 +246,7 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
 </div>
 <div className="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT overflow-hidden">
 {/* Header Row */}
-<div className="flex items-center bg-surface-container-low border-b border-outline-variant px-4 py-2 text-on-surface-variant font-label-caps text-label-caps sticky top-0 z-10">
+<div className="flex items-center bg-surface-container-low border-b border-outline-variant px-4 py-2 text-on-surface-variant font-label-caps text-label-caps font-bold sticky top-0 z-10">
 <div className="w-24">SIF TIER</div>
 <div className="w-24">TIME</div>
 <div className="w-[450px]">LOCATION</div>
@@ -281,10 +281,10 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
         {/* SIF TIER */}
         <div className="w-24 flex items-center gap-2">
           <div className={`w-1 h-5 ${tierConfig.bgClass} rounded-full`}></div>
-          <span className={`font-label-caps text-label-caps ${tierConfig.textClass}`}>{tierConfig.label}</span>
+          <span className={`font-label-caps text-label-caps font-bold ${tierConfig.textClass}`}>{tierConfig.label}</span>
         </div>
         {/* TIME */}
-        <div className="w-24 font-data-tabular text-data-tabular text-on-surface-variant">
+        <div className="w-24 font-data-tabular text-data-tabular font-bold text-on-surface-variant">
           {formatTimestamp(report.timestamp)}
         </div>
         {/* LOCATION */}
@@ -299,18 +299,18 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
         </div>
         {/* IOGP RULE */}
         <div className="w-48 pr-2">
-          <span className="inline-flex items-center gap-1 font-label-caps text-label-caps text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded truncate max-w-full" title={iogp.rule}>
+          <span className="inline-flex items-center gap-1 font-label-caps text-label-caps font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded truncate max-w-full" title={iogp.rule}>
             {iogp.icon && <span className="material-symbols-outlined text-[14px] leading-none">{iogp.icon}</span>}
             <span className="truncate">{iogp.rule}</span>
           </span>
         </div>
         {/* CATEGORY (was cause before, but category makes more sense here, cause drives the fact) */}
-        <div className="w-64 font-body-sm text-body-sm text-on-surface truncate pr-8" title={report.category}>
+        <div className="w-64 font-body-sm text-body-sm font-bold text-on-surface truncate pr-8" title={report.category}>
           {report.category || '—'}
         </div>
         {/* SIF Status */}
         <div className="flex-1 min-w-0">
-          <span className={`inline-block font-label-caps text-label-caps px-2 py-0.5 rounded truncate max-w-full ${
+          <span className={`inline-block font-label-caps text-label-caps font-bold px-2 py-0.5 rounded truncate max-w-full ${
             report.sif_potential ? 'text-error bg-error/10' : 'text-on-surface-variant bg-surface-container'
           }`}>
             {report.sif_potential ? 'Positive' : 'Negative'}
@@ -362,6 +362,6 @@ export default function ReportsDashboard({ reports, onSelectReport, onNavigate, 
   </div>
 )}
 
-    </>
+    </div>
   );
 }

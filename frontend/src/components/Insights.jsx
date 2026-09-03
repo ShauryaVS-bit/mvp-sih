@@ -57,7 +57,7 @@ export default function Insights({ onNavigate }) {
       </header>
 
       <main className="flex-1 overflow-auto p-container-padding">
-        <div className="max-w-5xl mx-auto space-y-8">
+        <div className="w-full space-y-8">
           <div>
             <h1 className="font-headline-lg text-headline-lg text-on-surface mb-2">Knowledge Graph Insights</h1>
             <p className="font-body-md text-body-md text-on-surface-variant">
